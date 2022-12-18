@@ -138,7 +138,7 @@ export const getDetail = (base_url, id) => {
       .get(`${base_url}/${id}`)
       .then((r) => setData(r.data.data))
       .catch((err) => setError(err?.response?.data?.message))
-      .finally(() => setLoading(false));
+      .finally(() => setLoading(() => false));
   }, []);
 
   const refetch = () => {
@@ -148,7 +148,7 @@ export const getDetail = (base_url, id) => {
       .get(`${base_url}/${id}`)
       .then((r) => setData(r.data.data))
       .catch((err) => setError(err?.response?.data?.message))
-      .finally(() => setLoading(false));
+      .finally(() => setLoading(() => false));
   };
 
   return { data, err, loading, refetch };

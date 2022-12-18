@@ -15,7 +15,7 @@ const navFiltering = (permission, navigation, setFilteredNaviation, type) => {
   const filteredNav = [];
   for (let nav of navigation) {
     if (
-      nav.hasOwnProperty("header") ||
+      (nav.hasOwnProperty("header") && type === nav?.type) ||
       (nav?.id == "dashboard" && type == 1) ||
       (nav?.id == "wo-dashboard" && type == 3)
     )

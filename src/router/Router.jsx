@@ -17,8 +17,9 @@ import {
 } from "react-router-dom";
 
 // Routes
-import { Routes } from "./routes";
+import { Routes } from "./admin-routes";
 import { WoRoutes } from "./wo-routes";
+import { GlobalRoutes } from "./global-routes";
 
 // Layouts
 import VerticalLayout from "../layout/VerticalLayout";
@@ -66,17 +67,29 @@ export default function Router() {
     const LayoutRoutes = [];
     const LayoutPaths = [];
     if (Routes) {
-      // Checks if Route layout or Default layout matches current layout
-      Routes.filter(
+      // global routes like error page and login form
+      GlobalRoutes.filter(
         (route) =>
           route.layout === layout &&
           (LayoutRoutes.push(route), LayoutPaths.push(route.path))
       );
-      WoRoutes.filter(
-        (route) =>
-          route.layout === layout &&
-          (LayoutRoutes.push(route), LayoutPaths.push(route.path))
-      );
+
+      // Checks if Route layout or Default layout matches current layout and type
+      if (type === 1) {
+        Routes.filter(
+          (route) =>
+            route.layout === layout &&
+            (LayoutRoutes.push(route), LayoutPaths.push(route.path))
+        );
+      }
+
+      if (type === 3) {
+        WoRoutes.filter(
+          (route) =>
+            route.layout === layout &&
+            (LayoutRoutes.push(route), LayoutPaths.push(route.path))
+        );
+      }
     }
     return { LayoutRoutes, LayoutPaths };
   };
@@ -180,8 +193,6 @@ export default function Router() {
       );
     });
   };
-
-  console.log(type);
 
   return permissionLoading ? (
     <LoadingPage />

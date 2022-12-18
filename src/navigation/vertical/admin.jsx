@@ -19,6 +19,7 @@ import { RiDashboardLine } from "react-icons/ri";
 const adminNav = [
   {
     header: "MENU SUPER ADMIN",
+    type: 1,
   },
 
   // navlink harus 2 path
@@ -32,7 +33,7 @@ const adminNav = [
     icon: (
       <Grid7 size={18} variant="outline" set="curved" className="remix-icon" />
     ),
-    navLink: "/admin/dashboard",
+    navLink: "/dashboard",
   },
 
   /**
@@ -214,15 +215,6 @@ const adminNav = [
     title: "Pengaturan Website",
     icon: <DocumentCode set="curved" className="remix-icon" size={18} />,
     navLink: "/admin/pengaturan-website",
-  },
-
-  {
-    id: "wo-dashboard",
-    title: "WO Dashboard",
-    icon: (
-      <Grid7 size={18} variant="outline" set="curved" className="remix-icon" />
-    ),
-    navLink: "/wo/dashboard",
   },
 ];
 
