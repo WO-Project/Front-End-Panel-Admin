@@ -99,7 +99,7 @@ const index = (props) => {
             },
           ]}
         >
-          <p>{data && data.sales_order_item?.product.name}</p>
+          <p>{data && data.sales_order_item?.product?.name}</p>
         </Form.Item>
 
         <Form.Item

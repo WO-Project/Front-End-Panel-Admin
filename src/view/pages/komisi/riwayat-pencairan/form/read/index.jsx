@@ -138,7 +138,7 @@ const index = (props) => {
             },
           ]}
         >
-          <p>{data && data.commission?.wedding_organizer.name}</p>
+          <p>{data && data.commission?.wedding_organizer?.name}</p>
         </Form.Item>
 
         <Form.Item
