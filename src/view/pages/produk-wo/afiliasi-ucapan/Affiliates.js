@@ -49,12 +49,11 @@ const columns = [
     fixed: "right",
     render: (payload) => (
       <Space size="large" className="icons-container">
-
-        {payload.permission.includes("/admin/afiliasi-ucapan/detail/:userid") ? (
+        {payload.permission.includes("/admin/afiliasi-ucapan/detail/:id") ? (
           <Popover content={"Detail"}>
             <Link
               to={{
-                pathname: `/admin/afiliasi-ucapan/${payload.id}`,
+                pathname: `/admin/afiliasi-ucapan/detail/${payload.id}`,
               }}
             >
               <Eye size={20} />
@@ -62,7 +61,7 @@ const columns = [
           </Popover>
         ) : undefined}
 
-        {payload.permission.includes("/admin/afiliasi-ucapan/detail/:userid") ? (
+        {payload.permission.includes("/admin/afiliasi-ucapan/edit/:id") ? (
           <Popover content={"Edit"}>
             <Link
               to={{
@@ -91,7 +90,6 @@ const columns = [
             </Link>
           </Popover>
         ) : undefined}
-
       </Space>
     ),
   },

@@ -78,7 +78,9 @@ const index = () => {
   if (commision_detail_loading) return <Spin />;
 
   return (
-    <CardForm title="Tambah Data User">
+    <CardForm
+      title={`Edit Data Kategori Komisi/Group User ${commision_detail_data?.name}`}
+    >
       <Form
         name="basic"
         labelCol={{
@@ -141,7 +143,7 @@ const index = () => {
         </Form.Item>
 
         <Form.Item
-          label="Nominal"
+          label={type === 1 ? "Persentase" : "Nominal"}
           key="nominal"
           name="nominal"
           rules={[

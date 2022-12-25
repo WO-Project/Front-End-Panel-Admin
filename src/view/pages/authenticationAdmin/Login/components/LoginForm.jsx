@@ -32,9 +32,9 @@ function LoginForm(props) {
 
   const tryLogin = async () => {
     if (username && password) {
-      api
+      await api
         .post("login", { username: username, password: password })
-        .then((response) => {
+        .then(async (response) => {
           console.log(response.data.data.data.access_menu_id);
           console.log(response.data.data.access_token);
           localStorage.setItem(
@@ -50,7 +50,9 @@ function LoginForm(props) {
           });
 
           setIsAuth(true);
-          fetchApi();
+          await fetchApi();
+
+          await history.push("/dashboard");
 
           message.info("Selamat Datang!");
         })

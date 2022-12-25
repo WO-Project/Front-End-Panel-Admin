@@ -48,12 +48,11 @@ const columns = [
     width: 200,
     render: (payload) => (
       <Space size="large" className="icons-container">
-
-        {payload.permission.includes("/admin/kupon/detail/:userid") ? (
+        {payload.permission.includes("/admin/kupon/detail/:id") ? (
           <Popover content={"Detail"}>
             <Link
               to={{
-                pathname: `/admin/kupon/${payload.id}`,
+                pathname: `/admin/kupon/detail/${payload.id}`,
                 id: payload.id,
               }}
             >
@@ -62,11 +61,11 @@ const columns = [
           </Popover>
         ) : undefined}
 
-        {payload.permission.includes("/admin/kupon/edit/:userid") ? (
+        {payload.permission.includes("/admin/kupon/edit/:id") ? (
           <Popover content={"Edit"}>
             <Link
               to={{
-                pathname: `/admin/kupon/update/${payload.id}`,
+                pathname: `/admin/kupon/edit/${payload.id}`,
               }}
             >
               <Edit size={20} />
@@ -86,7 +85,6 @@ const columns = [
             </Link>
           </Popover>
         ) : undefined}
-
       </Space>
     ),
   },

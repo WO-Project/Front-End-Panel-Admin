@@ -1,8 +1,8 @@
 import { useHistory, useParams } from "react-router-dom";
 import moment from "moment";
-import { useState } from "react";
-import { useEffect } from "react";
-6;
+import dayjs from "dayjs";
+import { useEffect, useState } from "react";
+
 import {
   Button,
   Form,
@@ -70,6 +70,10 @@ const index = () => {
     alert("Failed:", errorInfo);
   };
 
+  const disabledDate = (current) => {
+    return current < dayjs().startOf("day");
+  };
+
   if (loading)
     return (
       <CardForm title={`Detail Data Voucher/Kupon ${data?.name}`}>
@@ -99,15 +103,8 @@ const index = () => {
           <Input value={name} onChange={(e) => setName(e.target.value)} />
         </Form.Item>
 
-        <Form.Item label="Tipe" name="type" key="type" initialValue={type}>
-          <Select onChange={(v) => setType(v)} value={type}>
-            <Select.Option value={1}>Aktif</Select.Option>
-            <Select.Option value={2}>Non-aktif</Select.Option>
-          </Select>
-        </Form.Item>
-
         <Form.Item
-          label="Nominal"
+          label={type === 1 ? "Persentase" : "Nominal"}
           name="nominal"
           key="nominal"
           initialValue={nominal}
@@ -152,6 +149,7 @@ const index = () => {
           initialValue={moment(begin_date)}
         >
           <DatePicker
+            disabledDate={disabledDate}
             format="YYYY-MM-DD"
             onChange={(value, stringValue) => setBeginDate(stringValue)}
             value={begin_date}
@@ -165,6 +163,7 @@ const index = () => {
           initialValue={moment(end_date)}
         >
           <DatePicker
+            disabledDate={disabledDate}
             format="YYYY-MM-DD"
             onChange={(value, stringValue) => setEndDate(stringValue)}
             value={end_date}

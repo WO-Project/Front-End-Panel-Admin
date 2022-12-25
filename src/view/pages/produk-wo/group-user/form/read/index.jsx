@@ -18,7 +18,9 @@ const index = () => {
 
   if (commision_detail_loading)
     return (
-      <CardForm title={`Detail Data Komisi ${commision_detail_data?.name}`}>
+      <CardForm
+        title={`Detail Data Kategori Komisi/Group User ${commision_detail_data?.name}`}
+      >
         <Spin />
       </CardForm>
     );
@@ -28,7 +30,7 @@ const index = () => {
 
   return (
     <CardForm
-      title={`Detail Data Voucher/Kupon ${commision_detail_data?.name}`}
+      title={`Detail Data Kategori Komisi/Group User ${commision_detail_data?.name}`}
     >
       <Form
         name="basic"
@@ -46,7 +48,11 @@ const index = () => {
         <Form.Item label="WO" name="wedding_organizer" key="wedding_organizer">
           <p>{commision_detail_data?.wedding_organizer?.name}</p>
         </Form.Item>
-        <Form.Item label="Nominal" name="nominal" key="nominal">
+        <Form.Item
+          label={commision_detail_data?.type === 1 ? "Persentase" : "Nominal"}
+          name="nominal"
+          key="nominal"
+        >
           <p>
             {commision_detail_data?.type == 1
               ? `${`${commision_detail_data?.nominal}`.replace(

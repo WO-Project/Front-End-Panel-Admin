@@ -23,10 +23,9 @@ const index = () => {
 
   const onFinishFailed = (errorInfo) => {
     if (errorInfo.errorFields.length == 1) {
-      message.error(errorInfo.errorFields[0].errors[0])
-    }
-    else {
-      message.error("Mohon isi semua form yang ada")
+      message.error(errorInfo.errorFields[0].errors[0]);
+    } else {
+      message.error("Mohon isi semua form yang ada");
     }
   };
 

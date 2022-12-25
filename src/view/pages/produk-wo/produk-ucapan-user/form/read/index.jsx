@@ -1,6 +1,6 @@
 import { useHistory, useParams } from "react-router-dom";
 
-import { Form, Button, Spin } from "antd";
+import { Form, Button, Spin, Space } from "antd";
 import CardForm from "../../../../../components/custom-components/form-crud/CardForm";
 import ErrorPage from "../../../../../components/custom-components/Feedback/ErrorPage";
 
@@ -24,7 +24,7 @@ const index = () => {
   if (err) return <ErrorPage message={err} />;
 
   return (
-    <CardForm title={`Detail Data Produk Ucapan WO ${data?.product?.name}`}>
+    <CardForm title={`Detail Data Produk Ucapan User ${data?.product?.name}`}>
       <Form
         name="basic"
         labelCol={{
@@ -34,7 +34,7 @@ const index = () => {
           span: 13,
         }}
         autoComplete="off"
-        disabled={true}
+        size="small"
         labelAlign="left"
         colon={false}
       >
@@ -73,11 +73,20 @@ const index = () => {
         <Form.Item label="Editor" name="editor" key="editor">
           <p>{data?.editor}</p>
         </Form.Item>
-      </Form>
 
-      <Button danger onClick={() => history.goBack()}>
-        Kembali
-      </Button>
+        <Form.Item
+          wrapperCol={{
+            offset: 5,
+            span: 4,
+          }}
+        >
+          <Space size="middle">
+            <Button danger htmlType="button" onClick={() => history.goBack()}>
+              Kembali
+            </Button>
+          </Space>
+        </Form.Item>
+      </Form>
     </CardForm>
   );
 };

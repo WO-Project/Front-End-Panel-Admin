@@ -42,17 +42,16 @@ const index = () => {
 
   const onFinishFailed = (errorInfo) => {
     if (errorInfo.errorFields.length == 1) {
-      message.error(errorInfo.errorFields[0].errors[0])
-    }
-    else {
-      message.error("Mohon isi semua form yang ada")
+      message.error(errorInfo.errorFields[0].errors[0]);
+    } else {
+      message.error("Mohon isi semua form yang ada");
     }
   };
 
   if (wo_err) return <ErrorPage message="Gagal Mengambil Data" />;
 
   return (
-    <CardForm title="Tambah Data User">
+    <CardForm title="Tambah Data Kategori Komisi/Group User">
       <Form
         name="basic"
         labelCol={{
@@ -119,7 +118,7 @@ const index = () => {
         </Form.Item>
 
         <Form.Item
-          label="Nominal"
+          label={type === 1 ? "Persentase" : "Nominal"}
           key="nominal"
           name="nominal"
           rules={[

@@ -37,7 +37,7 @@ const index = () => {
 
   const {
     data: detail_produk_wo,
-    error: detail_produk_wo_error,
+    err: detail_produk_wo_error,
     loading: detail_produk_wo_loading,
   } = detailProdukWO(id);
 
@@ -103,7 +103,9 @@ const index = () => {
     return <ErrorPage message="Gagal Mengambil Data" />;
 
   return (
-    <CardForm title={`Detail Data Produk ${detail_produk_wo?.product?.name}`}>
+    <CardForm
+      title={`Detail Data Produk Ucapan User ${detail_produk_wo?.product?.name}`}
+    >
       <Form
         name="basic"
         labelCol={{

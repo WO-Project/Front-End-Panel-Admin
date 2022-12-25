@@ -36,7 +36,11 @@ const index = () => {
         <Form.Item label="Nama" name="name" key="name">
           <p>{data?.name}</p>
         </Form.Item>
-        <Form.Item label="Nominal" name="nominal" key="nominal">
+        <Form.Item
+          label={data?.type === 1 ? "Persentase" : "Nominal"}
+          name="nominal"
+          key="nominal"
+        >
           <p>
             {" "}
             {/* `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",") */}

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import dayjs from "dayjs";
 
 import {
   Button,
@@ -49,11 +50,14 @@ const index = (props) => {
 
   const onFinishFailed = (errorInfo) => {
     if (errorInfo.errorFields.length == 1) {
-      message.error(errorInfo.errorFields[0].errors[0])
+      message.error(errorInfo.errorFields[0].errors[0]);
+    } else {
+      message.error("Mohon isi semua form yang ada");
     }
-    else {
-      message.error("Mohon isi semua form yang ada")
-    }
+  };
+
+  const disabledDate = (current) => {
+    return current < dayjs().startOf("day");
   };
 
   return (
@@ -87,7 +91,7 @@ const index = (props) => {
         </Form.Item>
 
         <Form.Item
-          label="Nominal"
+          label={type === 1 ? "Persentase" : "Nominal"}
           key="nominal"
           name="nominal"
           rules={[
@@ -161,6 +165,7 @@ const index = (props) => {
           ]}
         >
           <DatePicker
+            disabledDate={disabledDate}
             format="YYYY-MM-DD"
             onChange={(value, stringValue) => setBeginDate(stringValue)}
             value={begin_date}
@@ -179,6 +184,7 @@ const index = (props) => {
           ]}
         >
           <DatePicker
+            disabledDate={disabledDate}
             format="YYYY-MM-DD"
             onChange={(value, stringValue) => setEndDate(stringValue)}
             value={end_date}
