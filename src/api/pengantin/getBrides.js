@@ -5,12 +5,15 @@ export const getBrides = (url = "brides") => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [deleteToggle, setDeleteToggle] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
     api
       .get(url)
       .then((res) => setData(res.data.data))
-      .catch((err) => setError(err));
+      .catch((err) => setError(err))
+      .finally(() => setLoading(() => false));
   }, [deleteToggle]);
 
   const deleteBride = async (id) => {
@@ -25,5 +28,5 @@ export const getBrides = (url = "brides") => {
     return isDeleted;
   };
 
-  return { data, error, deleteBride };
+  return { data, error, loading, deleteBride };
 };
