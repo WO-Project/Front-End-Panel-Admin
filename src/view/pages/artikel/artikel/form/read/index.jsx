@@ -46,7 +46,7 @@ const index = (props) => {
         </Form.Item>
 
         <Form.Item label="Status" name="status">
-          <p>{data?.status}</p>
+          <p>{data?.status === 1 ? "Aktif" : "Non-aktif"}</p>
         </Form.Item>
 
         <Form.Item label="Pembuat" name="creator">
@@ -59,7 +59,6 @@ const index = (props) => {
 
         <Form.Item label="Image" name="thumbnail">
           <div style={{ display: "flex" }}>
-            <b>:</b> {"\xa0\xa0\xa0"}{" "}
             <img
               src={asset(data?.thumbnail)}
               alt="thumbnail"

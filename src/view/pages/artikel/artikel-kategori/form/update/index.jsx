@@ -9,6 +9,7 @@ import {
 import { Button, Form, Space, Input, Spin, Select, message } from "antd";
 
 import CardForm from "../../../../../components/custom-components/form-crud/CardForm";
+import ErrorPage from "../../../../../components/custom-components/Feedback/ErrorPage";
 
 const index = (props) => {
   const history = useHistory();
@@ -30,11 +31,11 @@ const index = (props) => {
 
   const onFinish = async () => {
     const success = await updateArticleCategory(
-      { title, description, status },
+      { name, description, status },
       id
     );
 
-    if (success.data.success) {
+    if (success?.data?.success) {
       message.success("Berhasil mengubah kategori artikel");
       history.goBack();
     } else {
@@ -46,6 +47,8 @@ const index = (props) => {
     alert("Failed:", errorInfo);
   };
 
+  if (error) return <ErrorPage message="Gagal Mengambil Data" />;
+
   return (
     <>
       <CardForm title={`Ubah Data Kategori Artikel ${data.name}`}>
@@ -55,7 +58,6 @@ const index = (props) => {
             span: 4,
           }}
           autoComplete="off"
-          size="small"
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
           labelAlign="left"
@@ -65,14 +67,6 @@ const index = (props) => {
             <Spin size="large" />
           ) : (
             <>
-              <Form.Item label="ID Artikel" name="id">
-                <p>{data.id}</p>
-              </Form.Item>
-
-              <Form.Item label="Slug" name="slug">
-                <p>{data.slug}</p>
-              </Form.Item>
-
               <Form.Item
                 label="Nama"
                 name="name"
@@ -112,35 +106,18 @@ const index = (props) => {
               <Form.Item
                 label="Status"
                 name="status"
-                initialValue={status}
                 rules={[
                   {
                     required: true,
-                    message: "Mohon masukkan judul!",
+                    message: "Mohon masukkan status!",
                   },
                 ]}
+                initialValue={status}
               >
-                <Input
-                  value={status}
-                  onChange={(e) => setStatus(e.target.value)}
-                  defaultValue={status}
-                />
-              </Form.Item>
-
-              <Form.Item label="Pembuat" name="creator">
-                <p>{data.creator}</p>
-              </Form.Item>
-
-              <Form.Item label="Dibuat Pada" name="created_at">
-                <p>{data.created_at}</p>
-              </Form.Item>
-
-              <Form.Item label="Editor" name="editor">
-                <p>{data.editor}</p>
-              </Form.Item>
-
-              <Form.Item label="Diubah Pada" name="edited_at">
-                <p>{data.updated_at}</p>
+                <Select value={status} onChange={(value) => setStatus(value)}>
+                  <Select.Option value={1}>Aktif</Select.Option>
+                  <Select.Option value={2}>Non-Aktif</Select.Option>
+                </Select>
               </Form.Item>
 
               <Form.Item

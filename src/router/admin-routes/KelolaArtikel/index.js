@@ -1,7 +1,3 @@
-// import GetDetail from "./GetDetail";
-// import Create from "./Create";
-// import Update from "./Update";
-// import GetAll from "./GetAll";
 import { lazy } from "react";
 
 export default [
@@ -20,14 +16,14 @@ export default [
     layout: "VerticalLayout",
   },
   {
-    path: "/admin/artikel/update/:userid",
+    path: "/admin/artikel/edit/:id",
     component: lazy(() =>
       import("../../../view/pages/artikel/artikel/form/update/index")
     ),
     layout: "VerticalLayout",
   },
   {
-    path: "/admin/kategori-artikel/update/:userid",
+    path: "/admin/kategori-artikel/edit/:id",
     component: lazy(() =>
       import("../../../view/pages/artikel/artikel-kategori/form/update/index")
     ),
@@ -35,14 +31,14 @@ export default [
   },
 
   {
-    path: "/admin/artikel/detail/:userid",
+    path: "/admin/artikel/detail/:id",
     component: lazy(() =>
       import("../../../view/pages/artikel/artikel/form/read")
     ),
     layout: "VerticalLayout",
   },
   {
-    path: "/admin/kategori-artikel/detail/:userid",
+    path: "/admin/kategori-artikel/detail/:id",
     component: lazy(() =>
       import("../../../view/pages/artikel/artikel-kategori/form/read")
     ),

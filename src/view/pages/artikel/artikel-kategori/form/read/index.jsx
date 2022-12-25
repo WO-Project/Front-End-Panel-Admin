@@ -13,7 +13,7 @@ const index = (props) => {
 
   return (
     <>
-      <CardForm title={`Detail Data Artikel ${data.title}`}>
+      <CardForm title={`Detail Data Kategori Artikel ${data.name}`}>
         <Form
           name="basic"
           labelCol={{
