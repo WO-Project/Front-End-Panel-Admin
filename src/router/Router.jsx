@@ -202,11 +202,19 @@ export default function Router() {
         {ResolveRoutes()}
         {/* Home Page */}
         {auth ? (
-          <Redirect
-            to={{
-              pathname: "/dashboard",
-            }}
-          />
+          permission.includes(location.pathname) ? (
+            <Redirect
+              to={{
+                pathname: location.pathname,
+              }}
+            />
+          ) : (
+            <Redirect
+              to={{
+                pathname: "/dashboard",
+              }}
+            />
+          )
         ) : (
           <Redirect
             to={{
