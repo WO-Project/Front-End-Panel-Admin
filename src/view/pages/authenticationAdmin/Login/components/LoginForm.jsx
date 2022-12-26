@@ -22,8 +22,6 @@ function LoginForm(props) {
   const [password, setPassword] = useState("");
   const [isAuth, setIsAuth] = useState(false);
 
-  const history = useHistory();
-
   const { fetchApi } = usePermissionContext();
 
   useEffect(() => {
@@ -35,8 +33,12 @@ function LoginForm(props) {
       await api
         .post("login", { username: username, password: password })
         .then(async (response) => {
-          console.log(response.data.data.data.access_menu_id);
-          console.log(response.data.data.access_token);
+          if (response.data.data.data.status === 2) {
+            message.error("Akun tidak aktif, silahkan hubungi admin!");
+            console.log("tes");
+            return;
+          }
+
           localStorage.setItem(
             "token",
             `${response.data.data.token_type} ${response.data.data.access_token}`
@@ -51,8 +53,6 @@ function LoginForm(props) {
 
           setIsAuth(true);
           await fetchApi();
-
-          await history.push("/dashboard");
 
           message.info("Selamat Datang!");
         })

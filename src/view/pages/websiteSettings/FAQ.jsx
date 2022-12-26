@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+
 import { useData } from "../../../api/website-settings/apiTemplate";
 
 import {
@@ -12,11 +14,13 @@ import {
   Modal,
   Popover,
   Typography,
+  message,
 } from "antd";
 import { Trash, Danger } from "iconsax-react";
 
 export default function () {
   const [isAdding, setIsAdding] = useState(false);
+  const history = useHistory();
 
   let { data, error, loading, method } = useData("frequently-ask-questions");
   data = data.filter((d) => d.id !== undefined);
@@ -36,7 +40,7 @@ export default function () {
     }
   };
 
-  const deleteContact = (id, name) => {
+  const destroy = (id, name) => {
     Modal.confirm({
       title: `Apa anda yakin ingin menghapus ${name}?`,
       icon: <Danger color="red" />,
@@ -45,8 +49,33 @@ export default function () {
       okType: "primary",
       onOk() {
         method.destroy(id);
+
+        if (!error.destroy) {
+          message.info(`Berhasil menghapus FAQ!`);
+        } else message.error(`Gagal menghapus FAQ!`);
       },
     });
+  };
+
+  const create = async (value) => {
+    await method.create(value);
+
+    if (!error.create) {
+      message.info("Berhasil menambahkan FAQ baru!");
+    } else message.error("Gagal menambahkan FAQ baru!");
+  };
+
+  const updateStatus = async (id, value) => {
+    await method.update(id, value);
+
+    if (!error.update) {
+      message.info("Status telah diubah!");
+    } else {
+      message.error("Gagal mengubah status. Silakan coba kembali!");
+      setTimeout(() => {
+        history.push("/admin/pengaturan-website");
+      }, 1500);
+    }
   };
 
   return (
@@ -66,9 +95,9 @@ export default function () {
               <List.Item
                 actions={[
                   <Popover
-                    content="delete"
+                    content="destroydelete"
                     key="delete-contact"
-                    onClick={() => deleteContact(item.id, item.name)}
+                    onClick={() => destroy(item.id, item.name)}
                   >
                     <Trash color="red" size={20} />
                   </Popover>,
@@ -82,14 +111,15 @@ export default function () {
                       style={{
                         width: 120,
                       }}
-                      onChange={(e) =>
-                        method.update(item.id, {
-                          name: item.name,
-                          answer: item.answer,
-                          status: e,
-                          wedding_organizer_id: 0,
-                        })
-                      }
+                      onChange={(e) => {
+                        if (e != item.status)
+                          updateStatus(item.id, {
+                            name: item.name,
+                            answer: item.answer,
+                            status: e,
+                            wedding_organizer_id: 0,
+                          });
+                      }}
                       options={[
                         {
                           value: "2",
@@ -109,7 +139,7 @@ export default function () {
         />
         {isAdding ? (
           <AddForm
-            submit={method.create}
+            submit={create}
             setIsAdding={setIsAdding}
             createErr={error.create}
           />

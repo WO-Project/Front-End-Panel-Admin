@@ -60,6 +60,10 @@ export const PermissionContextProvider = ({ children }) => {
           .finally(() => setPermissionLoading(() => false));
       })
       .catch((err) => {
+        if (err.response.data.message == "Unauthenticated.") {
+          localStorage.removeItem("id");
+          localStorage.removeItem("token");
+        }
         console.log("Error user");
         setPermissionLoading(() => false);
       });
