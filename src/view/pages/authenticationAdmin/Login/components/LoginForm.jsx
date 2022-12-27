@@ -35,7 +35,6 @@ function LoginForm(props) {
         .then(async (response) => {
           if (response.data.data.data.status === 2) {
             message.error("Akun tidak aktif, silahkan hubungi admin!");
-            console.log("tes");
             return;
           }
 
