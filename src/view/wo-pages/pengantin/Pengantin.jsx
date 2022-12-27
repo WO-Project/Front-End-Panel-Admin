@@ -19,7 +19,11 @@ const MasterDisplay = () => {
     <TableCard>
       <Row>
         <Col span={24}>
-          <TableDisplay data={data} column={Column} addButton />
+          <TableDisplay
+            data={data}
+            column={Column}
+            addButton={permission.includes("/wo/pengantin/create")}
+          />
         </Col>
       </Row>
     </TableCard>

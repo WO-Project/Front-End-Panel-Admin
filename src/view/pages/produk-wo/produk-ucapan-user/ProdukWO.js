@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import { Edit, Trash, Eye, Danger } from "iconsax-react";
 
 const { confirm } = Modal;
-const showModal = (id, destroy) => {
+const showModal = (id, product, destroy) => {
   confirm({
-    title: `Apa anda yakin ingin menghapus ${id}?`,
+    title: `Apa anda yakin ingin menghapus ${product}?`,
     icon: <Danger color="red" />,
     okText: "Yakin",
     cancelText: "Batal",
@@ -55,8 +55,7 @@ const columns = [
     fixed: "right",
     render: (payload) => (
       <Space size="large" className="icons-container">
-
-        {payload.permission.includes("/admin/produk-ucapan-user/detail/:userid") ? (
+        {payload.permission.includes("/admin/produk-ucapan-user/detail/:id") ? (
           <Popover content={"Detail"}>
             <Link
               to={{
@@ -68,7 +67,7 @@ const columns = [
           </Popover>
         ) : undefined}
 
-        {payload.permission.includes("/admin/produk-ucapan-user/detail/:userid") ? (
+        {payload.permission.includes("/admin/produk-ucapan-user/edit/:id") ? (
           <Popover content={"Edit"}>
             <Link
               to={{
@@ -90,7 +89,7 @@ const columns = [
             <Link
               onClick={(e) => {
                 e.preventDefault();
-                showModal(payload.id, payload.destroy);
+                showModal(payload.id, payload.product, payload.destroy);
               }}
             >
               <Trash color="red" size={20} />

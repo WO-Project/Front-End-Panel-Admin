@@ -2,12 +2,12 @@ import { api } from "../../../configs/apiConfig";
 
 import { useState, useEffect } from "react";
 
-export const getArticleCategories = (
-  url = "http://127.0.0.1:8000/api/article-categories"
-) => {
+export const getArticleCategories = () => {
   const [data, setData] = useState([{}]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [errorDestroy, setErrorDestroy] = useState(null);
+  const [loadingDestroy, setLoadingDestroy] = useState(true);
   const [dataChangedToggle, setDataChangedToggle] = useState(false);
 
   useEffect(() => {
@@ -29,11 +29,25 @@ export const getArticleCategories = (
   };
 
   const destroy = (id) => {
-    api.delete(`/article-categories/destroy/${id}`);
+    setLoadingDestroy(true);
+
+    api
+      .delete(`/article-categories/destroy/${id}`)
+      .catch((err) => setErrorDestroy(err))
+      .finally(() => setLoadingDestroy(() => false));
+
     dataChangedToggle
       ? setDataChangedToggle(false)
       : setDataChangedToggle(true);
   };
 
-  return { data, error, loading, refetch, destroy };
+  return {
+    data,
+    error,
+    errorDestroy,
+    loading,
+    loadingDestroy,
+    refetch,
+    destroy,
+  };
 };

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
+import dayjs from "dayjs";
 
 import { createProdukWO } from "../../../../../../api/produk-wo";
 import { getWeddingOrganizers } from "../../../../../../api/wedding-organizer/getWeddingOrganizers";
@@ -65,18 +66,21 @@ const index = () => {
 
   const onFinishFailed = (errorInfo) => {
     if (errorInfo.errorFields.length == 1) {
-      message.error(errorInfo.errorFields[0].errors[0])
+      message.error(errorInfo.errorFields[0].errors[0]);
+    } else {
+      message.error("Mohon isi semua form yang ada");
     }
-    else {
-      message.error("Mohon isi semua form yang ada")
-    }
+  };
+
+  const disabledDate = (current) => {
+    return current < dayjs().startOf("day");
   };
 
   if (wo_err || brides_error || product_error)
     return <ErrorPage message="Gagal Mengambil Data" />;
 
   return (
-    <CardForm title="Tambah Data User">
+    <CardForm title="Tambah Data Produk Ucapan User">
       <Form
         name="basic"
         labelCol={{
@@ -122,9 +126,9 @@ const index = () => {
               options={
                 wo_data[0] != null
                   ? wo_data.map((v) => ({
-                    value: v.id,
-                    label: v.name,
-                  }))
+                      value: v.id,
+                      label: v.name,
+                    }))
                   : []
               }
               onChange={(value) => setWO(value)}
@@ -225,6 +229,7 @@ const index = () => {
           ]}
         >
           <DatePicker
+            disabledDate={disabledDate}
             format="YYYY-MM-DD"
             style={{ width: "100%" }}
             value={activeDate}

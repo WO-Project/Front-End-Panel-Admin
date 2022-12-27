@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+
 import { useData } from "../../../api/website-settings/apiTemplate";
 
 import {
@@ -7,16 +9,19 @@ import {
   Button,
   Form,
   Input,
+  InputNumber,
   Space,
   Select,
   Modal,
   Popover,
   Typography,
+  message,
 } from "antd";
 import { Trash, Danger } from "iconsax-react";
 
 export default function () {
   const [isAdding, setIsAdding] = useState(false);
+  const history = useHistory();
 
   let { data, error, loading, method } = useData("admin-contacts");
   data = data.filter((d) => d.id !== undefined);
@@ -45,8 +50,33 @@ export default function () {
       okType: "primary",
       onOk() {
         method.destroy(id);
+
+        if (!error.destroy) {
+          message.info(`Berhasil menghapus kontak ${name}!`);
+        } else message.error(`Gagal menghapus kontak ${name}!`);
       },
     });
+  };
+
+  const create = async (value) => {
+    await method.create(value);
+
+    if (!error.create) {
+      message.info("Berhasil menambahkan kontak baru!");
+    } else message.error("Gagal menambahkan kontak baru!");
+  };
+
+  const updateStatus = async (id, value) => {
+    await method.update(id, value);
+
+    if (!error.update) {
+      message.info("Status telah diubah!");
+    } else {
+      message.error("Gagal mengubah status, silakan coba kembali!");
+      setTimeout(() => {
+        history.push("/admin/pengaturan-website");
+      }, 1500);
+    }
   };
 
   return (
@@ -78,13 +108,14 @@ export default function () {
                       style={{
                         width: 120,
                       }}
-                      onChange={(e) =>
-                        method.update(item.id, {
-                          name: item.name,
-                          value: item.value,
-                          status: e,
-                        })
-                      }
+                      onChange={(e) => {
+                        if (e != item.status)
+                          updateStatus(item.id, {
+                            name: item.name,
+                            value: item.value,
+                            status: e,
+                          });
+                      }}
                       options={[
                         {
                           value: "2",
@@ -104,7 +135,7 @@ export default function () {
         />
         {isAdding ? (
           <AddForm
-            submit={method.create}
+            submit={create}
             setIsAdding={setIsAdding}
             createErr={error.create}
           />
@@ -159,7 +190,7 @@ const AddForm = ({ submit, setIsAdding, createErr }) => {
         >
           <Input
             value={name}
-            placeholder="Whatsapp, Line, Telegram"
+            placeholder="kontak admin 1, kontak admin 2, ..."
             onChange={(e) => setName(e.target.value)}
           />
         </Form.Item>
@@ -171,12 +202,17 @@ const AddForm = ({ submit, setIsAdding, createErr }) => {
               required: true,
               message: "Mohon masukkan kontak!",
             },
+            {
+              type: "number",
+              message: "Mohon masukkan angka!",
+            },
           ]}
         >
-          <Input
+          <InputNumber
+            addonBefore="+62"
             value={value}
-            placeholder="@admin123, 089..."
-            onChange={(e) => setValue(e.target.value)}
+            placeholder="89..., 83..."
+            onChange={(e) => setValue(e)}
           />
         </Form.Item>
         <Form.Item

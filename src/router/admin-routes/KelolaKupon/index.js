@@ -7,12 +7,12 @@ export default [
     layout: "VerticalLayout",
   },
   {
-    path: "/admin/kupon/update/:id",
+    path: "/admin/kupon/edit/:id",
     component: lazy(() => import("../../../view/pages/kupon/form/update")),
     layout: "VerticalLayout",
   },
   {
-    path: "/admin/kupon/:id",
+    path: "/admin/kupon/detail/:id",
     component: lazy(() => import("../../../view/pages/kupon/form/read")),
     layout: "VerticalLayout",
   },

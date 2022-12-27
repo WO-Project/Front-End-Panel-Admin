@@ -1,5 +1,9 @@
 import { lazy } from "react";
 
+import PengantinRoutes from "./Pengantin";
+import ProdukUcapanRoutes from "./ProdukUcapan";
+import LinkOrderRoutes from "./LinkOrder";
+
 const WORoutes = [
   {
     path: "/dashboard",
@@ -13,25 +17,15 @@ const WORoutes = [
     layout: "VerticalLayout",
   },
 
-  {
-    path: "/wo/pengantin",
-    component: lazy(() => import("../../view/wo-pages/pengantin")),
-    layout: "VerticalLayout",
-  },
+  ...PengantinRoutes,
+
+  ...ProdukUcapanRoutes,
+
+  ...LinkOrderRoutes,
 
   {
-    path: "/wo/produk-ucapan",
-    component: lazy(() =>
-      import("../../view/wo-pages/produk-wo/produk-ucapan-user")
-    ),
-    layout: "VerticalLayout",
-  },
-
-  {
-    path: "/wo/link-order",
-    component: lazy(() =>
-      import("../../view/wo-pages/produk-wo/afiliasi-ucapan")
-    ),
+    path: "/wo/pesanan",
+    component: lazy(() => import("../../view/wo-pages/dashboard")),
     layout: "VerticalLayout",
   },
 
@@ -49,12 +43,6 @@ const WORoutes = [
 
   {
     path: "/wo/pencairan-komisi",
-    component: lazy(() => import("../../view/wo-pages/dashboard")),
-    layout: "VerticalLayout",
-  },
-
-  {
-    path: "/wo/pesanan",
     component: lazy(() => import("../../view/wo-pages/dashboard")),
     layout: "VerticalLayout",
   },

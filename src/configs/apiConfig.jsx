@@ -12,7 +12,7 @@ const token = localStorage.getItem("token");
 
 const config = {
   baseURL: NODE_ENV === "production" ? REACT_APP_API_PROD : REACT_APP_API_DEV,
-  timeout: 1000,
+  timeout: 10000,
   headers: { Authorization: token },
 };
 

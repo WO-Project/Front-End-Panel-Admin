@@ -36,17 +36,24 @@ const columns = [
   },
 
   {
+    title: "Status",
+    dataIndex: "status",
+    key: "status",
+    render: (data) => (data === 1 ? "Aktif" : "Non-aktif"),
+  },
+
+  {
     title: "Action",
     key: "action",
     width: 200,
     fixed: "right",
     render: (payload) => (
       <Space size="large" className="icons-container">
-        {payload.permission.includes("/admin/kategori-artikel/detail/:userid") ? (
+        {payload.permission.includes("/admin/kategori-artikel/detail/:id") ? (
           <Popover content={"Detail"}>
             <Link
               to={{
-                pathname: `/admin/kategori-artikel/${payload.id}`,
+                pathname: `/admin/kategori-artikel/detail/${payload.id}`,
               }}
             >
               <Eye size={20} />
@@ -54,11 +61,11 @@ const columns = [
           </Popover>
         ) : undefined}
 
-        {payload.permission.includes("/admin/kategori-artikel/edit/:userid") ? (
+        {payload.permission.includes("/admin/kategori-artikel/edit/:id") ? (
           <Popover content={"Edit"}>
             <Link
               to={{
-                pathname: `/admin/kategori-artikel/update/${payload.id}`,
+                pathname: `/admin/kategori-artikel/edit/${payload.id}`,
                 state: {
                   permission: "Edit",
                   data: "User",
@@ -69,7 +76,6 @@ const columns = [
               <Edit size={20} />
             </Link>
           </Popover>
-
         ) : undefined}
 
         {payload.permission.includes("delete kategori artikel") ? (
@@ -84,7 +90,6 @@ const columns = [
             </Link>
           </Popover>
         ) : undefined}
-
       </Space>
     ),
   },

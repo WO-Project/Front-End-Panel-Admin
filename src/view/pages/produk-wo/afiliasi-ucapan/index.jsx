@@ -1,6 +1,8 @@
+import { useState, useEffect } from "react";
+
 import { useAffiliatesData } from "../../../../api/afiliasi";
 
-import { Row, Col } from "antd";
+import { Row, Col, message } from "antd";
 
 import TableCard from "../../../components/custom-components/TableCard";
 import TableDisplay from "../../../components/custom-components/TableDisplay";
@@ -11,13 +13,29 @@ import { usePermissionContext } from "../../../../context/PermissionContext";
 
 export default function index() {
   const { data, error, loading, method } = useAffiliatesData();
-  const { permission } = usePermissionContext()
+  const { permission } = usePermissionContext();
+  const [onDelete, setOnDelete] = useState(false);
+
+  useEffect(() => {
+    if (error.destroy != null || error.destroy != undefined)
+      message.error("Gagal menghapus komisi");
+  }, [error.destroy]);
+
+  useEffect(() => {
+    if (loading.destroy) {
+      setOnDelete(true);
+    }
+
+    if (onDelete && !loading.destroy) {
+      message.info("Berhasil menghapus komisi");
+    }
+  }, [loading.destroy]);
 
   if (error.getAll) return <ErrorPage message={"Gagal mengambil data!"} />;
 
   return (
     <>
-      <TableCard customTitle="Pesanan">
+      <TableCard customTitle="Link Afiliasi">
         <Row>
           <Col span={24}>
             {loading.getAll ? (
@@ -36,7 +54,7 @@ export default function index() {
                   status: d.status,
                   id: d.id,
                   destroy: method.destroy,
-                  permission
+                  permission,
                 }))}
                 column={columns}
                 addButton

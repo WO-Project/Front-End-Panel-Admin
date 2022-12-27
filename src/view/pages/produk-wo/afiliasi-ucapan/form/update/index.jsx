@@ -69,7 +69,7 @@ const index = () => {
   if (affiliates_detail_loding) return <Spin />;
 
   return (
-    <CardForm title="Tambah Data User">
+    <CardForm title={`Edit Link Afiliasi ${affiliates_detail_data?.name}`}>
       <Form
         name="basic"
         labelCol={{

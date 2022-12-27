@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import { Edit, Trash, Eye, Danger } from "iconsax-react";
 
 const { confirm } = Modal;
-const showModal = (id, destroy) => {
+const showModal = (id, name, destroy) => {
   confirm({
-    title: `Apa anda yakin ingin menghapus ${id}?`,
+    title: `Apa anda yakin ingin menghapus ${name}?`,
     icon: <Danger color="red" />,
     okText: "Yakin",
     cancelText: "Batal",
@@ -33,7 +33,7 @@ const columns = [
     title: "Tipe",
     dataIndex: "type",
     key: "type",
-    render: (data) => (data === 1 ? "Presentase" : "nominal"),
+    render: (data) => (data === 1 ? "Persentase" : "nominal"),
   },
 
   {
@@ -56,12 +56,11 @@ const columns = [
     fixed: "right",
     render: (payload) => (
       <Space size="large" className="icons-container">
-
-        {payload.permission.includes("/admin/group-user/detail/:userid") ? (
+        {payload.permission.includes("/admin/group-user/detail/:id") ? (
           <Popover content={"Detail"}>
             <Link
               to={{
-                pathname: `/admin/group-user/${payload.id}`,
+                pathname: `/admin/group-user/detail/${payload.id}`,
               }}
             >
               <Eye size={20} />
@@ -69,7 +68,7 @@ const columns = [
           </Popover>
         ) : undefined}
 
-        {payload.permission.includes("/admin/group-user/detail/:userid") ? (
+        {payload.permission.includes("/admin/group-user/edit/:id") ? (
           <Popover content={"Edit"}>
             <Link
               to={{
@@ -86,19 +85,18 @@ const columns = [
           </Popover>
         ) : undefined}
 
-        {payload.permission.includes("delete group user") ? (
+        {payload.permission.includes("delete kategori komisi") ? (
           <Popover content={"Delete"}>
             <Link
               onClick={(e) => {
                 e.preventDefault();
-                showModal(payload.id, payload.destroy);
+                showModal(payload.id, payload.name, payload.destroy);
               }}
             >
               <Trash color="red" size={20} />
             </Link>
           </Popover>
         ) : undefined}
-
       </Space>
     ),
   },

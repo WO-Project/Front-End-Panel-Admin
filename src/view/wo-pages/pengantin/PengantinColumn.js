@@ -7,100 +7,113 @@ const showModal = (id, groom, bride, deleteBride) => {
   confirm({
     title: `Apa anda yakin ingin menghapus ${groom} ${bride}?`,
     icon: <Danger color="red" />,
-    okText: 'Yakin',
-    cancelText: 'Batal',
-    okType: 'primary',
+    okText: "Yakin",
+    cancelText: "Batal",
+    okType: "primary",
     async onOk() {
-      const success = await deleteBride(id)
+      const success = await deleteBride(id);
       if (success) {
-        message.success("Berhasil menghapus pengantin")
-      }
-      else {
-        message.error("Gagal menghapus pengantin")
+        message.success("Berhasil menghapus pengantin");
+      } else {
+        message.error("Gagal menghapus pengantin");
       }
     },
-  })
-}
+  });
+};
 
 const columns = [
   {
-    title: 'Pengantin Pria',
-    dataIndex: 'groom',
-    key: 'groom',
+    title: "Pengantin Pria",
+    dataIndex: "groom",
+    key: "groom",
     render: (text) => <a>{text}</a>,
     sorter: (a, b) => a.groom.length - b.groom.length,
   },
   {
-    title: 'Pengantin Wanita',
-    dataIndex: 'bride',
-    key: 'bride',
+    title: "Pengantin Wanita",
+    dataIndex: "bride",
+    key: "bride",
     render: (text) => <a>{text}</a>,
     sorter: (a, b) => a.bride.length - b.bride.length,
   },
 
   {
-    title: 'No Telp',
-    dataIndex: 'phone',
-    key: 'phone',
+    title: "No Telp",
+    dataIndex: "phone",
+    key: "phone",
   },
 
   {
-    title: 'Status',
-    dataIndex: 'status',
-    key: 'status',
+    title: "Status",
+    dataIndex: "status",
+    key: "status",
     render: (status) => {
       switch (status) {
         case 1:
-          return <p>Aktif</p>
+          return <p>Aktif</p>;
         case 2:
-          return <p>Non Aktif</p>
+          return <p>Non Aktif</p>;
         default:
-          return <p>{status}</p>
+          return <p>{status}</p>;
       }
-    }
+    },
   },
-
 
   // Kolom aksi
   {
-    title: 'Aksi',
-    key: 'action',
-    render: payload => (
-      <Space size="large" className="icons-container" >
-
-        {payload.permission.includes("/admin/pengantin/detail/:userid") ? (
+    title: "Aksi",
+    key: "action",
+    render: (payload) => (
+      <Space size="large" className="icons-container">
+        {payload.permission.includes("/wo/pengantin/detail/:id") ? (
           <Popover content={"Detail"}>
-            <Link to={{
-              pathname: `pengantin/detail/${payload.id}`,
-              state: {
-                permission: 'Detail',
-                data: 'Pengantin',
-                id: payload.id
-              },
-            }} >
+            <Link
+              to={{
+                pathname: `pengantin/detail/${payload.id}`,
+                state: {
+                  permission: "Detail",
+                  data: "Pengantin",
+                  id: payload.id,
+                },
+              }}
+            >
               <Eye size={20} />
             </Link>
           </Popover>
         ) : undefined}
 
-        {payload.permission.includes("/admin/pengantin/edit/:userid") ? (
+        {payload.permission.includes("/wo/pengantin/edit/:id") ? (
           <Popover content={"Edit"}>
-            <Link to={{
-              pathname: `pengantin/edit/${payload.id}`,
-              state: {
-                permission: 'Edit',
-                data: 'Pengantin',
-                id: payload.id
-              },
-            }}>
+            <Link
+              to={{
+                pathname: `pengantin/edit/${payload.id}`,
+                state: {
+                  permission: "Edit",
+                  data: "Pengantin",
+                  id: payload.id,
+                },
+              }}
+            >
               <Edit size={20} />
             </Link>
           </Popover>
         ) : undefined}
 
-        {payload.permission.includes("delete pengantin") ? (
+        {payload.permission.includes("delete pengantin wo") ? (
           <Popover content={"Delete"}>
-            <Trash color="red" size={20} className='trash' onClick={() => showModal(payload.id, payload.groom, payload.bride, payload.deleteBride)} />
+            <Trash
+              color="red"
+              size={20}
+              className="trash"
+              onClick={() =>
+                showModal(
+                  payload.id,
+                  payload.groom,
+                  payload.bride,
+                  payload.deleteBride
+                )
+              }
+            />
           </Popover>
         ) : undefined}
       </Space>
@@ -108,4 +121,4 @@ const columns = [
   },
 ];
 
-export default columns
+export default columns;

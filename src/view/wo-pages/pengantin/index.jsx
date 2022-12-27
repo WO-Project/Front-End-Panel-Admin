@@ -1,10 +1,8 @@
-import React from 'react'
-import DataPengguna from './Pengantin'
+import React from "react";
+import DataPengguna from "./Pengantin";
 
 const index = () => {
-  return (
-    <DataPengguna />
-  )
-}
+  return <DataPengguna />;
+};
 
-export default index
+export default index;

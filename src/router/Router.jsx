@@ -75,7 +75,7 @@ export default function Router() {
       );
 
       // Checks if Route layout or Default layout matches current layout and type
-      if (type === 1) {
+      if (type == 1) {
         Routes.filter(
           (route) =>
             route.layout === layout &&
@@ -83,7 +83,7 @@ export default function Router() {
         );
       }
 
-      if (type === 3) {
+      if (type == 3) {
         WoRoutes.filter(
           (route) =>
             route.layout === layout &&
@@ -202,11 +202,19 @@ export default function Router() {
         {ResolveRoutes()}
         {/* Home Page */}
         {auth ? (
-          <Redirect
-            to={{
-              pathname: "/dashboard",
-            }}
-          />
+          permission.includes(location.pathname) ? (
+            <Redirect
+              to={{
+                pathname: location.pathname,
+              }}
+            />
+          ) : (
+            <Redirect
+              to={{
+                pathname: "/dashboard",
+              }}
+            />
+          )
         ) : (
           <Redirect
             to={{

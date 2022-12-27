@@ -7,7 +7,7 @@ const PermissionContext = createContext();
 
 export const PermissionContextProvider = ({ children }) => {
   const [permission, setPermission] = useState([]);
-  const [permissionLoading, setPermissionLoading] = useState(false);
+  const [permissionLoading, setPermissionLoading] = useState(true);
   const [type, setType] = useState(null);
 
   const accessableMenus = (roles, menus) => {
@@ -16,9 +16,10 @@ export const PermissionContextProvider = ({ children }) => {
     );
 
     const navigationMenu = [];
+
     for (const menu of menus.data.data) {
       for (const sub_menu of menu.sub_menus) {
-        if (permissionsId.includes(sub_menu.id)) {
+        if (permissionsId.some((d) => d == sub_menu.id)) {
           navigationMenu.push(sub_menu.route);
           navigationMenu.includes(menu.route)
             ? undefined
@@ -26,6 +27,7 @@ export const PermissionContextProvider = ({ children }) => {
         }
       }
     }
+
     return navigationMenu;
   };
 
@@ -47,20 +49,23 @@ export const PermissionContextProvider = ({ children }) => {
           timeout: 3000,
         });
 
-        // testing
-        setTimeout(() => {
-          axios
-            .all([getRoles, getMenus])
-            .then(
-              axios.spread((...allResponse) => {
-                setPermission(accessableMenus(allResponse[0], allResponse[1]));
-              })
-            )
-            .catch((err) => console.log("Error menu/role"))
-            .finally(() => setPermissionLoading(() => false));
-        }, 1000);
+        axios
+          .all([getRoles, getMenus])
+          .then(
+            axios.spread((...allResponse) => {
+              const processed = accessableMenus(allResponse[0], allResponse[1]);
+
+              setPermission(processed);
+            })
+          )
+          .catch((err) => console.log("Error menu/role"))
+          .finally(() => setPermissionLoading(() => false));
       })
       .catch((err) => {
+        if (err?.response?.data?.message == "Unauthenticated.") {
+          localStorage.removeItem("id");
+          localStorage.removeItem("token");
+        }
         console.log("Error user");
         setPermissionLoading(() => false);
       });

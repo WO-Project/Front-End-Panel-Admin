@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 export const getWeddingOrganizers = (url = "wedding-organizers") => {
   const [data, setData] = useState([null]);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [deleteToggle, setDeleteToggle] = useState(false);
 
   useEffect(() => {

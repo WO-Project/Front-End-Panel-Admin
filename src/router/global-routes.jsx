@@ -6,7 +6,6 @@ const GlobalRoutes = [
     component: lazy(() => import("../view/pages/authenticationAdmin/Login")),
     layout: "FullLayout",
     noNeedAuth: true,
-    type: 1,
   },
 
   {
