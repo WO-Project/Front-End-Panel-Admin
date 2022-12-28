@@ -30,15 +30,16 @@ const columns = [
   },
 
   {
-    title: "Pengantin Pria",
-    dataIndex: "groom",
+    title: "Pengantin",
     key: "groom",
+    render: (payload) => `${payload.groom} & ${payload.bride}`,
   },
 
   {
-    title: "Pengantin Perempuan",
-    dataIndex: "bride",
-    key: "bride",
+    title: "Harga",
+    key: "price",
+    render: (payload) =>
+      "Rp." + `${payload.price}`.replace(/\B(?=(\d{3})+(?!\d))/g, ","),
   },
 
   {

@@ -94,25 +94,28 @@ export default function () {
                   <Popover
                     content="delete"
                     key="delete-contact"
-                    onClick={() => deleteContact(item.id, item.name)}
+                    onClick={() => deleteContact(item?.id, item?.name)}
                   >
                     <Trash color="red" size={20} />
                   </Popover>,
                 ]}
               >
                 <Skeleton avatar title={false} loading={item.loading} active>
-                  <List.Item.Meta title={item.name} description={item.value} />
+                  <List.Item.Meta
+                    title={item?.name}
+                    description={`+62-${item?.value}`}
+                  />
                   <div>
                     <Select
-                      value={statusConverter(item.status)}
+                      value={statusConverter(item?.status)}
                       style={{
                         width: 120,
                       }}
                       onChange={(e) => {
-                        if (e != item.status)
-                          updateStatus(item.id, {
-                            name: item.name,
-                            value: item.value,
+                        if (e != item?.status)
+                          updateStatus(item?.id, {
+                            name: item?.name,
+                            value: item?.value,
                             status: e,
                           });
                       }}

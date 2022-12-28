@@ -175,10 +175,10 @@ const AddForm = ({ submit, setIsAdding, createErr }) => {
       <Form
         name="addForm"
         labelCol={{
-          span: 8,
+          span: 6,
         }}
         wrapperCol={{
-          span: 8,
+          span: 12,
         }}
         autoComplete="off"
       >
@@ -192,9 +192,10 @@ const AddForm = ({ submit, setIsAdding, createErr }) => {
             },
           ]}
         >
-          <Input
+          <Input.TextArea
+            rows={5}
             value={name}
-            placeholder="Whatsapp, Line, Telegram"
+            placeholder="question"
             onChange={(e) => setName(e.target.value)}
           />
         </Form.Item>
@@ -208,9 +209,10 @@ const AddForm = ({ submit, setIsAdding, createErr }) => {
             },
           ]}
         >
-          <Input
+          <Input.TextArea
+            rows={5}
             value={value}
-            placeholder="@admin123, 089..."
+            placeholder="answer"
             onChange={(e) => setValue(e.target.value)}
           />
         </Form.Item>

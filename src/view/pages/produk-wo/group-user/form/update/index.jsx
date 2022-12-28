@@ -79,7 +79,7 @@ const index = () => {
 
   return (
     <CardForm
-      title={`Edit Data Kategori Komisi/Group User ${commision_detail_data?.name}`}
+      title={`Edit Data Kategori Komisi ${commision_detail_data?.name}`}
     >
       <Form
         name="basic"
@@ -159,6 +159,8 @@ const index = () => {
           initialValue={nominal}
         >
           <InputNumber
+            max={type === 1 ? 100 : undefined}
+            min={0}
             value={nominal}
             onChange={(value) => setNominal(value)}
             style={{
