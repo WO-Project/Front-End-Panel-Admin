@@ -46,6 +46,7 @@ export default function index() {
                 groom: d.groom,
                 bride: d.bride,
                 status: d.status,
+                price: d.price,
                 id: d.id,
                 destroy: method.destroy,
                 permission,

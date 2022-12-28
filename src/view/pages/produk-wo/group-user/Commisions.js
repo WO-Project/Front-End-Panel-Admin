@@ -30,16 +30,13 @@ const columns = [
   },
 
   {
-    title: "Tipe",
-    dataIndex: "type",
-    key: "type",
-    render: (data) => (data === 1 ? "Persentase" : "nominal"),
-  },
-
-  {
     title: "Nominal",
     dataIndex: "nominal",
     key: "nominal",
+    render: (nominal, payload) =>
+      payload.type === 1
+        ? `${nominal}%`
+        : "Rp." + `${nominal}`.replace(/\B(?=(\d{3})+(?!\d))/g, ","),
   },
 
   {

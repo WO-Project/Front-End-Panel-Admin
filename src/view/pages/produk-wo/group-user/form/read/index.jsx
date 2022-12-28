@@ -19,7 +19,7 @@ const index = () => {
   if (commision_detail_loading)
     return (
       <CardForm
-        title={`Detail Data Kategori Komisi/Group User ${commision_detail_data?.name}`}
+        title={`Detail Data Kategori Komisi ${commision_detail_data?.name}`}
       >
         <Spin />
       </CardForm>

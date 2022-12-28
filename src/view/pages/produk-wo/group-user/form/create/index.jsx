@@ -51,7 +51,7 @@ const index = () => {
   if (wo_err) return <ErrorPage message="Gagal Mengambil Data" />;
 
   return (
-    <CardForm title="Tambah Data Kategori Komisi/Group User">
+    <CardForm title="Tambah Data Kategori Komisi">
       <Form
         name="basic"
         labelCol={{
@@ -135,6 +135,8 @@ const index = () => {
           <InputNumber
             value={nominal}
             onChange={(value) => setNominal(value)}
+            max={type === 1 ? 100 : undefined}
+            min={0}
             style={{
               width: "100%",
             }}

@@ -15,6 +15,7 @@ import {
   Popover,
   Typography,
   message,
+  Upload,
 } from "antd";
 import { Trash, Danger } from "iconsax-react";
 
@@ -194,12 +195,12 @@ const AddForm = ({ submit, setIsAdding, createErr }) => {
           />
         </Form.Item>
         <Form.Item
-          label="Nama Akun"
+          label="Link Akun"
           name="value"
           rules={[
             {
               required: true,
-              message: "Mohon masukkan nama akun!",
+              message: "Mohon masukkan link akun!",
             },
           ]}
         >
@@ -208,6 +209,18 @@ const AddForm = ({ submit, setIsAdding, createErr }) => {
             placeholder="wo123"
             onChange={(e) => setValue(e.target.value)}
           />
+        </Form.Item>
+        <Form.Item
+          label="Icon"
+          name="icon"
+          rules={[
+            {
+              required: true,
+              message: "Mohon masukkan icon!",
+            },
+          ]}
+        >
+          <Upload />
         </Form.Item>
         <Form.Item
           wrapperCol={{

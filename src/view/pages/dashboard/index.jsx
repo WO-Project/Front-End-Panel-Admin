@@ -1,6 +1,8 @@
 import React, { useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 
+import { usePermissionContext } from "../../../context/PermissionContext";
+
 import { Col, Row, Card, Statistic, Button, Table, Spin } from "antd";
 import ErrorPage from "../../components/custom-components/Feedback/ErrorPage";
 import {
@@ -21,6 +23,8 @@ import {
 import "./style.css";
 
 export default function DashBoard() {
+  const { permission } = usePermissionContext();
+
   const {
     data: data_count,
     loading: loading_count,
@@ -60,43 +64,51 @@ export default function DashBoard() {
         ) : (
           <>
             <Col span={6}>
-              <Card>
-                <Statistic
-                  title="Total User"
-                  value={data_count.total_user_count}
-                  prefix={<UserOctagon color="#f47373" size={30} />}
-                />
-              </Card>
+              <Link to="/admin/crud-user">
+                <Card className="clickable-counter">
+                  <Statistic
+                    title="Total User"
+                    value={data_count.total_user_count}
+                    prefix={<UserOctagon color="#f47373" size={30} />}
+                  />
+                </Card>
+              </Link>
             </Col>
 
             <Col span={6}>
-              <Card>
-                <Statistic
-                  title="Wedding Organizer"
-                  value={data_count.user_count}
-                  prefix={<SecurityUser color="#F45000" size={30} />}
-                />
-              </Card>
+              <Link to="/admin/wedding-organizer">
+                <Card className="clickable-counter">
+                  <Statistic
+                    title="Wedding Organizer"
+                    value={data_count.user_count}
+                    prefix={<SecurityUser color="#F45000" size={30} />}
+                  />
+                </Card>
+              </Link>
             </Col>
 
             <Col span={6}>
-              <Card>
-                <Statistic
-                  title="Pelanggan"
-                  value={data_count.customer_count}
-                  prefix={<Profile2User color="#F45000" size={30} />}
-                />
-              </Card>
+              <Link to="/admin/customer">
+                <Card className="clickable-counter">
+                  <Statistic
+                    title="Pelanggan"
+                    value={data_count.customer_count}
+                    prefix={<Profile2User color="#F45000" size={30} />}
+                  />
+                </Card>
+              </Link>
             </Col>
 
             <Col span={6}>
-              <Card>
-                <Statistic
-                  title="Pesanan"
-                  value={data_count.sales_order_count}
-                  prefix={<ShoppingCart color="#37d67a" />}
-                />
-              </Card>
+              <Link to="/admin/pesanan">
+                <Card className="clickable-counter">
+                  <Statistic
+                    title="Pesanan"
+                    value={data_count.sales_order_count}
+                    prefix={<ShoppingCart color="#37d67a" />}
+                  />
+                </Card>
+              </Link>
             </Col>
           </>
         )}
@@ -117,7 +129,11 @@ export default function DashBoard() {
               <Table
                 dataSource={data_best}
                 columns={bestSellingColumns}
-                title={() => "Best Seller Products"}
+                title={() => (
+                  <h1 style={{ fontSize: 20, fontWeight: 600 }}>
+                    Best Seller Products
+                  </h1>
+                )}
                 footer={() => {
                   return (
                     <div
@@ -128,7 +144,9 @@ export default function DashBoard() {
                       }}
                     >
                       <Link to="/admin/pesanan">
-                        <Button danger>Selengkapnya</Button>
+                        <Button type="primary" danger>
+                          Selengkapnya
+                        </Button>
                       </Link>
                     </div>
                   );
@@ -155,12 +173,17 @@ export default function DashBoard() {
               <Table
                 dataSource={data_latest.map((d) => ({
                   name: d.product?.name,
-                  bride: d.sales_order?.bride?.bride,
-                  groom: d.sales_order?.bride?.groom,
+                  brideGroom: `${d.sales_order?.bride?.bride} & ${d.sales_order?.bride?.groom}`,
                   wo: d.sales_order?.bride?.wedding_organizer?.name,
+                  id: d.id,
+                  permission,
                 }))}
                 columns={lastOrderColumns}
-                title={() => "Pesanan Terbaru"}
+                title={() => (
+                  <h1 style={{ fontSize: 20, fontWeight: 600 }}>
+                    Pesanan Terbaru
+                  </h1>
+                )}
                 footer={() => {
                   return (
                     <div
@@ -171,7 +194,9 @@ export default function DashBoard() {
                       }}
                     >
                       <Link to="/admin/pesanan">
-                        <Button danger>Selengkapnya</Button>
+                        <Button type="primary" danger>
+                          Selengkapnya
+                        </Button>
                       </Link>
                     </div>
                   );
