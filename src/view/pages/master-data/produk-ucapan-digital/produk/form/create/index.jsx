@@ -15,10 +15,15 @@ const index = () => {
   const [video, setVideo] = useState(false)
 
   const onFinish = async (values) => {
+    if (values?.file?.size > 1000000 * 20) { // 20 Mb
+      message.error("File harus lebih kecil dari 20 MB")
+      return
+    }
+
     const form = new FormData()
 
     form.append("name", values.name)
-    form.append("price", values.price)
+    form.append("price", values.price.replace(",", ""))
     form.append("description", values.description)
     form.append("product_category_id", values.product_category_id)
     form.append("attachment", values.attachment.file.originFileObj)
@@ -123,7 +128,7 @@ const index = () => {
             },
           ]}
         >
-          <Input />
+          <Input.TextArea />
         </Form.Item>
 
         <Form.Item

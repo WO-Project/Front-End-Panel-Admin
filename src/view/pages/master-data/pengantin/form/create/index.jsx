@@ -122,7 +122,7 @@ const index = () => {
             },
           ]}
         >
-          <Input />
+          <Input.TextArea />
         </Form.Item>
 
         <Form.Item
@@ -169,7 +169,7 @@ const index = () => {
             },
           ]}
         >
-          <Input />
+          <Input.TextArea />
         </Form.Item>
 
         <Form.Item
@@ -182,7 +182,7 @@ const index = () => {
             },
           ]}
         >
-          <Input />
+          <Input.TextArea />
         </Form.Item>
 
         <Form.Item

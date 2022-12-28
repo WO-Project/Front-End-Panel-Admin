@@ -57,7 +57,7 @@ const index = (props) => {
         </Form.Item>
 
         <Form.Item label="Deskripsi Produk" name="description">
-          <Input />
+          <Input.TextArea />
         </Form.Item>
 
         <Form.Item label="Kategori Produk" name="status">

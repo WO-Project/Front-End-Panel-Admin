@@ -65,7 +65,7 @@ const index = (props) => {
 
         {role ? (
           <Form.Item
-            label="Role"
+            label="Role User"
             name="customer"
           >
             <p>{role?.name}</p>
@@ -75,17 +75,17 @@ const index = (props) => {
         }
 
         <Form.Item
+          label="Tipe User"
+          name="type"
+        >
+          <p>{user?.type == 1 ? "Admin" : user?.type == 2 ? "Content Creator" : user?.type == 3 ? "Wo" : user?.type}</p>
+        </Form.Item>
+
+        <Form.Item
           label="Status"
           name="status"
         >
           <p>{user?.status == 1 ? "Aktif" : "Non Aktif"}</p>
-        </Form.Item>
-
-        <Form.Item
-          label="Tipe"
-          name="type"
-        >
-          <p>{user?.type == 1 ? "Admin" : user?.type == 2 ? "Content Creator" : user?.type == 3 ? "Wo" : user?.type}</p>
         </Form.Item>
 
         <Form.Item

@@ -8,7 +8,7 @@ export const postProduct = async (form) => {
     }
   })
     .then(res => res.data.success)
-    .catch(err => err)
+    .catch(err => false)
 
   return response
 }

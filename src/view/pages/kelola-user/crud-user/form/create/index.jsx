@@ -115,7 +115,7 @@ const index = () => {
         </Form.Item>
 
         <Form.Item
-          label="Tipe"
+          label="Tipe User"
           name="type"
           rules={[
             {
@@ -138,7 +138,7 @@ const index = () => {
         </Form.Item>
 
         <Form.Item
-          label="Role"
+          label="Role User"
           name="access_menu_id"
         >
 

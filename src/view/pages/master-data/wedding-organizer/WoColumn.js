@@ -71,6 +71,7 @@ const columns = [
   {
     title: 'Aksi',
     key: 'action',
+    width: "25%",
     render: payload => (
       <Space size="large" className="icons-container" >
 

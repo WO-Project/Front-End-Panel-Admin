@@ -54,6 +54,7 @@ const columns = [
   {
     title: 'Action',
     key: 'action',
+    width: "25%",
     render: payload => (
       <Space size="large" className="icons-container" >
         {payload.permission.includes("/admin/customer/detail/:userid") ? (
