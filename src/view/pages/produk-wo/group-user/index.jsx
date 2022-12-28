@@ -36,7 +36,7 @@ export default function index() {
 
   return (
     <>
-      <TableCard customTitle="Kategori Komisi/Group User">
+      <TableCard customTitle="Kategori Komisi">
         <Row>
           <Col span={24}>
             {loading.getAll ? (
