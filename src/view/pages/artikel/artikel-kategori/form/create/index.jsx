@@ -2,7 +2,6 @@ import { Button, Form, Input, Space, message } from "antd";
 import { useHistory } from "react-router-dom";
 import React, { useState } from "react";
 import CardForm from "../../../../../components/custom-components/form-crud/CardForm";
-import { postCustomer } from "../../../../../../api/customer/postCustomer";
 import { postArticleCategory } from "../../../../../../api/artikel/category/postCategory";
 
 const index = () => {

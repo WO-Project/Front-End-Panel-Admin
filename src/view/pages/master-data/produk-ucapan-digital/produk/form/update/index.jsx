@@ -18,19 +18,21 @@ const index = (props) => {
   const { data: categories } = getProductCategories2();
 
   const onFinish = async (values) => {
-    const form = new FormData()
+    if (values?.file?.size > 1000000 * 20) { // 20 Mb
+      message.error("File harus lebih kecil dari 20 MB")
+      return
+    }
+    console.log(values);
 
+    const form = new FormData()
     form.append("name", values.name)
-    form.append("price", values.price)
+    form.append("price", values.price.replace(",", ""))
     form.append("description", values.description)
     form.append("product_category_id", values.product_category_id)
     form.append("status", values.status)
-
-    values?.attachment?.file?.originFileObj &&
-      form.append("attachment", values.attachment.file.originFileObj)
+    form.append("attachment", values.attachment.file.originFileObj)
 
     const success = await putProduct(form, id);
-    console.log(values);
 
     if (success == true) {
       message.success("Berhasil mengubah produk");
@@ -72,7 +74,7 @@ const index = (props) => {
           },
           {
             name: "price",
-            value: product?.price,
+            value: Number(product?.price).toLocaleString("en-US"),
           },
           {
             name: "description",
@@ -82,17 +84,27 @@ const index = (props) => {
             name: "status",
             value: product?.status,
           },
-          {
-            name: "attachment",
-            value: product?.attachment,
-          },
         ]}
       >
-        <Form.Item label="Nama Produk" name="name">
+        <Form.Item label="Nama Produk" name="name"
+          rules={[
+            {
+              required: true,
+              message: "Masukkan nama produk dengan benar!"
+            }
+          ]}
+        >
           <Input />
         </Form.Item>
 
-        <Form.Item label="Kategori Produk" name="product_category_id">
+        <Form.Item label="Kategori Produk" name="product_category_id"
+          rules={[
+            {
+              required: true,
+              message: "Pilih kategori produk dengan benar!"
+            }
+          ]}
+        >
           <Select
             style={{
               width: 200,
@@ -106,17 +118,37 @@ const index = (props) => {
           </Select>
         </Form.Item>
 
-        <Form.Item label="Harga Produk" name="price">
+        <Form.Item label="Harga Produk" name="price"
+          rules={[
+            {
+              required: true,
+              message: "Masukkan harga produk dengan benar!"
+            }
+          ]}
+        >
           <InputPrice />
         </Form.Item>
 
-        <Form.Item label="Deskripsi Produk" name="description">
-          <Input />
+        <Form.Item label="Deskripsi Produk" name="description"
+          rules={[
+            {
+              required: true,
+              message: "Masukkan deskripsi produk dengan benar!"
+            }
+          ]}
+        >
+          <Input.TextArea />
         </Form.Item>
 
         <Form.Item
           label="Upload Video Demo"
           name="attachment"
+          rules={[
+            {
+              required: true,
+              message: "Upload video demo produk!"
+            }
+          ]}
         >
           <Upload
             accept=".mp4,.mkv,.mov,.webm"
@@ -134,7 +166,13 @@ const index = (props) => {
           </Upload>
         </Form.Item>
 
-        <Form.Item label="Status" name="status">
+        <Form.Item label="Status" name="status"
+          rules={[
+            {
+              required: true,
+              message: "Masukkan status dengan benar!"
+            }
+          ]}>
           <Select style={{ width: "200px" }}>
             <Option value={1}>Aktif</Option>
             <Option value={2}>Non-Aktif</Option>

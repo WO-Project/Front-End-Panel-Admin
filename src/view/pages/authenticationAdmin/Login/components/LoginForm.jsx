@@ -116,11 +116,12 @@ function LoginForm(props) {
           />
         </Form.Item>
 
-        <div className="custom-redirect-container">
+        {/* //! dihapus setelah yakin menghilangkan forget password */}
+        {/* <div className="custom-redirect-container">
           <a href="/" className="custom-redirect-login">
             Lupa password?
           </a>
-        </div>
+        </div> */}
 
         <Form.Item
           wrapperCol={{

@@ -117,7 +117,7 @@ export default function DashBoard() {
               <Table
                 dataSource={data_best}
                 columns={bestSellingColumns}
-                title={() => "Best Seller Products"}
+                title={() => <h2 style={{ fontSize: "20px" }}>Best Seller Products</h2>}
                 footer={() => {
                   return (
                     <div
@@ -160,7 +160,7 @@ export default function DashBoard() {
                   wo: d.sales_order?.bride?.wedding_organizer?.name,
                 }))}
                 columns={lastOrderColumns}
-                title={() => "Pesanan Terbaru"}
+                title={() => <h2 style={{ fontSize: "20px" }}>Pesanan Terbaru</h2>}
                 footer={() => {
                   return (
                     <div

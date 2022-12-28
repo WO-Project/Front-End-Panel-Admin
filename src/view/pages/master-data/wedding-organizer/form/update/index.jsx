@@ -69,6 +69,12 @@ const index = (props) => {
         <Form.Item
           label="Nama WO"
           name="name"
+          rules={[
+            {
+              required: true,
+              message: "Masukkan nama wo dengan benar!"
+            }
+          ]}
         >
           <Input />
         </Form.Item>
@@ -80,6 +86,10 @@ const index = (props) => {
             {
               type: "email",
               message: "Masukkan format email dengan benar!"
+            },
+            {
+              required: true,
+              message: "Masukkan email dari wo!"
             }
           ]}
         >
@@ -89,6 +99,12 @@ const index = (props) => {
         <Form.Item
           label="Website WO"
           name="website"
+          rules={[
+            {
+              required: true,
+              message: "Masukkan website wo dengan benar!"
+            }
+          ]}
         >
           <Input />
         </Form.Item>
@@ -96,6 +112,12 @@ const index = (props) => {
         <Form.Item
           label="Nomor telp WO"
           name="phone"
+          rules={[
+            {
+              required: true,
+              message: "Masukkan nomor telepon wo dengan benar!"
+            }
+          ]}
         >
           <NumericInput />
         </Form.Item>
@@ -103,13 +125,25 @@ const index = (props) => {
         <Form.Item
           label="Alamat WO"
           name="address"
+          rules={[
+            {
+              required: true,
+              message: "Masukkan alamat wo dengan benar!"
+            }
+          ]}
         >
-          <Input />
+          <Input.TextArea />
         </Form.Item>
 
         <Form.Item
           label="Status WO"
           name="status"
+          rules={[
+            {
+              required: true,
+              message: "Masukkan status wo dengan benar!"
+            }
+          ]}
         >
           <Select style={{ width: "200px" }}>
             <Option value={1}>Aktif</Option>

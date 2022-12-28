@@ -1,4 +1,4 @@
-import { Button, Form, Input, Space, DatePicker, TimePicker, message, InputNumber } from 'antd';
+import { Button, Form, Input, Space, DatePicker, TimePicker, message, InputNumber, Select } from 'antd';
 import { useHistory } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import CardForm from '../../../../../components/custom-components/form-crud/CardForm';
@@ -6,11 +6,13 @@ import { putBride } from '../../../../../../api/pengantin/putBride';
 import { getOneBride } from '../../../../../../api/pengantin/getOneBride';
 import moment from 'moment';
 import NumericInput from '../../../../../components/custom-components/InputNumberOnly';
+import { getWeddingOrganizers } from '../../../../../../api/wedding-organizer/getWeddingOrganizers';
 
 const index = (props) => {
   const history = useHistory()
   const id = props.location.state.id
   const { data: bride } = getOneBride(id)
+  const { data: wo } = getWeddingOrganizers()
 
   const [date, setDate] = useState(null)
   const [time, setTime] = useState(null)
@@ -77,7 +79,7 @@ const index = (props) => {
           },
           {
             name: ['wedding_organizer'],
-            value: bride && bride?.wedding_organizer?.name
+            value: bride && bride?.wedding_organizer?.id
           },
           {
             name: ['status'],
@@ -88,6 +90,12 @@ const index = (props) => {
         <Form.Item
           label="Pengantin Pria"
           name="groom"
+          rules={[
+            {
+              required: true,
+              message: "Masukkan nama pengantin pria dengan benar!"
+            }
+          ]}
         >
           <Input />
         </Form.Item>
@@ -95,6 +103,12 @@ const index = (props) => {
         <Form.Item
           label="Pengantin Wanita"
           name="bride"
+          rules={[
+            {
+              required: true,
+              message: "Masukkan nama pengantin wanita dengan benar!"
+            }
+          ]}
         >
           <Input />
         </Form.Item>
@@ -102,6 +116,12 @@ const index = (props) => {
         <Form.Item
           label="No Telp"
           name="phone"
+          rules={[
+            {
+              required: true,
+              message: "Masukkan nomor telepon dengan benar!"
+            }
+          ]}
         >
           <NumericInput />
         </Form.Item>
@@ -109,8 +129,14 @@ const index = (props) => {
         <Form.Item
           label="Alamat"
           name="address"
+          rules={[
+            {
+              required: true,
+              message: "Masukkan alamat dengan benar!"
+            }
+          ]}
         >
-          <Input />
+          <Input.TextArea />
         </Form.Item>
 
         <Form.Item
@@ -144,29 +170,62 @@ const index = (props) => {
         <Form.Item
           label="Alamat Pernikahan"
           name="wedding_address"
+          rules={[
+            {
+              required: true,
+              message: "Masukkan alamat pernikahan dengan benar!"
+            }
+          ]}
         >
-          <Input />
+          <Input.TextArea />
         </Form.Item>
 
         <Form.Item
           label="Tempat Pernikahan"
           name="wedding_place"
+          rules={[
+            {
+              required: true,
+              message: "Masukkan tempat pernikahan dengan benar!"
+            }
+          ]}
         >
-          <Input />
+          <Input.TextArea />
         </Form.Item>
 
         <Form.Item
           label="Wedding Organizer"
           name="wedding_organizer"
+          rules={[
+            {
+              required: true,
+              message: "Pilih wedding organizer yang ada!"
+            }
+          ]}
         >
-          <Input />
+          <Select style={{ width: "200px" }}>
+            {wo ? wo.map((value) => (
+              <Select.Option key={value?.id} value={value?.id}>{value?.name}</Select.Option>
+            )) : (
+              <Select.Option>{bride?.wedding_organizer?.name}</Select.Option>
+            )}
+          </Select>
         </Form.Item>
 
         <Form.Item
           label="Status"
           name="status"
+          rules={[
+            {
+              required: true,
+              message: "Masukkan status dengan benar!"
+            }
+          ]}
         >
-          <InputNumber />
+          <Select style={{ width: "200px" }}>
+            <Select.Option value={1}>Aktif</Select.Option>
+            <Select.Option value={2}>Non-Aktif</Select.Option>
+          </Select>
         </Form.Item>
 
         <Form.Item

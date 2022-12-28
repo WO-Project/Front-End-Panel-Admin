@@ -15,7 +15,7 @@ const index = () => {
   ))
 
   return (
-    <TableCard >
+    <TableCard customTitle="Kelola User" >
       <Row>
         <Col span={24}>
           <TableDisplay data={data} column={Column} addButton={true} />

@@ -56,6 +56,12 @@ const index = (props) => {
         <Form.Item
           label="Sales Order ID"
           name="sales-order-id"
+          rules={[
+            {
+              required: true,
+              message: "Masukkan sales order dengan benar!"
+            }
+          ]}
         >
           <InputNumber />
         </Form.Item>
@@ -63,6 +69,12 @@ const index = (props) => {
         <Form.Item
           label="Product ID"
           name="product-id"
+          rules={[
+            {
+              required: true,
+              message: "Masukkan jenis produk dengan benar!"
+            }
+          ]}
         >
           <InputNumber />
         </Form.Item>
@@ -70,6 +82,12 @@ const index = (props) => {
         <Form.Item
           label="Price"
           name="price"
+          rules={[
+            {
+              required: true,
+              message: "Masukkan harga dengan benar!"
+            }
+          ]}
         >
           <InputNumber />
         </Form.Item>
@@ -77,6 +95,12 @@ const index = (props) => {
         <Form.Item
           label="Status"
           name="status"
+          rules={[
+            {
+              required: true,
+              message: "Masukkan status dengan benar!"
+            }
+          ]}
         >
           <InputNumber />
         </Form.Item>

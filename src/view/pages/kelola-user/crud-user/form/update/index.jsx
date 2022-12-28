@@ -1,4 +1,4 @@
-import { Button, Form, Input, Space, message, Select } from 'antd';
+import { Button, Form, Input, Space, message, Select, Spin } from 'antd';
 import { useHistory } from 'react-router-dom';
 import React from 'react';
 import CardForm from '../../../../../components/custom-components/form-crud/CardForm';
@@ -6,17 +6,20 @@ import { putUser } from '../../../../../../api/kelola-user/putUser';
 import { getOneUser } from '../../../../../../api/kelola-user/getOneUser';
 import { getRoles } from '../../../../../../api/role/getRoles';
 import { getWeddingOrganizers } from '../../../../../../api/wedding-organizer/getWeddingOrganizers';
+import { useState } from 'react';
 
 const index = (props) => {
   const history = useHistory()
+  const [type, setType] = useState(null)
   const title = `${props.location.state.permission} Data ${props.location.state.data}`
   const id = props.location.state.id
 
-  const { data: user } = getOneUser(id)
+  const { data: user, loading } = getOneUser(id)
   const { data: roles } = getRoles()
   const { data: wos } = getWeddingOrganizers()
 
   const onFinish = async (values) => {
+    values.type = values.type == undefined ? user?.type : type
     const success = await putUser(values, id)
 
     if (success.data.success) {
@@ -25,6 +28,10 @@ const index = (props) => {
     }
     else message.error('Gagal mengubah data user')
   };
+
+  const handleTypeChange = (e) => {
+    setType(e)
+  }
 
   return (
     <CardForm title={title} >
@@ -65,15 +72,17 @@ const index = (props) => {
             name: "status",
             value: user?.status
           },
-          {
-            name: "type",
-            value: user?.type
-          },
         ]}
       >
         <Form.Item
           label="Nama"
           name="name"
+          rules={[
+            {
+              required: true,
+              message: "Masukkan nama dengan benar!"
+            }
+          ]}
         >
           <Input />
         </Form.Item>
@@ -81,6 +90,12 @@ const index = (props) => {
         <Form.Item
           label="Username"
           name="username"
+          rules={[
+            {
+              required: true,
+              message: "Masukkan username dengan benar!"
+            }
+          ]}
         >
           <Input />
         </Form.Item>
@@ -92,6 +107,10 @@ const index = (props) => {
             {
               type: "email",
               message: "Masukkan format email dengan benar!"
+            },
+            {
+              required: true,
+              message: "Masukkan email anda!"
             }
           ]}
         >
@@ -99,51 +118,64 @@ const index = (props) => {
         </Form.Item>
 
         <Form.Item
-          label="Password"
-          name="password"
+          label="Tipe User"
+          name="type"
           rules={[
             {
-              min: 8,
-              message: 'Mohon masukkan password minimal 8 karakter',
-            },
+              required: true,
+              message: "Pilih tipe user dengan benar!"
+            }
           ]}
         >
-          <Input.Password minLength={8} />
+          {loading ? (
+            <Spin></Spin>
+          ) : (
+            <Select
+              defaultValue={user?.type}
+              style={{
+                width: 200,
+              }}
+              onSelect={(e) => handleTypeChange(e)}
+            >
+              <Option value={1}>Admin</Option>
+              <Option value={2}>Content Creator</Option>
+              <Option value={3}>Wo</Option>
+            </Select>
+          )}
         </Form.Item>
 
-        <Form.Item
-          label="Tipe"
-          name="type"
-        >
-          <Select
-            style={{
-              width: 200,
-            }}
+        {user?.type == 3 || type == 3 ? (
+          <Form.Item
+            label="Wedding Organizer"
+            name="wo"
+            rules={[
+              {
+                required: true,
+                message: "Pilih wedding organizer dengan benar!"
+              }
+            ]}
           >
-            <Option value={1}>Admin</Option>
-            <Option value={2}>Content Creator</Option>
-            <Option value={3}>Wo</Option>
-          </Select>
-        </Form.Item>
+            <Select
+              style={{
+                width: 200,
+              }}
+            >
+              {wos?.map((wo, i) => (
+                <Option key={i} value={wo?.id}>{wo?.name}</Option>
+              ))}
+            </Select>
+          </Form.Item>
+        ) : undefined}
 
         <Form.Item
-          label="Wedding Organizer"
-          name="wo"
-        >
-          <Select
-            style={{
-              width: 200,
-            }}
-          >
-            {wos?.map((wo, i) => (
-              <Option key={i} value={wo?.id}>{wo?.name}</Option>
-            ))}
-          </Select>
-        </Form.Item>
-
-        <Form.Item
-          label="Role"
+          label="Role User"
           name="access_menu_id"
+          rules={[
+            {
+              required: true,
+              message: "Masukkan role user dengan benar!"
+            }
+          ]}
         >
           <Select
             style={{
@@ -159,6 +191,12 @@ const index = (props) => {
         <Form.Item
           label="Status"
           name="status"
+          rules={[
+            {
+              required: true,
+              message: "Masukkan status dengan benar!"
+            }
+          ]}
         >
           <Select
             style={{
