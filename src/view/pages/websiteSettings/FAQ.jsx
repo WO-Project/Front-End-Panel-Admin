@@ -166,8 +166,10 @@ const AddForm = ({ submit, setIsAdding, createErr }) => {
   const [value, setValue] = useState();
 
   const submitHandler = (e) => {
-    submit({ name, answer: value, wedding_organizer_id: 0 });
-    name && value && setIsAdding(false);
+    if ((name, value)) {
+      submit({ name, answer: value, wedding_organizer_id: 0 });
+      name && value && setIsAdding(false);
+    }
   };
 
   return (

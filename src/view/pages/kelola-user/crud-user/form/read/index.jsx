@@ -37,20 +37,28 @@ const index = (props) => {
         colon={false}
       >
         <Form.Item label="Nama" name="nama">
-          <p>{user && user.name}</p>
+          <p>{user?.name}</p>
         </Form.Item>
 
         <Form.Item label="Username" name="username">
-          <p>{user && user.username}</p>
+          <p>{user?.username}</p>
         </Form.Item>
 
         <Form.Item label="Email" name="email">
-          <p>{user && user.email}</p>
+          <p>{user?.email}</p>
         </Form.Item>
 
-        <Form.Item label="Customer" name="customer">
-          <p>{user?.customer?.name}</p>
-        </Form.Item>
+        {user?.customer ? (
+          <Form.Item label="Customer" name="customer">
+            <p>{user?.customer?.name}</p>
+          </Form.Item>
+        ) : undefined}
+
+        {user?.employee ? (
+          <Form.Item label="Employee" name="employee">
+            <p>{user?.employee?.name}</p>
+          </Form.Item>
+        ) : undefined}
 
         {user?.wedding_organizer ? (
           <Form.Item label="Wedding Organizer" name="wedding_organizer">
