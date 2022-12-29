@@ -165,8 +165,10 @@ const AddForm = ({ submit, setIsAdding, createErr }) => {
   const [value, setValue] = useState();
 
   const submitHandler = (e) => {
-    submit({ name, value });
-    name && value && setIsAdding(false);
+    if (name && value) {
+      submit({ name, value });
+      name && value && setIsAdding(false);
+    }
   };
 
   return (

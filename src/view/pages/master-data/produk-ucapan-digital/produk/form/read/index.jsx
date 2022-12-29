@@ -4,13 +4,18 @@ import React from "react";
 import CardForm from "../../../../../../components/custom-components/form-crud/CardForm";
 import { getOneProduct } from "../../../../../../../api/produk/getOneProduct";
 import { asset } from "../../../../../../../configs/apiConfig";
+import LoadingSpinner from "../../../../../../components/custom-components/LoadingSpinner";
+import ErrorPage from "../../../../../../components/custom-components/Feedback/ErrorPage";
 
 const index = (props) => {
   const history = useHistory();
   const title = `${props.location.state.permission} Data ${props.location.state.data}`;
   const id = props.location.state.id;
 
-  const { data: product } = getOneProduct(id);
+  const { data: product, loading, error } = getOneProduct(id);
+
+  if (loading) return <LoadingSpinner />;
+  if (error) return <ErrorPage message={error} />;
 
   return (
     <CardForm title={title}>
@@ -48,29 +53,35 @@ const index = (props) => {
               <video
                 src={asset(product?.attachment)}
                 type="video/mp4"
-                style={{ width: 450, height: 250, objectFit: "contain", objectPosition: "center top" }}
+                style={{
+                  width: 450,
+                  height: 250,
+                  objectFit: "contain",
+                  objectPosition: "center top",
+                }}
                 controls
               />
             </div>
           </Form.Item>
         ) : undefined}
 
-        <Form.Item
-          wrapperCol={{
-            offset: 6,
-            span: 4,
-          }}
-        >
-          <Space size="middle">
-            <Button
-              danger
-              htmlType="button"
-              onClick={() => history.push("/admin/produk-ucapan-digital")}
-            >
-              Batal
-            </Button>
-          </Space>
+        <Form.Item label="Dibuat Oleh" name="creator">
+          <p>{product?.creator}</p>
         </Form.Item>
+
+        <Form.Item label="Dibuat Pada" name="created_at">
+          <p>{Date(product?.created_at)}</p>
+        </Form.Item>
+
+        <Form.Item label="Diubah Oleh" name="editor">
+          <p>{product?.editor}</p>
+        </Form.Item>
+
+        <Form.Item label="Diubah Pada" name="edited_at">
+          <p>{Date(product?.updated_at)}</p>
+        </Form.Item>
+
+        <Form.Item></Form.Item>
       </Form>
     </CardForm>
   );

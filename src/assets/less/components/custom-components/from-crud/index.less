@@ -17,13 +17,19 @@
     width: 100%;
   }
 
+  .ant-form-item-label,
+  .ant-form-item-no-colon {
+    display: flex;
+    align-items: center;
+  }
+
   .ant-form-item-control-input::before {
     content: ":";
     margin-right: 30px;
     font-size: 15px;
     font-weight: bolder;
-    align-self: flex-start;
-    margin-top: 8px;
+    align-self: center;
+    justify-content: center;
   }
 
   .ant-form-item:last-child .ant-form-item-control-input::before {
@@ -39,5 +45,4 @@
     margin-left: 35px;
     margin-bottom: 15px;
   }
-
 }

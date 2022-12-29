@@ -7,6 +7,7 @@ import ErrorPage from "../../../../../components/custom-components/Feedback/Erro
 import { detailProdukWO } from "../../../../../../api/produk-wo";
 
 import "./style.css";
+import LoadingSpinner from "../../../../../components/custom-components/LoadingSpinner";
 
 const index = () => {
   const history = useHistory();
@@ -14,17 +15,14 @@ const index = () => {
 
   const { data, err, loading } = detailProdukWO(id);
 
-  if (loading)
-    return (
-      <CardForm title={`Detail Data Voucher/Kupon ${data?.product?.name}`}>
-        <Spin />
-      </CardForm>
-    );
-
+  if (loading) return <LoadingSpinner />;
   if (err) return <ErrorPage message={err} />;
 
   return (
-    <CardForm title={`Detail Data Produk Ucapan User ${data?.product?.name}`}>
+    <CardForm
+      title={`Detail Data Produk Ucapan User ${data?.product?.name}`}
+      back
+    >
       <Form
         name="basic"
         labelCol={{
@@ -66,26 +64,23 @@ const index = () => {
           <p>{data?.status === 1 ? "Aktif" : "Non-aktif"}</p>
         </Form.Item>
 
-        <Form.Item label="Kreator" name="creator" key="creator">
+        <Form.Item label="Dibuat Oleh" name="creator">
           <p>{data?.creator}</p>
         </Form.Item>
 
-        <Form.Item label="Editor" name="editor" key="editor">
+        <Form.Item label="Dibuat Pada" name="created_at">
+          <p>{Date(data?.created_at)}</p>
+        </Form.Item>
+
+        <Form.Item label="Diubah Oleh" name="editor">
           <p>{data?.editor}</p>
         </Form.Item>
 
-        <Form.Item
-          wrapperCol={{
-            offset: 5,
-            span: 4,
-          }}
-        >
-          <Space size="middle">
-            <Button danger htmlType="button" onClick={() => history.goBack()}>
-              Kembali
-            </Button>
-          </Space>
+        <Form.Item label="Diubah Pada" name="edited_at">
+          <p>{Date(data?.updated_at)}</p>
         </Form.Item>
+
+        <Form.Item></Form.Item>
       </Form>
     </CardForm>
   );

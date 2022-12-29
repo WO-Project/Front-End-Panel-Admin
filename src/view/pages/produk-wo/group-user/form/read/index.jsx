@@ -6,6 +6,7 @@ import CardForm from "../../../../../components/custom-components/form-crud/Card
 import ErrorPage from "../../../../../components/custom-components/Feedback/ErrorPage";
 
 import { useCommisionDetail } from "../../../../../../api/komisi";
+import LoadingSpinner from "../../../../../components/custom-components/LoadingSpinner";
 
 const index = () => {
   const history = useHistory();
@@ -16,21 +17,13 @@ const index = () => {
     loading: commision_detail_loading,
   } = useCommisionDetail(id);
 
-  if (commision_detail_loading)
-    return (
-      <CardForm
-        title={`Detail Data Kategori Komisi ${commision_detail_data?.name}`}
-      >
-        <Spin />
-      </CardForm>
-    );
-
-  if (commision_detail_error)
-    return <ErrorPage message={commision_detail_error} />;
+  if (commision_detail_loading) return <LoadingSpinner />;
+  if (commision_detail_error) return <ErrorPage message={error} />;
 
   return (
     <CardForm
       title={`Detail Data Kategori Komisi/Group User ${commision_detail_data?.name}`}
+      back
     >
       <Form
         name="basic"
@@ -68,25 +61,20 @@ const index = () => {
         <Form.Item label="Status" name="status" key="status">
           <p>{commision_detail_data?.status === 1 ? "Aktif" : "Non-aktif"}</p>
         </Form.Item>
-        <Form.Item label="Kreator" name="creator" key="creator">
+        <Form.Item label="Dibuat Oleh" name="creator">
           <p>{commision_detail_data?.creator}</p>
         </Form.Item>
-        <Form.Item label="Editor" name="editor" key="editor">
+        <Form.Item label="Dibuat Pada" name="created_at">
+          <p>{Date(commision_detail_data?.created_at)}</p>
+        </Form.Item>
+        <Form.Item label="Diubah Oleh" name="editor">
           <p>{commision_detail_data?.editor}</p>
         </Form.Item>
-
-        <Form.Item
-          wrapperCol={{
-            offset: 4,
-            span: 4,
-          }}
-        >
-          <Space size="middle">
-            <Button danger htmlType="button" onClick={() => history.goBack()}>
-              Kembali
-            </Button>
-          </Space>
+        <Form.Item label="Diubah Pada" name="edited_at">
+          <p>{Date(commision_detail_data?.updated_at)}</p>
         </Form.Item>
+
+        <Form.Item></Form.Item>
       </Form>
     </CardForm>
   );

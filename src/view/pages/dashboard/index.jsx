@@ -21,6 +21,7 @@ import {
 } from "../../../api/dashboard";
 
 import "./style.css";
+import LoadingSpinner from "../../components/custom-components/LoadingSpinner";
 
 export default function DashBoard() {
   const { permission } = usePermissionContext();
@@ -43,8 +44,6 @@ export default function DashBoard() {
     error: error_latest,
   } = getLatestOrder();
 
-  console.log(data_latest);
-
   if (error_best || error_count || error_latest)
     return <ErrorPage message="Gagal mengambil data!" />;
 
@@ -52,15 +51,7 @@ export default function DashBoard() {
     <>
       <Row gutter={[32, 32]}>
         {loading_count ? (
-          <div
-            style={{
-              width: "100%",
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <Spin />
-          </div>
+          <LoadingSpinner />
         ) : (
           <>
             <Col span={6}>
