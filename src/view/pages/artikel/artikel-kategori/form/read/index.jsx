@@ -2,14 +2,20 @@ import { useHistory, useParams } from "react-router-dom";
 
 import { getArticleCategoryDetail } from "../../../../../../api/artikel/category";
 
-import { Button, Form, Space } from "antd";
+import { Button, Form, Space, Spin } from "antd";
 import { Back } from "iconsax-react";
 
 import CardForm from "../../../../../components/custom-components/form-crud/CardForm";
+import ErrorPage from "../../../../../components/custom-components/Feedback/ErrorPage";
+import LoadingSpinner from "../../../../../components/custom-components/LoadingSpinner";
 
 const index = (props) => {
   const { id } = useParams();
-  const { data, error } = getArticleCategoryDetail(id);
+  const { data, error, loading } = getArticleCategoryDetail(id);
+
+  if (error)
+    return <ErrorPage message="Gagal mengambil data detail artikel!" />;
+  if (loading) return <LoadingSpinner />;
 
   return (
     <div>
@@ -44,20 +50,20 @@ const index = (props) => {
             <p>{data.status}</p>
           </Form.Item>
 
-          <Form.Item label="Pembuat" name="creator">
+          <Form.Item label="Dibuat Oleh" name="creator">
             <p>{data.creator}</p>
           </Form.Item>
 
           <Form.Item label="Dibuat Pada" name="created_at">
-            <p>{data.created_at}</p>
+            <p>{Date(data.created_at)}</p>
           </Form.Item>
 
-          <Form.Item label="Editor" name="editor">
+          <Form.Item label="Diubah Oleh" name="editor">
             <p>{data.editor}</p>
           </Form.Item>
 
           <Form.Item label="Diubah Pada" name="edited_at">
-            <p>{data.updated_at}</p>
+            <p>{Date(data.updated_at)}</p>
           </Form.Item>
 
           <Form.Item></Form.Item>

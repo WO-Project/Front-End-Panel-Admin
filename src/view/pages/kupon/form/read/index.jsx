@@ -6,19 +6,14 @@ import CardForm from "../../../../components/custom-components/form-crud/CardFor
 import ErrorPage from "../../../../components/custom-components/Feedback/ErrorPage";
 
 import { useKuponDetail } from "../../../../../api/kupon";
+import LoadingSpinner from "../../../../components/custom-components/LoadingSpinner";
 
 const index = () => {
   const history = useHistory();
   const { id } = useParams();
   const { data, err, loading } = useKuponDetail(id);
 
-  if (loading)
-    return (
-      <CardForm title={`Detail Data Voucher/Kupon ${data?.name}`}>
-        <Spin />
-      </CardForm>
-    );
-
+  if (loading) return <LoadingSpinner />;
   if (err) return <ErrorPage message={err} />;
 
   return (
@@ -67,11 +62,17 @@ const index = () => {
         <Form.Item label="Status" name="status" key="status">
           <p>{data?.status === 1 ? "Aktif" : "Non-aktif"}</p>
         </Form.Item>
-        <Form.Item label="Kreator" name="creator" key="creator">
+        <Form.Item label="Dibuat Oleh" name="creator">
           <p>{data?.creator}</p>
         </Form.Item>
-        <Form.Item label="Editor" name="editor" key="editor">
+        <Form.Item label="Dibuat Pada" name="created_at">
+          <p>{Date(data?.created_at)}</p>
+        </Form.Item>
+        <Form.Item label="Diubah Oleh" name="editor">
           <p>{data?.editor}</p>
+        </Form.Item>
+        <Form.Item label="Diubah Pada" name="edited_at">
+          <p>{Date(data?.updated_at)}</p>
         </Form.Item>
 
         <Form.Item></Form.Item>

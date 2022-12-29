@@ -3,13 +3,18 @@ import { useHistory } from "react-router-dom";
 import React from "react";
 import CardForm from "../../../../../components/custom-components/form-crud/CardForm";
 import { getOneWeddingOrganizer } from "../../../../../../api/wedding-organizer/getOneWeddingOrganizer";
+import LoadingSpinner from "../../../../../components/custom-components/LoadingSpinner";
+import ErrorPage from "../../../../../components/custom-components/Feedback/ErrorPage";
 
 const index = (props) => {
   const history = useHistory();
   const title = `${props.location.state.permission} Data ${props.location.state.data}`;
   const id = props.location.state.id;
 
-  const { data: wo } = getOneWeddingOrganizer(id);
+  const { data: wo, loading, error } = getOneWeddingOrganizer(id);
+
+  if (loading) return <LoadingSpinner />;
+  if (error) return <ErrorPage message={error} />;
 
   return (
     <CardForm title={title} back>
@@ -55,6 +60,22 @@ const index = (props) => {
 
         <Form.Item label="Status WO" name="status">
           <p>{wo?.status == 1 ? "Aktif" : "Non Aktif"}</p>
+        </Form.Item>
+
+        <Form.Item label="Dibuat Oleh" name="creator">
+          <p>{wo?.creator}</p>
+        </Form.Item>
+
+        <Form.Item label="Dibuat Pada" name="created_at">
+          <p>{Date(wo?.created_at)}</p>
+        </Form.Item>
+
+        <Form.Item label="Diubah Oleh" name="editor">
+          <p>{wo?.editor}</p>
+        </Form.Item>
+
+        <Form.Item label="Diubah Pada" name="edited_at">
+          <p>{Date(wo?.updated_at)}</p>
         </Form.Item>
 
         <Form.Item></Form.Item>

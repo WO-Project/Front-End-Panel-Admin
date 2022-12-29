@@ -4,12 +4,18 @@ import React from "react";
 import CardForm from "../../../../../components/custom-components/form-crud/CardForm";
 
 import { getOneCommission } from "../../../../../../api/komisi/getOneCommission";
+import ErrorPage from "../../../../../components/custom-components/Feedback/ErrorPage";
+import LoadingSpinner from "../../../../../components/custom-components/LoadingSpinner";
 
 const index = (props) => {
   const history = useHistory();
   const title = `${props.location.state.permission} Data ${props.location.state.data}`;
   const id = props.location.state.id;
-  const { data, error } = getOneCommission(id);
+  const { data, error, loading } = getOneCommission(id);
+
+  if (error)
+    return <ErrorPage message="Gagal mengambil data detail artikel!" />;
+  if (loading) return <LoadingSpinner />;
 
   return (
     <CardForm title={title} back>
@@ -100,6 +106,22 @@ const index = (props) => {
           ]}
         >
           <p>{data && data.sales_order_item?.product?.name}</p>
+        </Form.Item>
+
+        <Form.Item label="Dibuat Oleh" name="creator">
+          <p>{data?.creator}</p>
+        </Form.Item>
+
+        <Form.Item label="Dibuat Pada" name="created_at">
+          <p>{Date(data?.created_at)}</p>
+        </Form.Item>
+
+        <Form.Item label="Diubah Oleh" name="editor">
+          <p>{data?.editor}</p>
+        </Form.Item>
+
+        <Form.Item label="Diubah Pada" name="edited_at">
+          <p>{Date(data?.updated_at)}</p>
         </Form.Item>
 
         <Form.Item></Form.Item>

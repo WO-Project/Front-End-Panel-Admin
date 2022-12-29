@@ -5,6 +5,7 @@ import CardForm from "../../../../../components/custom-components/form-crud/Card
 import ErrorPage from "../../../../../components/custom-components/Feedback/ErrorPage";
 
 import { detailAffiliates } from "../../../../../../api/afiliasi";
+import LoadingSpinner from "../../../../../components/custom-components/LoadingSpinner";
 
 const index = () => {
   const history = useHistory();
@@ -13,13 +14,7 @@ const index = () => {
   console.log(id);
   const { data, err, loading } = detailAffiliates(id);
 
-  if (loading)
-    return (
-      <CardForm title={`Detail Data Voucher/Kupon ${data?.name}`}>
-        <Spin />
-      </CardForm>
-    );
-
+  if (loading) return <LoadingSpinner />;
   if (err) return <ErrorPage message={err} />;
 
   return (
@@ -49,13 +44,17 @@ const index = () => {
         <Form.Item label="Status" name="status" key="status">
           <p>{data?.status === 1 ? "Aktif" : "Non-aktif"}</p>
         </Form.Item>
-
-        <Form.Item label="Kreator" name="creator" key="creator">
+        <Form.Item label="Dibuat Oleh" name="creator">
           <p>{data?.creator}</p>
         </Form.Item>
-
-        <Form.Item label="Editor" name="editor" key="editor">
+        <Form.Item label="Dibuat Pada" name="created_at">
+          <p>{Date(data?.created_at)}</p>
+        </Form.Item>
+        <Form.Item label="Diubah Oleh" name="editor">
           <p>{data?.editor}</p>
+        </Form.Item>
+        <Form.Item label="Diubah Pada" name="edited_at">
+          <p>{Date(data?.updated_at)}</p>
         </Form.Item>
 
         <Form.Item></Form.Item>

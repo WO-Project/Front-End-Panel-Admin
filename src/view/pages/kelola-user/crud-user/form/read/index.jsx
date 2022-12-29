@@ -1,9 +1,11 @@
-import { Button, Form, Space } from "antd";
+import { Button, Form, Space, Spin } from "antd";
 import { useHistory } from "react-router-dom";
 import React from "react";
 import CardForm from "../../../../../components/custom-components/form-crud/CardForm";
 import { getOneUser } from "../../../../../../api/kelola-user/getOneUser";
 import { getOneRole } from "../../../../../../api/role/getOneRole";
+import ErrorPage from "../../../../../components/custom-components/Feedback/ErrorPage";
+import LoadingSpinner from "../../../../../components/custom-components/LoadingSpinner";
 
 const index = (props) => {
   const history = useHistory();
@@ -11,8 +13,16 @@ const index = (props) => {
   const id = props.location.state.id;
   const access_menu_id = props.location.state.access_menu_id;
 
-  const { data: user } = getOneUser(id);
-  const { data: role } = getOneRole(access_menu_id);
+  const { data: user, error: erroUser, loading: loadingUser } = getOneUser(id);
+  const {
+    data: role,
+    error: errorRole,
+    loading: loadingRole,
+  } = getOneRole(access_menu_id);
+
+  if (errorRole || erroUser)
+    return <ErrorPage message="Gagal mengambil data detail artikel!" />;
+  if (loadingUser || loadingRole) return <LoadingSpinner />;
 
   return (
     <CardForm title={title} back>
@@ -70,8 +80,20 @@ const index = (props) => {
           <p>{user?.status == 1 ? "Aktif" : "Non Aktif"}</p>
         </Form.Item>
 
-        <Form.Item label="Creator" name="creator">
-          <p>{user && user.creator}</p>
+        <Form.Item label="Dibuat Oleh" name="creator">
+          <p>{user?.creator}</p>
+        </Form.Item>
+
+        <Form.Item label="Dibuat Pada" name="created_at">
+          <p>{Date(user?.created_at)}</p>
+        </Form.Item>
+
+        <Form.Item label="Diubah Oleh" name="editor">
+          <p>{user?.editor}</p>
+        </Form.Item>
+
+        <Form.Item label="Diubah Pada" name="edited_at">
+          <p>{Date(user?.updated_at)}</p>
         </Form.Item>
 
         <Form.Item></Form.Item>

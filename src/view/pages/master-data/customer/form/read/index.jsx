@@ -3,13 +3,18 @@ import { useHistory } from "react-router-dom";
 import React from "react";
 import CardForm from "../../../../../components/custom-components/form-crud/CardForm";
 import { getOneCustomer } from "../../../../../../api/customer/getOneCustomer";
+import LoadingSpinner from "../../../../../components/custom-components/LoadingSpinner";
+import ErrorPage from "../../../../../components/custom-components/Feedback/ErrorPage";
 
 const index = (props) => {
   const history = useHistory();
   const title = `${props.location.state.permission} Data ${props.location.state.data}`;
   const id = props.location.state.id;
 
-  const { data: customer } = getOneCustomer(id);
+  const { data: customer, error, loading } = getOneCustomer(id);
+
+  if (loading) return <LoadingSpinner />;
+  if (error) return <ErrorPage message={error} />;
 
   return (
     <CardForm title={title} back>
@@ -47,6 +52,22 @@ const index = (props) => {
               ? "Non Aktif"
               : undefined}
           </p>
+        </Form.Item>
+
+        <Form.Item label="Dibuat Oleh" name="creator">
+          <p>{customer?.creator}</p>
+        </Form.Item>
+
+        <Form.Item label="Dibuat Pada" name="created_at">
+          <p>{Date(customer?.created_at)}</p>
+        </Form.Item>
+
+        <Form.Item label="Diubah Oleh" name="editor">
+          <p>{customer?.editor}</p>
+        </Form.Item>
+
+        <Form.Item label="Diubah Pada" name="edited_at">
+          <p>{Date(customer?.updated_at)}</p>
         </Form.Item>
 
         <Form.Item></Form.Item>

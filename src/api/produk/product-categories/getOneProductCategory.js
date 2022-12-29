@@ -1,15 +1,19 @@
-import { useEffect, useState } from 'react'
-import { api } from '../../../configs/apiConfig'
+import { useEffect, useState } from "react";
+import { api } from "../../../configs/apiConfig";
 
 export const getOneProductCategory = (id) => {
-  const [data, setData] = useState(null)
-  const [error, setError] = useState(null)
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    api.get('product-categories/' + id)
-      .then(res => setData(res.data.data))
-      .catch(err => setError(err))
-  }, [])
+    setLoading(true);
+    api
+      .get("product-categories/" + id)
+      .then((res) => setData(res.data.data))
+      .catch((err) => setError(err))
+      .finally(() => setLoading(() => false));
+  }, []);
 
-  return { data, error }
-}
+  return { data, error, loading };
+};

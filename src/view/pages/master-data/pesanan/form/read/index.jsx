@@ -4,12 +4,17 @@ import React from "react";
 import CardForm from "../../../../../components/custom-components/form-crud/CardForm";
 
 import { getPesanan } from "../../../../../../api/pesanan/getPesanan";
+import LoadingSpinner from "../../../../../components/custom-components/LoadingSpinner";
+import ErrorPage from "../../../../../components/custom-components/Feedback/ErrorPage";
 
 const index = (props) => {
   const history = useHistory();
   const title = `${props.location.state.permission} Data ${props.location.state.data}`;
   const id = props.location.state.id;
-  const { data, error, refetch } = getPesanan(id);
+  const { data, error, loading } = getPesanan(id);
+
+  if (loading) return <LoadingSpinner />;
+  if (error) return <ErrorPage message={error} />;
 
   return (
     <CardForm title={title} back>
@@ -68,7 +73,23 @@ const index = (props) => {
         </Form.Item>
 
         <Form.Item label="Product Status" name="product status">
-          <p>{data && (data.product?.status == 1 ? "Aktif" : "Nonaktif")}</p>
+          <p>{data?.product?.status == 1 ? "Aktif" : "Nonaktif"}</p>
+        </Form.Item>
+
+        <Form.Item label="Dibuat Oleh" name="creator">
+          <p>{data?.creator}</p>
+        </Form.Item>
+
+        <Form.Item label="Dibuat Pada" name="created_at">
+          <p>{Date(data?.created_at)}</p>
+        </Form.Item>
+
+        <Form.Item label="Diubah Oleh" name="editor">
+          <p>{data?.editor}</p>
+        </Form.Item>
+
+        <Form.Item label="Diubah Pada" name="edited_at">
+          <p>{Date(data?.updated_at)}</p>
         </Form.Item>
 
         <Form.Item></Form.Item>
