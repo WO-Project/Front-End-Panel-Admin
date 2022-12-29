@@ -1,34 +1,31 @@
-import { Button, Form, Input, Space, message, Select } from 'antd';
-import { useHistory } from 'react-router-dom';
-import { postUser } from '../../../../../../api/kelola-user/postUser'
-import React from 'react';
-import CardForm from '../../../../../components/custom-components/form-crud/CardForm';
-import { getWeddingOrganizers } from '../../../../../../api/wedding-organizer/getWeddingOrganizers';
-import { getRoles } from '../../../../../../api/role/getRoles';
-
+import { Button, Form, Input, Space, message, Select } from "antd";
+import { useHistory } from "react-router-dom";
+import { postUser } from "../../../../../../api/kelola-user/postUser";
+import React from "react";
+import CardForm from "../../../../../components/custom-components/form-crud/CardForm";
+import { getWeddingOrganizers } from "../../../../../../api/wedding-organizer/getWeddingOrganizers";
+import { getRoles } from "../../../../../../api/role/getRoles";
 
 const index = () => {
-  const history = useHistory()
-  const { data: wos } = getWeddingOrganizers()
-  const { data: roles } = getRoles()
+  const history = useHistory();
+  const { data: wos } = getWeddingOrganizers();
+  const { data: roles } = getRoles();
 
   const onFinish = async (values) => {
-    const success = await postUser(values)
+    const success = await postUser(values);
     if (success.data.success) {
-      message.success('Berhasil menambahkan user')
-      history.goBack()
-    }
-    else {
-      message.error('Gagal menambahkan user')
+      message.success("Berhasil menambahkan user");
+      history.goBack();
+    } else {
+      message.error("Gagal menambahkan user");
     }
   };
 
   const onFinishFailed = (errorInfo) => {
     if (errorInfo.errorFields.length == 1) {
-      message.error(errorInfo.errorFields[0].errors[0])
-    }
-    else {
-      message.error("Mohon isi semua form yang ada")
+      message.error(errorInfo.errorFields[0].errors[0]);
+    } else {
+      message.error("Mohon isi semua form yang ada");
     }
   };
 
@@ -46,7 +43,7 @@ const index = () => {
         onFinishFailed={onFinishFailed}
         autoComplete="off"
         colon={false}
-        labelAlign='left'
+        labelAlign="left"
       >
         <Form.Item
           label="Nama"
@@ -54,13 +51,11 @@ const index = () => {
           rules={[
             {
               required: true,
-              message: 'Mohon masukkan nama!',
+              message: "Mohon masukkan nama!",
             },
           ]}
         >
-
           <Input />
-
         </Form.Item>
 
         <Form.Item
@@ -69,13 +64,11 @@ const index = () => {
           rules={[
             {
               required: true,
-              message: 'Mohon masukkan username!',
+              message: "Mohon masukkan username!",
             },
           ]}
         >
-
           <Input />
-
         </Form.Item>
 
         <Form.Item
@@ -84,17 +77,15 @@ const index = () => {
           rules={[
             {
               required: true,
-              message: 'Mohon masukkan email!',
+              message: "Mohon masukkan email!",
             },
             {
               type: "email",
-              message: "Masukkan format email dengan benar!"
-            }
+              message: "Masukkan format email dengan benar!",
+            },
           ]}
         >
-
           <Input />
-
         </Form.Item>
 
         <Form.Item
@@ -103,11 +94,11 @@ const index = () => {
           rules={[
             {
               required: true,
-              message: 'Mohon masukkan password anda!',
+              message: "Mohon masukkan password anda!",
             },
             {
               min: 8,
-              message: 'Mohon masukkan password minimal 8 karakter',
+              message: "Mohon masukkan password minimal 8 karakter",
             },
           ]}
         >
@@ -120,11 +111,10 @@ const index = () => {
           rules={[
             {
               required: true,
-              message: 'Mohon masukkan tipe user!',
+              message: "Mohon masukkan tipe user!",
             },
           ]}
         >
-
           <Select
             style={{
               width: 200,
@@ -134,34 +124,31 @@ const index = () => {
             <Option value={2}>Content Creator</Option>
             <Option value={3}>Wo</Option>
           </Select>
-
         </Form.Item>
 
-        <Form.Item
-          label="Role User"
-          name="access_menu_id"
-        >
-
+        <Form.Item label="Role User" name="access_menu_id">
           <Select
             style={{
               width: 200,
             }}
           >
             {roles?.map((role, i) => (
-              <Option key={i} value={role?.id}>{role?.name}</Option>
+              <Option key={i} value={role?.id}>
+                {role?.name}
+              </Option>
             ))}
           </Select>
-
         </Form.Item>
 
         <Form.Item
+          className="custom-action-form"
           wrapperCol={{
             offset: 4,
             span: 4,
           }}
         >
-          <Space size='middle'>
-            <Button type='primary' danger htmlType="submit">
+          <Space size="middle">
+            <Button type="primary" danger htmlType="submit">
               Simpan
             </Button>
             <Button danger htmlType="button" onClick={() => history.goBack()}>
@@ -169,11 +156,9 @@ const index = () => {
             </Button>
           </Space>
         </Form.Item>
-
       </Form>
     </CardForm>
   );
 };
 
-
-export default index
+export default index;
