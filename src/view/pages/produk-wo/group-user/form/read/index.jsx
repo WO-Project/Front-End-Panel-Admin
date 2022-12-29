@@ -20,6 +20,7 @@ const index = () => {
     return (
       <CardForm
         title={`Detail Data Kategori Komisi ${commision_detail_data?.name}`}
+        back
       >
         <Spin />
       </CardForm>
@@ -31,6 +32,7 @@ const index = () => {
   return (
     <CardForm
       title={`Detail Data Kategori Komisi/Group User ${commision_detail_data?.name}`}
+      back
     >
       <Form
         name="basic"
@@ -75,18 +77,7 @@ const index = () => {
           <p>{commision_detail_data?.editor}</p>
         </Form.Item>
 
-        <Form.Item
-          wrapperCol={{
-            offset: 4,
-            span: 4,
-          }}
-        >
-          <Space size="middle">
-            <Button danger htmlType="button" onClick={() => history.goBack()}>
-              Kembali
-            </Button>
-          </Space>
-        </Form.Item>
+        <Form.Item></Form.Item>
       </Form>
     </CardForm>
   );

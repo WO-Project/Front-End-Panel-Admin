@@ -12,7 +12,7 @@ const index = (props) => {
   const { data: category } = getOneProductCategory(id);
 
   return (
-    <CardForm title={title}>
+    <CardForm title={title} back>
       <Form
         name="basic"
         labelCol={{
@@ -37,22 +37,7 @@ const index = (props) => {
           <p>{category?.status == 1 ? "Aktif" : "Non-Aktif"}</p>
         </Form.Item>
 
-        <Form.Item
-          wrapperCol={{
-            offset: 6,
-            span: 4,
-          }}
-        >
-          <Space size="middle">
-            <Button
-              danger
-              htmlType="button"
-              onClick={() => history.push("/admin/kategori-produk-ucapan-digital")}
-            >
-              Kembali
-            </Button>
-          </Space>
-        </Form.Item>
+        <Form.Item></Form.Item>
       </Form>
     </CardForm>
   );

@@ -24,7 +24,10 @@ const index = () => {
   if (err) return <ErrorPage message={err} />;
 
   return (
-    <CardForm title={`Detail Data Produk Ucapan User ${data?.product?.name}`}>
+    <CardForm
+      title={`Detail Data Produk Ucapan User ${data?.product?.name}`}
+      back
+    >
       <Form
         name="basic"
         labelCol={{
@@ -74,18 +77,7 @@ const index = () => {
           <p>{data?.editor}</p>
         </Form.Item>
 
-        <Form.Item
-          wrapperCol={{
-            offset: 5,
-            span: 4,
-          }}
-        >
-          <Space size="middle">
-            <Button danger htmlType="button" onClick={() => history.goBack()}>
-              Kembali
-            </Button>
-          </Space>
-        </Form.Item>
+        <Form.Item></Form.Item>
       </Form>
     </CardForm>
   );

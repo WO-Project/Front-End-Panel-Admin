@@ -1,18 +1,18 @@
-import { Button, Form, Space } from 'antd';
-import { useHistory } from 'react-router-dom';
-import React from 'react';
-import CardForm from '../../../../../components/custom-components/form-crud/CardForm';
+import { Button, Form, Space } from "antd";
+import { useHistory } from "react-router-dom";
+import React from "react";
+import CardForm from "../../../../../components/custom-components/form-crud/CardForm";
 
-import { getOneDisbursement } from "../../../../../../api/disbursement/getOneDisbursement"
+import { getOneDisbursement } from "../../../../../../api/disbursement/getOneDisbursement";
 
 const index = (props) => {
-  const history = useHistory()
-  const title = `${props.location.state.permission} Data ${props.location.state.data}`
-  const id = props.location.state.id
-  const { data, error } = getOneDisbursement(id)
+  const history = useHistory();
+  const title = `${props.location.state.permission} Data ${props.location.state.data}`;
+  const id = props.location.state.id;
+  const { data, error } = getOneDisbursement(id);
 
   return (
-    <CardForm title={title}>
+    <CardForm title={title} back>
       <Form
         name="basic"
         labelCol={{
@@ -22,7 +22,7 @@ const index = (props) => {
           span: 14,
         }}
         autoComplete="off"
-        size='small'
+        size="small"
       >
         <Form.Item
           label="Wedding Organizer"
@@ -30,7 +30,7 @@ const index = (props) => {
           rules={[
             {
               required: true,
-              message: 'Mohon masukkan status commission',
+              message: "Mohon masukkan status commission",
             },
           ]}
         >
@@ -43,7 +43,7 @@ const index = (props) => {
           rules={[
             {
               required: true,
-              message: 'Mohon masukkan nama commission',
+              message: "Mohon masukkan nama commission",
             },
           ]}
         >
@@ -56,7 +56,7 @@ const index = (props) => {
           rules={[
             {
               required: true,
-              message: 'Mohon masukkan status commission',
+              message: "Mohon masukkan status commission",
             },
           ]}
         >
@@ -69,7 +69,7 @@ const index = (props) => {
           rules={[
             {
               required: true,
-              message: 'Mohon masukkan status commission',
+              message: "Mohon masukkan status commission",
             },
           ]}
         >
@@ -82,30 +82,17 @@ const index = (props) => {
           rules={[
             {
               required: true,
-              message: 'Mohon masukkan status commission',
+              message: "Mohon masukkan status commission",
             },
           ]}
         >
           <p>{data && data.request_nominal}</p>
         </Form.Item>
 
-        <Form.Item
-          wrapperCol={{
-            offset: 4,
-            span: 4,
-          }}
-        >
-          <Space size='middle'>
-            <Button danger htmlType="button" onClick={() => history.goBack()}>
-              Kembali
-            </Button>
-          </Space>
-        </Form.Item>
-
+        <Form.Item></Form.Item>
       </Form>
     </CardForm>
   );
 };
 
-
-export default index
+export default index;

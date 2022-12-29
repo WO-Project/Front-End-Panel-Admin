@@ -3,17 +3,17 @@ import { useHistory, useParams } from "react-router-dom";
 import { getArticleCategoryDetail } from "../../../../../../api/artikel/category";
 
 import { Button, Form, Space } from "antd";
+import { Back } from "iconsax-react";
 
 import CardForm from "../../../../../components/custom-components/form-crud/CardForm";
 
 const index = (props) => {
-  const history = useHistory();
   const { id } = useParams();
   const { data, error } = getArticleCategoryDetail(id);
 
   return (
-    <>
-      <CardForm title={`Detail Data Kategori Artikel ${data.name}`}>
+    <div>
+      <CardForm title={`Detail Data Kategori Artikel ${data.name}`} back>
         <Form
           name="basic"
           labelCol={{
@@ -60,21 +60,10 @@ const index = (props) => {
             <p>{data.updated_at}</p>
           </Form.Item>
 
-          <Form.Item
-            wrapperCol={{
-              offset: 4,
-              span: 4,
-            }}
-          >
-            <Space size="middle">
-              <Button danger htmlType="button" onClick={() => history.goBack()}>
-                Kembali
-              </Button>
-            </Space>
-          </Form.Item>
+          <Form.Item></Form.Item>
         </Form>
       </CardForm>
-    </>
+    </div>
   );
 };
 

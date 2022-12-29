@@ -1,18 +1,18 @@
-import { Button, Form, Space } from 'antd';
-import { useHistory } from 'react-router-dom';
-import React from 'react';
-import CardForm from '../../../../../components/custom-components/form-crud/CardForm';
-import { getOneWeddingOrganizer } from '../../../../../../api/wedding-organizer/getOneWeddingOrganizer';
+import { Button, Form, Space } from "antd";
+import { useHistory } from "react-router-dom";
+import React from "react";
+import CardForm from "../../../../../components/custom-components/form-crud/CardForm";
+import { getOneWeddingOrganizer } from "../../../../../../api/wedding-organizer/getOneWeddingOrganizer";
 
 const index = (props) => {
-  const history = useHistory()
-  const title = `${props.location.state.permission} Data ${props.location.state.data}`
-  const id = props.location.state.id
+  const history = useHistory();
+  const title = `${props.location.state.permission} Data ${props.location.state.data}`;
+  const id = props.location.state.id;
 
-  const { data: wo } = getOneWeddingOrganizer(id)
+  const { data: wo } = getOneWeddingOrganizer(id);
 
   return (
-    <CardForm title={title}>
+    <CardForm title={title} back>
       <Form
         name="basic"
         labelCol={{
@@ -25,11 +25,7 @@ const index = (props) => {
         colon={false}
         labelAlign="left"
       >
-
-        <Form.Item
-          label="Nama WO"
-          name="name"
-        >
+        <Form.Item label="Nama WO" name="name">
           <p>{wo?.name}</p>
         </Form.Item>
 
@@ -38,58 +34,33 @@ const index = (props) => {
           name="email"
           rules={[
             {
-              type: 'email',
+              type: "email",
             },
           ]}
         >
           <p>{wo?.email}</p>
         </Form.Item>
 
-        <Form.Item
-          label="Nomor telp WO"
-          name="phone"
-        >
+        <Form.Item label="Nomor telp WO" name="phone">
           <p>{wo?.phone}</p>
         </Form.Item>
 
-        <Form.Item
-          label="Website WO"
-          name="website"
-        >
+        <Form.Item label="Website WO" name="website">
           <p>{wo?.website}</p>
         </Form.Item>
 
-        <Form.Item
-          label="Alamat WO"
-          name="address"
-        >
+        <Form.Item label="Alamat WO" name="address">
           <p>{wo?.address}</p>
         </Form.Item>
 
-        <Form.Item
-          label="Status WO"
-          name="status"
-        >
+        <Form.Item label="Status WO" name="status">
           <p>{wo?.status == 1 ? "Aktif" : "Non Aktif"}</p>
         </Form.Item>
 
-        <Form.Item
-          wrapperCol={{
-            offset: 6,
-            span: 4,
-          }}
-        >
-          <Space size='middle'>
-            <Button danger htmlType="button" onClick={() => history.goBack()}>
-              Kembali
-            </Button>
-          </Space>
-        </Form.Item>
-
+        <Form.Item></Form.Item>
       </Form>
     </CardForm>
   );
 };
 
-
-export default index
+export default index;

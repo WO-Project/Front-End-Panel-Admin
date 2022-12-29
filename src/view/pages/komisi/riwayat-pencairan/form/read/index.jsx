@@ -1,18 +1,18 @@
-import { Button, Form, Space } from 'antd';
-import { useHistory } from 'react-router-dom';
-import React from 'react';
-import CardForm from '../../../../../components/custom-components/form-crud/CardForm';
+import { Button, Form, Space } from "antd";
+import { useHistory } from "react-router-dom";
+import React from "react";
+import CardForm from "../../../../../components/custom-components/form-crud/CardForm";
 
-import { getOneDisbursement } from "../../../../../../api/disbursement/getOneDisbursement"
+import { getOneDisbursement } from "../../../../../../api/disbursement/getOneDisbursement";
 
 const index = (props) => {
-  const history = useHistory()
-  const title = `${props.location.state.permission} Data ${props.location.state.data}`
-  const id = props.location.state.id
-  const { data, error } = getOneDisbursement(id)
+  const history = useHistory();
+  const title = `${props.location.state.permission} Data ${props.location.state.data}`;
+  const id = props.location.state.id;
+  const { data, error } = getOneDisbursement(id);
 
   return (
-    <CardForm title={title}>
+    <CardForm title={title} back>
       <Form
         name="basic"
         labelCol={{
@@ -22,7 +22,7 @@ const index = (props) => {
           span: 14,
         }}
         autoComplete="off"
-        size='small'
+        size="small"
       >
         <Form.Item
           label="Disbursement Name"
@@ -30,7 +30,7 @@ const index = (props) => {
           rules={[
             {
               required: true,
-              message: 'Mohon masukkan nama disbursement',
+              message: "Mohon masukkan nama disbursement",
             },
           ]}
         >
@@ -43,7 +43,7 @@ const index = (props) => {
           rules={[
             {
               required: true,
-              message: 'Mohon masukkan status pencairan',
+              message: "Mohon masukkan status pencairan",
             },
           ]}
         >
@@ -56,7 +56,7 @@ const index = (props) => {
           rules={[
             {
               required: true,
-              message: 'Mohon masukkan tanggal request',
+              message: "Mohon masukkan tanggal request",
             },
           ]}
         >
@@ -69,7 +69,7 @@ const index = (props) => {
           rules={[
             {
               required: true,
-              message: 'Mohon masukkan nominal ',
+              message: "Mohon masukkan nominal ",
             },
           ]}
         >
@@ -82,11 +82,11 @@ const index = (props) => {
           rules={[
             {
               required: true,
-              message: 'Mohon masukkan tipe dari pencairan',
+              message: "Mohon masukkan tipe dari pencairan",
             },
           ]}
         >
-          <p>{data && data.disbursement_type === 1 ? "Percent": "Nominal"}</p>
+          <p>{data && data.disbursement_type === 1 ? "Percent" : "Nominal"}</p>
         </Form.Item>
 
         <Form.Item
@@ -95,7 +95,7 @@ const index = (props) => {
           rules={[
             {
               required: true,
-              message: 'Mohon masukkan bank untuk pencairan',
+              message: "Mohon masukkan bank untuk pencairan",
             },
           ]}
         >
@@ -108,7 +108,7 @@ const index = (props) => {
           rules={[
             {
               required: true,
-              message: 'Mohon masukkan nomor rekening untuk pencairan',
+              message: "Mohon masukkan nomor rekening untuk pencairan",
             },
           ]}
         >
@@ -121,7 +121,7 @@ const index = (props) => {
           rules={[
             {
               required: true,
-              message: 'Mohon masukkan nominal untuk pencairan',
+              message: "Mohon masukkan nominal untuk pencairan",
             },
           ]}
         >
@@ -134,30 +134,17 @@ const index = (props) => {
           rules={[
             {
               required: true,
-              message: 'Mohon masukkan wedding organizer',
+              message: "Mohon masukkan wedding organizer",
             },
           ]}
         >
           <p>{data && data.commission?.wedding_organizer?.name}</p>
         </Form.Item>
 
-        <Form.Item
-          wrapperCol={{
-            offset: 4,
-            span: 4,
-          }}
-        >
-          <Space size='middle'>
-            <Button danger htmlType="button" onClick={() => history.goBack()}>
-              Kembali
-            </Button>
-          </Space>
-        </Form.Item>
-
+        <Form.Item></Form.Item>
       </Form>
     </CardForm>
   );
 };
 
-
-export default index
+export default index;
