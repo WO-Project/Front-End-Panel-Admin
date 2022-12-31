@@ -12,7 +12,7 @@ const WORoutes = [
   },
 
   {
-    path: "/wo/profile",
+    path: "/profile",
     component: lazy(() => import("../../view/wo-pages/profile")),
     layout: "VerticalLayout",
   },

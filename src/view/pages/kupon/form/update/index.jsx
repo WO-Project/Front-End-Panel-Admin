@@ -32,6 +32,7 @@ const index = () => {
   const [begin_date, setBeginDate] = useState();
   const [end_date, setEndDate] = useState();
   const [status, setStatus] = useState(1);
+  const [typeQuota, setTypeQuota] = useState();
 
   useEffect(() => {
     if (data) {
@@ -42,15 +43,17 @@ const index = () => {
       setBeginDate(data.begin_date);
       setEndDate(data.end_date);
       setStatus(data.status);
+      setTypeQuota(data.quota > 0 ? 2 : 1);
     }
   }, [data]);
 
+  console.log(typeQuota == 2 ? quota : 0);
   const onFinish = async () => {
     const response = await updateKupon(id, {
       name,
       type,
       nominal,
-      quota,
+      quota: typeQuota == 2 ? quota : null,
       begin_date,
       end_date,
       status,
@@ -132,15 +135,34 @@ const index = () => {
           />
         </Form.Item>
 
-        <Form.Item label="Kuota" name="quota" key="quota" initialValue={quota}>
-          <InputNumber
-            style={{
-              width: "100%",
-            }}
-            value={quota}
-            onChange={(value) => setQuota(value)}
+        <Form.Item label="Jenis Kuota" name="type" initialValue={typeQuota}>
+          <Select
+            value={typeQuota}
+            onChange={(e) => setTypeQuota(e)}
+            options={[
+              { label: "Unlimited", value: 1 },
+              { label: "Limited", value: 2 },
+            ]}
           />
         </Form.Item>
+
+        {typeQuota === 2 && (
+          <Form.Item
+            label="Kuota"
+            name="quota"
+            key="quota"
+            initialValue={quota}
+          >
+            <InputNumber
+              min={1}
+              style={{
+                width: "100%",
+              }}
+              value={quota}
+              onChange={(value) => setQuota(value)}
+            />
+          </Form.Item>
+        )}
 
         <Form.Item
           label="Mulai"

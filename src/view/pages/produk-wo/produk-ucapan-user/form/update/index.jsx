@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import moment from "moment";
+import dayjs from "dayjs";
 
 import {
   createProdukWO,
@@ -32,7 +33,9 @@ const index = () => {
   const [bride, setBride] = useState();
   const [product, setProduct] = useState();
   const [quota, setQuota] = useState();
-  const [activeDate, setActiveDate] = useState();
+  const [type, setType] = useState();
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
   const [status, setStatus] = useState();
 
   const {
@@ -64,15 +67,19 @@ const index = () => {
     const bride = detail_produk_wo?.bride?.id;
     const product = detail_produk_wo?.product?.id;
     const quota = detail_produk_wo?.quota;
-    const active_date = detail_produk_wo?.active_date;
+    const start_date = detail_produk_wo?.start_date;
+    const end_date = detail_produk_wo?.end_date;
     const status = detail_produk_wo?.status;
+    const type = quota > 0 ? 2 : 1;
 
     setWO(wo);
     setBride(bride);
     setProduct(product);
     setQuota(quota);
-    setActiveDate(active_date);
     setStatus(status);
+    setStartDate(start_date);
+    setEndDate(end_date);
+    setType(type);
   }, [detail_produk_wo]);
 
   const onFinish = async () => {
@@ -81,7 +88,8 @@ const index = () => {
       bride_id: bride,
       product_id: product,
       quota,
-      active_date: activeDate,
+      start_date: startDate,
+      end_date: endDate,
       status,
     });
 
@@ -95,6 +103,10 @@ const index = () => {
 
   const onFinishFailed = (errorInfo) => {
     alert("Failed:", errorInfo);
+  };
+
+  const disabledDate = (current) => {
+    return current < dayjs().startOf("day");
   };
 
   if (detail_produk_wo_loading) return <Spin />;
@@ -220,39 +232,84 @@ const index = () => {
         </Form.Item>
 
         <Form.Item
-          label="Kuota"
-          name="quota"
+          label="Jenis Kuota"
+          name="type"
           rules={[
             {
               required: true,
-              message: "Mohon masukkan kuota!",
+              message: "Mohon masukkan type kuota!",
             },
           ]}
-          initialValue={quota}
+          initialValue={type}
         >
-          <InputNumber
-            style={{ width: "100%" }}
-            value={quota}
-            onChange={(value) => setQuota(value)}
+          <Select
+            value={type}
+            onChange={(e) => setType(e)}
+            options={[
+              { label: "Unlimited", value: 1 },
+              { label: "Limited", value: 2 },
+            ]}
+          />
+        </Form.Item>
+
+        {type === 2 && (
+          <Form.Item
+            label="Kuota"
+            name="quota"
+            rules={[
+              {
+                required: true,
+                message: "Mohon masukkan kuota!",
+              },
+            ]}
+            initialValue={quota}
+          >
+            <InputNumber
+              min={1}
+              style={{ width: "100%" }}
+              value={quota}
+              onChange={(value) => setQuota(value)}
+            />
+          </Form.Item>
+        )}
+
+        <Form.Item
+          label="Tanggal Mulai"
+          key="start_date"
+          name="start_date"
+          rules={[
+            {
+              required: true,
+              message: "Mohon masukkan tanggal mulainya produk berlaku!",
+            },
+          ]}
+          initialValue={moment(startDate)}
+        >
+          <DatePicker
+            disabledDate={disabledDate}
+            format="YYYY-MM-DD"
+            onChange={(value, stringValue) => setStartDate(stringValue)}
+            value={startDate}
           />
         </Form.Item>
 
         <Form.Item
-          label="Tanggal Aktivasi"
-          name="activate_date"
+          label="Tanggal Berakhir"
+          key="end_date"
+          name="end_date"
           rules={[
             {
               required: true,
-              message: "Mohon masukkan Tanggal Aktivasi!",
+              message: "Mohon masukkan tanggal kadaluwarsa produk!",
             },
           ]}
-          initialValue={moment(activeDate)}
+          initialValue={moment(endDate)}
         >
           <DatePicker
+            disabledDate={disabledDate}
             format="YYYY-MM-DD"
-            style={{ width: "100%" }}
-            value={activeDate}
-            onChange={(value, stringValue) => setActiveDate(stringValue)}
+            onChange={(value, stringValue) => setEndDate(stringValue)}
+            value={endDate}
           />
         </Form.Item>
 

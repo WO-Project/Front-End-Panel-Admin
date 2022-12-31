@@ -53,11 +53,15 @@ const index = () => {
         </Form.Item>
 
         <Form.Item label="Kuota" name="quota" key="quota">
-          <p>{data?.quota}</p>
+          <p>{data?.quota > 0 ? data.quota : "unlimited"}</p>
         </Form.Item>
 
-        <Form.Item label="Tanggal Aktif" name="active_date" key="active_date">
-          <p>{data?.active_date}</p>
+        <Form.Item label="Tanggal Mulai" name="start_date" key="start_date">
+          <p>{data?.start_date}</p>
+        </Form.Item>
+
+        <Form.Item label="Tanggal Berakhir" name="end_date" key="end_date">
+          <p>{data?.end_date}</p>
         </Form.Item>
 
         <Form.Item label="Status" name="status" key="status">

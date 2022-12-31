@@ -14,7 +14,8 @@ const TableDisplay = ({
    * ex: [
    *    {
    *      name: "button name",
-   *      link: "button link"
+   *      link: "button link",
+   *      click: "click event listener"
    *    },
    * ]
    */
@@ -26,6 +27,7 @@ const TableDisplay = ({
   colomWidth = 400,
   filteredState,
   filteredColumn,
+  tableProps,
 }) => {
   const [tableData, setTableData] = useState([]);
 
@@ -54,7 +56,10 @@ const TableDisplay = ({
           >
             {otherButton
               ? otherButton.map((btn) => {
-                  return (
+                  if (!btn?.name) {
+                    return btn.component;
+                  }
+                  return btn.link ? (
                     <Link to={btn.link}>
                       <Button
                         type="primary"
@@ -63,10 +68,23 @@ const TableDisplay = ({
                         style={
                           btn.name.length <= 15 ? { fontSize: "12px" } : {}
                         }
+                        onClick={btn.click ? btn.click : () => {}}
                       >
                         {btn.name}
                       </Button>
                     </Link>
+                  ) : (
+                    <Button
+                      type="primary"
+                      danger
+                      size="small"
+                      style={{ width: "100%" }}
+                      onClick={
+                        btn.click ? btn.click : (e) => e.stopPropagation()
+                      }
+                    >
+                      {btn.name}
+                    </Button>
                   );
                 })
               : undefined}
@@ -107,6 +125,7 @@ const TableDisplay = ({
         onChange={(pagination, filters, sorter, extra) => {
           filteredState ? filteredState(extra.currentDataSource) : undefined;
         }}
+        {...tableProps}
       />
     </>
   );

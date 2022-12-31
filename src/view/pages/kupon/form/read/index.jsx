@@ -48,7 +48,7 @@ const index = () => {
           </p>
         </Form.Item>
         <Form.Item label="Kuota" name="quota" key="quota">
-          <p>{data?.quota}</p>
+          <p>{data?.quota > 0 ? data.quota : "Unlimited"}</p>
         </Form.Item>
         <Form.Item label="Terpakai" name="used" key="used">
           <p>{data?.used}</p>

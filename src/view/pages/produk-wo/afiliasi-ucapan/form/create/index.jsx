@@ -14,7 +14,6 @@ const index = () => {
   const [wo, setWO] = useState(null);
   const [name, setName] = useState();
   const [description, setDescription] = useState();
-  const [link, setLink] = useState();
 
   const {
     data: wo_data,
@@ -27,7 +26,6 @@ const index = () => {
       wedding_organizer_id: wo,
       name,
       description,
-      link,
     });
 
     if (success?.data?.success) {
@@ -37,8 +35,6 @@ const index = () => {
       message.error("Gagal menambahkan link affiliasi");
     }
   };
-
-  console.log(wo_loading);
 
   const onFinishFailed = (errorInfo) => {
     if (errorInfo.errorFields.length == 1) {
@@ -135,19 +131,6 @@ const index = () => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
-        </Form.Item>
-
-        <Form.Item
-          label="Link"
-          name="link"
-          rules={[
-            {
-              required: true,
-              message: "Mohon masukkan dlink affiliasi!",
-            },
-          ]}
-        >
-          <Input value={link} onChange={(e) => setLink(e.target.value)} />
         </Form.Item>
 
         <Form.Item

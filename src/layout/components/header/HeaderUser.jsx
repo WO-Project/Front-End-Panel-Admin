@@ -78,10 +78,10 @@ export default function HeaderUser() {
       <Divider className="hp-my-18" /> */}
 
       <Row>
-        {type === 3 && (
+        {(type === 3 || type === 1) && (
           <Col span={24}>
             <Link
-              to="/wo/profile"
+              to="/profile"
               className="hp-d-flex-center hp-p1-body hp-font-weight-500 hp-my-4 hp-py-8 hp-px-10 hp-d-block hp-transition hp-hover-bg-primary-4 hp-hover-bg-dark-80 hp-border-radius"
               style={{ marginLeft: -10, marginRight: -10 }}
             >

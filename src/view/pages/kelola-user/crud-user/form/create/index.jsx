@@ -5,9 +5,12 @@ import React from "react";
 import CardForm from "../../../../../components/custom-components/form-crud/CardForm";
 import { getWeddingOrganizers } from "../../../../../../api/wedding-organizer/getWeddingOrganizers";
 import { getRoles } from "../../../../../../api/role/getRoles";
+import { useState } from "react";
 
 const index = () => {
   const history = useHistory();
+  const [type, setType] = useState(null);
+
   const { data: wos } = getWeddingOrganizers();
   const { data: roles } = getRoles();
 
@@ -34,10 +37,10 @@ const index = () => {
       <Form
         name="basic"
         labelCol={{
-          span: 4,
+          span: 5,
         }}
         wrapperCol={{
-          span: 14,
+          span: 13,
         }}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
@@ -119,14 +122,49 @@ const index = () => {
             style={{
               width: 200,
             }}
+            onSelect={(e) => setType(e)}
           >
             <Option value={1}>Admin</Option>
-            <Option value={2}>Content Creator</Option>
+            <Option value={1}>Content Creator</Option>
             <Option value={3}>Wo</Option>
           </Select>
         </Form.Item>
 
-        <Form.Item label="Role User" name="access_menu_id">
+        {type == 3 ? (
+          <Form.Item
+            label="Wedding Organizer"
+            name="wo"
+            rules={[
+              {
+                required: true,
+                message: "Pilih wedding organizer dengan benar!",
+              },
+            ]}
+          >
+            <Select
+              style={{
+                width: 200,
+              }}
+            >
+              {wos?.map((wo, i) => (
+                <Option key={i} value={wo?.id}>
+                  {wo?.name}
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
+        ) : undefined}
+
+        <Form.Item
+          label="Role User"
+          name="access_menu_id"
+          rules={[
+            {
+              required: true,
+              message: "Mohon masukkan role user!",
+            },
+          ]}
+        >
           <Select
             style={{
               width: 200,
@@ -141,9 +179,8 @@ const index = () => {
         </Form.Item>
 
         <Form.Item
-          className="custom-action-form"
           wrapperCol={{
-            offset: 4,
+            offset: 5,
             span: 4,
           }}
         >
