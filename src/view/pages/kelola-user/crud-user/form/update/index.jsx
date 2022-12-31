@@ -1,40 +1,35 @@
-import { Button, Form, Input, Space, message, Select, Spin } from 'antd';
-import { useHistory } from 'react-router-dom';
-import React from 'react';
-import CardForm from '../../../../../components/custom-components/form-crud/CardForm';
-import { putUser } from '../../../../../../api/kelola-user/putUser';
-import { getOneUser } from '../../../../../../api/kelola-user/getOneUser';
-import { getRoles } from '../../../../../../api/role/getRoles';
-import { getWeddingOrganizers } from '../../../../../../api/wedding-organizer/getWeddingOrganizers';
-import { useState } from 'react';
+import { Button, Form, Input, Space, message, Select, Spin } from "antd";
+import { useHistory } from "react-router-dom";
+import React from "react";
+import CardForm from "../../../../../components/custom-components/form-crud/CardForm";
+import { putUser } from "../../../../../../api/kelola-user/putUser";
+import { getOneUser } from "../../../../../../api/kelola-user/getOneUser";
+import { getRoles } from "../../../../../../api/role/getRoles";
+import { getWeddingOrganizers } from "../../../../../../api/wedding-organizer/getWeddingOrganizers";
+import { useState } from "react";
 
 const index = (props) => {
-  const history = useHistory()
-  const [type, setType] = useState(null)
-  const title = `${props.location.state.permission} Data ${props.location.state.data}`
-  const id = props.location.state.id
+  const history = useHistory();
+  const [type, setType] = useState(null);
+  const title = `${props.location.state.permission} Data ${props.location.state.data}`;
+  const id = props.location.state.id;
 
-  const { data: user, loading } = getOneUser(id)
-  const { data: roles } = getRoles()
-  const { data: wos } = getWeddingOrganizers()
+  const { data: user, loading } = getOneUser(id);
+  const { data: roles } = getRoles();
+  const { data: wos } = getWeddingOrganizers();
 
   const onFinish = async (values) => {
-    values.type = values.type == undefined ? user?.type : type
-    const success = await putUser(values, id)
+    values.type = values.type == undefined ? user?.type : type;
+    const success = await putUser(values, id);
 
     if (success.data.success) {
-      message.success('Berhasil mengubah data user')
-      history.goBack()
-    }
-    else message.error('Gagal mengubah data user')
+      message.success("Berhasil mengubah data user");
+      history.goBack();
+    } else message.error("Gagal mengubah data user");
   };
 
-  const handleTypeChange = (e) => {
-    setType(e)
-  }
-
   return (
-    <CardForm title={title} >
+    <CardForm title={title}>
       <Form
         name="basic"
         labelCol={{
@@ -50,27 +45,27 @@ const index = (props) => {
         fields={[
           {
             name: "name",
-            value: user?.name
+            value: user?.name,
           },
           {
             name: "username",
-            value: user?.username
+            value: user?.username,
           },
           {
             name: "email",
-            value: user?.email
+            value: user?.email,
           },
           {
             name: "access_menu_id",
-            value: user?.access_menu_id
+            value: user?.access_menu_id,
           },
           {
             name: "wo",
-            value: user?.wedding_organizer?.id
+            value: user?.wedding_organizer?.id,
           },
           {
             name: "status",
-            value: user?.status
+            value: user?.status,
           },
         ]}
       >
@@ -80,8 +75,8 @@ const index = (props) => {
           rules={[
             {
               required: true,
-              message: "Masukkan nama dengan benar!"
-            }
+              message: "Masukkan nama dengan benar!",
+            },
           ]}
         >
           <Input />
@@ -93,8 +88,8 @@ const index = (props) => {
           rules={[
             {
               required: true,
-              message: "Masukkan username dengan benar!"
-            }
+              message: "Masukkan username dengan benar!",
+            },
           ]}
         >
           <Input />
@@ -106,12 +101,12 @@ const index = (props) => {
           rules={[
             {
               type: "email",
-              message: "Masukkan format email dengan benar!"
+              message: "Masukkan format email dengan benar!",
             },
             {
               required: true,
-              message: "Masukkan email anda!"
-            }
+              message: "Masukkan email anda!",
+            },
           ]}
         >
           <Input />
@@ -123,8 +118,8 @@ const index = (props) => {
           rules={[
             {
               required: true,
-              message: "Pilih tipe user dengan benar!"
-            }
+              message: "Pilih tipe user dengan benar!",
+            },
           ]}
         >
           {loading ? (
@@ -135,10 +130,10 @@ const index = (props) => {
               style={{
                 width: 200,
               }}
-              onSelect={(e) => handleTypeChange(e)}
+              onSelect={(e) => setType(e)}
             >
               <Option value={1}>Admin</Option>
-              <Option value={2}>Content Creator</Option>
+              <Option value={1}>Content Creator</Option>
               <Option value={3}>Wo</Option>
             </Select>
           )}
@@ -151,8 +146,8 @@ const index = (props) => {
             rules={[
               {
                 required: true,
-                message: "Pilih wedding organizer dengan benar!"
-              }
+                message: "Pilih wedding organizer dengan benar!",
+              },
             ]}
           >
             <Select
@@ -161,7 +156,9 @@ const index = (props) => {
               }}
             >
               {wos?.map((wo, i) => (
-                <Option key={i} value={wo?.id}>{wo?.name}</Option>
+                <Option key={i} value={wo?.id}>
+                  {wo?.name}
+                </Option>
               ))}
             </Select>
           </Form.Item>
@@ -173,8 +170,8 @@ const index = (props) => {
           rules={[
             {
               required: true,
-              message: "Masukkan role user dengan benar!"
-            }
+              message: "Masukkan role user dengan benar!",
+            },
           ]}
         >
           <Select
@@ -183,7 +180,9 @@ const index = (props) => {
             }}
           >
             {roles?.map((role, i) => (
-              <Option key={i} value={role?.id}>{role?.name}</Option>
+              <Option key={i} value={role?.id}>
+                {role?.name}
+              </Option>
             ))}
           </Select>
         </Form.Item>
@@ -194,8 +193,8 @@ const index = (props) => {
           rules={[
             {
               required: true,
-              message: "Masukkan status dengan benar!"
-            }
+              message: "Masukkan status dengan benar!",
+            },
           ]}
         >
           <Select
@@ -214,8 +213,8 @@ const index = (props) => {
             span: 4,
           }}
         >
-          <Space size='middle'>
-            <Button type='primary' danger htmlType="submit">
+          <Space size="middle">
+            <Button type="primary" danger htmlType="submit">
               Simpan
             </Button>
             <Button danger htmlType="button" onClick={() => history.goBack()}>
@@ -223,11 +222,9 @@ const index = (props) => {
             </Button>
           </Space>
         </Form.Item>
-
       </Form>
     </CardForm>
   );
 };
 
-
-export default index
+export default index;

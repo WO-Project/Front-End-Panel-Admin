@@ -27,13 +27,14 @@ const index = (props) => {
   const [quota, setQuota] = useState(0);
   const [begin_date, setBeginDate] = useState();
   const [end_date, setEndDate] = useState();
+  const [typeQuota, setTypeQuota] = useState();
 
   const onFinish = async () => {
     const response = await createKupon({
       name,
       type,
       nominal,
-      quota,
+      quota: typeQuota == 2 ? quota : 0,
       begin_date,
       end_date,
     });
@@ -130,28 +131,51 @@ const index = (props) => {
         </Form.Item>
 
         <Form.Item
-          label="Kuota"
-          key="quota"
-          name="quota"
+          label="Jenis Kuota"
+          name="type"
           rules={[
             {
               required: true,
-              message: "Mohon masukkan kuota voucher!",
-            },
-            {
-              type: "number",
-              message: "Mohon masukkan dengan format angka!",
+              message: "Mohon masukkan type kuota!",
             },
           ]}
         >
-          <InputNumber
-            style={{
-              width: "100%",
-            }}
-            value={quota}
-            onChange={(value) => setQuota(value)}
+          <Select
+            value={typeQuota}
+            onChange={(e) => setTypeQuota(e)}
+            options={[
+              { label: "Unlimited", value: 1 },
+              { label: "Limited", value: 2 },
+            ]}
           />
         </Form.Item>
+
+        {typeQuota === 2 && (
+          <Form.Item
+            label="Kuota"
+            key="quota"
+            name="quota"
+            rules={[
+              {
+                required: true,
+                message: "Mohon masukkan kuota voucher!",
+              },
+              {
+                type: "number",
+                message: "Mohon masukkan dengan format angka!",
+              },
+            ]}
+          >
+            <InputNumber
+              min={1}
+              style={{
+                width: "100%",
+              }}
+              value={quota}
+              onChange={(value) => setQuota(value)}
+            />
+          </Form.Item>
+        )}
 
         <Form.Item
           label="Mulai"

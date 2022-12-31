@@ -26,7 +26,9 @@ const index = () => {
   const [bride, setBride] = useState();
   const [product, setProduct] = useState();
   const [quota, setQuota] = useState();
-  const [activeDate, setActiveDate] = useState();
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
+  const [type, setType] = useState(1);
 
   const {
     data: wo_data,
@@ -52,10 +54,10 @@ const index = () => {
       bride_id: bride,
       product_id: product,
       quota,
-      active_date: activeDate,
+      start_date: startDate,
+      end_date: endDate,
     });
 
-    console.log(success);
     if (success?.data?.success) {
       message.success("Berhasil menambahkan produk wo");
       history.goBack();
@@ -202,38 +204,84 @@ const index = () => {
         </Form.Item>
 
         <Form.Item
-          label="Kuota"
-          name="quota"
+          label="Jenis Kuota"
+          name="type"
           rules={[
             {
               required: true,
-              message: "Mohon masukkan kuota!",
+              message: "Mohon masukkan type kuota!",
             },
           ]}
         >
-          <InputNumber
-            style={{ width: "100%" }}
-            value={quota}
-            onChange={(value) => setQuota(value)}
+          <Select
+            value={type}
+            onChange={(e) => setType(e)}
+            options={[
+              { label: "Unlimited", value: 1 },
+              { label: "Limited", value: 2 },
+            ]}
           />
         </Form.Item>
 
+        {type === 2 && (
+          <Form.Item
+            label="Kuota"
+            name="quota"
+            rules={[
+              {
+                required: true,
+                message: "Mohon masukkan kuota!",
+              },
+              {
+                min: 1,
+                message: "Kuota tidak boleh 0 atau negatif!",
+              },
+            ]}
+          >
+            <InputNumber
+              min={1}
+              style={{ width: "100%" }}
+              value={quota}
+              onChange={(value) => setQuota(value)}
+            />
+          </Form.Item>
+        )}
+
         <Form.Item
-          label="Tanggal Aktivasi"
-          name="activate_date"
+          label="Tanggal Mulai"
+          key="start_date"
+          name="start_date"
           rules={[
             {
               required: true,
-              message: "Mohon masukkan Tanggal Aktivasi!",
+              message: "Mohon masukkan tanggal mulainya produk berlaku!",
             },
           ]}
         >
           <DatePicker
             disabledDate={disabledDate}
             format="YYYY-MM-DD"
-            style={{ width: "100%" }}
-            value={activeDate}
-            onChange={(value, stringValue) => setActiveDate(stringValue)}
+            onChange={(value, stringValue) => setStartDate(stringValue)}
+            value={startDate}
+          />
+        </Form.Item>
+
+        <Form.Item
+          label="Tanggal Berakhir"
+          key="end_date"
+          name="end_date"
+          rules={[
+            {
+              required: true,
+              message: "Mohon masukkan tanggal kadaluwarsa produk!",
+            },
+          ]}
+        >
+          <DatePicker
+            disabledDate={disabledDate}
+            format="YYYY-MM-DD"
+            onChange={(value, stringValue) => setEndDate(stringValue)}
+            value={endDate}
           />
         </Form.Item>
 

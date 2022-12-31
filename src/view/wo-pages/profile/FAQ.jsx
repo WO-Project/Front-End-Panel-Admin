@@ -9,7 +9,6 @@ import {
   Button,
   Form,
   Input,
-  InputNumber,
   Space,
   Select,
   Modal,
@@ -23,7 +22,7 @@ export default function () {
   const [isAdding, setIsAdding] = useState(false);
   const history = useHistory();
 
-  let { data, error, loading, method } = useData("admin-contacts");
+  let { data, error, loading, method } = useData("frequently-ask-questions");
   data = data.filter((d) => d.id !== undefined);
 
   useEffect(() => {
@@ -41,7 +40,7 @@ export default function () {
     }
   };
 
-  const deleteContact = (id, name) => {
+  const destroy = (id, name) => {
     Modal.confirm({
       title: `Apa anda yakin ingin menghapus ${name}?`,
       icon: <Danger color="red" />,
@@ -52,8 +51,8 @@ export default function () {
         method.destroy(id);
 
         if (!error.destroy) {
-          message.info(`Berhasil menghapus kontak ${name}!`);
-        } else message.error(`Gagal menghapus kontak ${name}!`);
+          message.info(`Berhasil menghapus FAQ!`);
+        } else message.error(`Gagal menghapus FAQ!`);
       },
     });
   };
@@ -62,8 +61,8 @@ export default function () {
     await method.create(value);
 
     if (!error.create) {
-      message.info("Berhasil menambahkan kontak baru!");
-    } else message.error("Gagal menambahkan kontak baru!");
+      message.info("Berhasil menambahkan FAQ baru!");
+    } else message.error("Gagal menambahkan FAQ baru!");
   };
 
   const updateStatus = async (id, value) => {
@@ -72,7 +71,7 @@ export default function () {
     if (!error.update) {
       message.info("Status telah diubah!");
     } else {
-      message.error("Gagal mengubah status, silakan coba kembali!");
+      message.error("Gagal mengubah status. Silakan coba kembali!");
       setTimeout(() => {
         history.push("/admin/pengaturan-website");
       }, 1500);
@@ -85,42 +84,40 @@ export default function () {
         <List
           itemLayout="horizontal"
           dataSource={data}
-          header={<Typography.Title level={4}>Kontak Admin</Typography.Title>}
+          header={
+            <Typography.Title level={4}>
+              Frequently Asked Questions
+            </Typography.Title>
+          }
           loading={loading.update || loading.destroy || loading.getAll}
           renderItem={(item) => (
             <>
               <List.Item
                 actions={[
                   <Popover
-                    content="delete"
+                    content="destroydelete"
                     key="delete-contact"
-                    onClick={() => deleteContact(item?.id, item?.name)}
+                    onClick={() => destroy(item.id, item.name)}
                   >
                     <Trash color="red" size={20} />
                   </Popover>,
                 ]}
               >
-                <Skeleton avatar title={false} loading={item.loading} active>
-                  <List.Item.Meta
-                    title={item?.name}
-                    description={
-                      item?.type === 1 || item?.type === 3
-                        ? `+62-${item?.value}`
-                        : item?.value
-                    }
-                  />
+                <Skeleton title={false} loading={item.loading} active>
+                  <List.Item.Meta title={item.name} description={item.answer} />
                   <div>
                     <Select
-                      value={statusConverter(item?.status)}
+                      value={statusConverter(item.status)}
                       style={{
                         width: 120,
                       }}
                       onChange={(e) => {
-                        if (e != item?.status)
-                          updateStatus(item?.id, {
-                            name: item?.name,
-                            value: item?.value,
+                        if (e != item.status)
+                          updateStatus(item.id, {
+                            name: item.name,
+                            answer: item.answer,
                             status: e,
+                            wedding_organizer_id: 0,
                           });
                       }}
                       options={[
@@ -155,7 +152,7 @@ export default function () {
               danger
               onClick={() => setIsAdding(true)}
             >
-              tambah kontak admin
+              tambah FAQ
             </Button>
           </div>
         )}
@@ -167,11 +164,10 @@ export default function () {
 const AddForm = ({ submit, setIsAdding, createErr }) => {
   const [name, setName] = useState();
   const [value, setValue] = useState();
-  const [type, setType] = useState(4);
 
   const submitHandler = (e) => {
-    if (name && value && type) {
-      submit({ name, value, type });
+    if ((name, value)) {
+      submit({ name, answer: value, wedding_organizer_id: 0 });
       name && value && setIsAdding(false);
     }
   };
@@ -181,99 +177,47 @@ const AddForm = ({ submit, setIsAdding, createErr }) => {
       <Form
         name="addForm"
         labelCol={{
-          span: 8,
+          span: 6,
         }}
         wrapperCol={{
-          span: 8,
+          span: 12,
         }}
         autoComplete="off"
       >
         <Form.Item
-          label="Nama Kontak"
+          label="Pertanyaan"
           name="name"
           rules={[
             {
               required: true,
-              message: "Mohon masukkan nama kontak!",
+              message: "Mohon masukkan pertanyaan!",
             },
           ]}
         >
-          <Input
+          <Input.TextArea
+            rows={5}
             value={name}
-            placeholder="kontak admin 1, kontak admin 2, ..."
+            placeholder="question"
             onChange={(e) => setName(e.target.value)}
           />
         </Form.Item>
-
         <Form.Item
-          label="Jenis Kontak"
-          name="type"
+          label="Jawaban"
+          name="anser"
           rules={[
             {
               required: true,
-              message: "Mohon masukkan type kontak!",
+              message: "Mohon masukkan jawaban!",
             },
           ]}
         >
-          <Select
-            value={type}
-            placeholder="wa, email, nomor telepon"
-            onChange={(v) => setType(v)}
-            options={[
-              {
-                value: 1,
-                label: "Whatsapp",
-              },
-              {
-                value: 2,
-                label: "Email",
-              },
-              {
-                value: 3,
-                label: "Nomor Telepon",
-              },
-              {
-                value: 4,
-                label: "lainnya",
-              },
-            ]}
+          <Input.TextArea
+            rows={5}
+            value={value}
+            placeholder="answer"
+            onChange={(e) => setValue(e.target.value)}
           />
         </Form.Item>
-
-        <Form.Item
-          label={
-            type === 1
-              ? "Nomor WA"
-              : type === 2
-              ? "Email"
-              : type === 3
-              ? "Nomor Telepon"
-              : "Kontak"
-          }
-          name="value"
-          rules={[
-            {
-              required: true,
-              message: "Mohon masukkan kontak!",
-            },
-          ]}
-        >
-          {type === 1 || type === 3 ? (
-            <InputNumber
-              addonBefore="+62"
-              value={value}
-              placeholder="89..., 83..."
-              onChange={(e) => setValue(e)}
-            />
-          ) : (
-            <Input
-              value={name}
-              placeholder="email, kontak lain, ..."
-              onChange={(e) => setValue(e.target.value)}
-            />
-          )}
-        </Form.Item>
-
         <Form.Item
           wrapperCol={{
             offset: 8,

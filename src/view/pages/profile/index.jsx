@@ -383,9 +383,6 @@ export default function index() {
   return (
     <>
       <EditProfile />
-      <FAQ />
-      <TermConditions />
-      <PrivacyPolicies />
     </>
   );
 }

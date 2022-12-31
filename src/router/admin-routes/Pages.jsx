@@ -17,6 +17,12 @@ const PagesRoutes = [
     type: 1,
   },
 
+  {
+    path: "/profile",
+    component: lazy(() => import("../../view/pages/profile")),
+    layout: "VerticalLayout",
+  },
+
   // Pages Kelola User
   ...kelolaUser,
 

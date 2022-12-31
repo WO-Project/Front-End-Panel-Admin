@@ -1,36 +1,45 @@
-import moment from 'moment';
-import { Row, Col, Space, Popover, Modal, DatePicker, message, Button } from 'antd'
+import moment from "moment";
+import {
+  Row,
+  Col,
+  Space,
+  Popover,
+  Modal,
+  DatePicker,
+  message,
+  Button,
+} from "antd";
 import { Trash, Eye, Danger } from "iconsax-react";
 import { Link } from "react-router-dom";
-import { SearchOutlined } from '@ant-design/icons';
+import { SearchOutlined } from "@ant-design/icons";
 
-import TableDisplay from '../../../components/custom-components/TableDisplay'
-import TableCard from '../../../components/custom-components/TableCard'
+import TableDisplay from "../../../components/custom-components/TableDisplay";
+import TableCard from "../../../components/custom-components/TableCard";
 
-import { getWOCommissions } from "../../../../api/komisi/getWOCommissions"
-import { useRef, useState } from 'react'
-import { CSVLink } from 'react-csv';
-import { useReactToPrint } from 'react-to-print';
-import { usePermissionContext } from '../../../../context/PermissionContext';
+import { getWOCommissions } from "../../../../api/komisi/getWOCommissions";
+import { useRef, useState } from "react";
+import { CSVLink } from "react-csv";
+import { useReactToPrint } from "react-to-print";
+import { usePermissionContext } from "../../../../context/PermissionContext";
 
 const MasterDisplay = () => {
-  let { data, deletePesanan } = getWOCommissions()
-  const { permission } = usePermissionContext()
+  let { data, deletePesanan } = getWOCommissions();
+  const { permission } = usePermissionContext();
 
-  const [searchText, setSearchText] = useState()
-  const [searchedColumn, setSearchedColumn] = useState()
-  const [currentData, setCurrentData] = useState()
+  const [searchText, setSearchText] = useState();
+  const [searchedColumn, setSearchedColumn] = useState();
+  const [currentData, setCurrentData] = useState();
 
   const searchInput = useRef(null);
-  const pdfComponent = useRef()
+  const pdfComponent = useRef();
 
   const filterData = (currentData) => {
-    setCurrentData(currentData)
-  }
+    setCurrentData(currentData);
+  };
 
   const handlePrintToPDF = useReactToPrint({
-    content: () => pdfComponent.current
-  })
+    content: () => pdfComponent.current,
+  });
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
@@ -44,7 +53,13 @@ const MasterDisplay = () => {
   };
 
   const getColumnSearchProps = (dataIndex) => ({
-    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
+    filterDropdown: ({
+      setSelectedKeys,
+      selectedKeys,
+      confirm,
+      clearFilters,
+      close,
+    }) => (
       <div
         style={{
           padding: 8,
@@ -52,10 +67,13 @@ const MasterDisplay = () => {
         onKeyDown={(e) => e.stopPropagation()}
       >
         <DatePicker.RangePicker
-          style={{ marginBottom: 8, display: 'block' }}
+          style={{ marginBottom: 8, display: "block" }}
           value={selectedKeys[0]}
-          onChange={e => setSelectedKeys(e ? [e] : [])}
-          onPressEnter={() => { confirm(); setSearchText(selectedKeys[0]), setSearchedColumn(dataIndex); }}
+          onChange={(e) => setSelectedKeys(e ? [e] : [])}
+          onPressEnter={() => {
+            confirm();
+            setSearchText(selectedKeys[0]), setSearchedColumn(dataIndex);
+          }}
         />
 
         <Space>
@@ -101,13 +119,15 @@ const MasterDisplay = () => {
     filterIcon: (filtered) => (
       <SearchOutlined
         style={{
-          color: filtered ? '#1890ff' : undefined,
+          color: filtered ? "#1890ff" : undefined,
         }}
       />
     ),
 
     onFilter: (value, record) =>
-      record[dataIndex] ? moment(record[dataIndex]).isBetween(value[0], value[1], 'day', '[]') : "",
+      record[dataIndex]
+        ? moment(record[dataIndex]).isBetween(value[0], value[1], "day", "[]")
+        : "",
 
     onFilterDropdownOpenChange: (visible) => {
       if (visible) {
@@ -115,7 +135,7 @@ const MasterDisplay = () => {
       }
     },
 
-    render: text => moment(text).format("DD/MM/YYYY")
+    render: (text) => moment(text).format("DD/MM/YYYY"),
   });
 
   const mapDataToCsv = (data) => {
@@ -127,10 +147,10 @@ const MasterDisplay = () => {
         name: d.name,
         nominal: d.nominal,
         wo: d.wo,
-      }
-    })
-    return csvData
-  }
+      };
+    });
+    return csvData;
+  };
 
   data = data.map((d) => {
     return {
@@ -141,83 +161,85 @@ const MasterDisplay = () => {
       nominal: d.nominal_get,
       wo: d.commission ? d.commission.wedding_organizer.name : "",
       deletePesanan: deletePesanan,
-      permission
-    }
-  })
+      permission,
+    };
+  });
 
-  const { confirm } = Modal
+  const { confirm } = Modal;
   const showModal = (id, name, wo, deletePesanan) => {
     confirm({
       title: `Apa anda yakin ingin menghapus riwayat komisi ${name} dari WO ${wo}?`,
       icon: <Danger color="red" />,
-      okText: 'Yakin',
-      cancelText: 'Batal',
-      okType: 'primary',
+      okText: "Yakin",
+      cancelText: "Batal",
+      okType: "primary",
       async onOk() {
-        const success = await deletePesanan(id)
+        const success = await deletePesanan(id);
         if (success) {
-          message.success("Berhasil menghapus produk")
-        }
-        else {
-          message.error("Gagal menghapus produk")
+          message.success("Berhasil menghapus produk");
+        } else {
+          message.error("Gagal menghapus produk");
         }
       },
-    })
-  }
+    });
+  };
 
   const columns = [
     {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
       render: (text) => <a>{text}</a>,
       sorter: (a, b) => a.name.length - b.name.length,
     },
 
     {
-      title: 'Date',
-      dataIndex: 'date',
-      key: 'date',
-      render: (date) => <a>{new Date(date).toLocaleString('en-GB')}</a>,
+      title: "Date",
+      dataIndex: "date",
+      key: "date",
+      render: (date) => <a>{new Date(date).toLocaleString("en-GB")}</a>,
       sorter: (a, b) => new Date(a.date) - new Date(b.date),
-      ...getColumnSearchProps('date'),
+      ...getColumnSearchProps("date"),
     },
 
     {
-      title: 'Type',
-      dataIndex: 'type',
-      key: 'type',
+      title: "Type",
+      dataIndex: "type",
+      key: "type",
       render: (type) => <a>{type == 1 ? "Percent" : "Direct"}</a>,
     },
 
     {
-      title: 'Nominal',
-      dataIndex: 'nominal',
-      key: 'nominal',
+      title: "Nominal",
+      dataIndex: "nominal",
+      key: "nominal",
     },
 
     {
-      title: 'WO',
-      dataIndex: 'wo',
-      key: 'wo',
+      title: "WO",
+      dataIndex: "wo",
+      key: "wo",
     },
 
     {
-      title: 'Action',
-      key: 'action',
+      title: "Action",
+      key: "action",
       render: (payload) => (
-        <Space size="large" className="icons-container" >
-
-          {payload.permission.includes("/admin/riwayat-komisi-wo/detail/:userid") ? (
+        <Space size="large" className="icons-container">
+          {payload.permission.includes(
+            "/admin/riwayat-komisi-wo/detail/:userid"
+          ) ? (
             <Popover content={"Detail"}>
-              <Link to={{
-                pathname: `/admin/riwayat-komisi-wo/detail/${payload.id}`,
-                state: {
-                  permission: 'Detail',
-                  data: 'Pesanan',
-                  id: payload.id
-                },
-              }} >
+              <Link
+                to={{
+                  pathname: `/admin/riwayat-komisi-wo/detail/${payload.id}`,
+                  state: {
+                    permission: "Detail",
+                    data: "Pesanan",
+                    id: payload.id,
+                  },
+                }}
+              >
                 <Eye size={20} />
               </Link>
             </Popover>
@@ -225,52 +247,64 @@ const MasterDisplay = () => {
 
           {payload.permission.includes("delete riwayat komisi wo") ? (
             <Popover content={"Delete"}>
-              <Trash color="red" size={20} className='trash' onClick={() => showModal(payload.id, payload.name, payload.wo, payload.deletePesanan)} />
+              <Trash
+                color="red"
+                size={20}
+                className="trash"
+                onClick={() =>
+                  showModal(
+                    payload.id,
+                    payload.name,
+                    payload.wo,
+                    payload.deletePesanan
+                  )
+                }
+              />
             </Popover>
           ) : undefined}
-
         </Space>
       ),
-    },];
+    },
+  ];
 
   return (
     <>
-      <TableCard >
-
+      <TableCard>
         <Row>
           <Col span={24}>
             <div ref={pdfComponent}>
-              <TableDisplay data={data} column={columns} filteredState={filterData} />
+              <TableDisplay
+                data={data}
+                column={columns}
+                filteredState={filterData}
+                otherButton={[
+                  {
+                    name: (
+                      <CSVLink
+                        style={{ width: 200 }}
+                        filename={"AdminHistory.csv"}
+                        data={
+                          currentData != null
+                            ? mapDataToCsv(currentData)
+                            : mapDataToCsv(data)
+                        }
+                      >
+                        <p>Download CSV</p>
+                      </CSVLink>
+                    ),
+                  },
+                  {
+                    name: "Print PDF",
+                    click: handlePrintToPDF,
+                  },
+                ]}
+              />
             </div>
           </Col>
         </Row>
-
-        <Button
-          size="medium"
-          style={{
-            width: 180,
-          }}
-        >
-          <CSVLink filename={"WOHistory.csv"}
-          data={currentData != null ? mapDataToCsv(currentData) : mapDataToCsv(data)}
-          >
-            Download CSV
-          </CSVLink>
-        </Button>
-
-        <Button
-          onClick={handlePrintToPDF}
-          size="medium"
-          style={{
-            width: 180,
-          }}
-        >
-          Download PDF
-        </Button>
-
       </TableCard>
     </>
-  )
-}
+  );
+};
 
-export default MasterDisplay
+export default MasterDisplay;

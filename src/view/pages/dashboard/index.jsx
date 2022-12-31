@@ -166,6 +166,7 @@ export default function DashBoard() {
                   name: d.product?.name,
                   brideGroom: `${d.sales_order?.bride?.bride} & ${d.sales_order?.bride?.groom}`,
                   wo: d.sales_order?.bride?.wedding_organizer?.name,
+                  customer: d.sales_order?.customer?.name,
                   id: d.id,
                   permission,
                 }))}
