@@ -1,1 +1,0 @@
-{"version":3,"sources":["webpack://src/view/pages/produk-wo/produk-ucapan-user/form/read/style.css"],"names":[],"mappings":"AAAA,iDACE,cACF,CAEA,2CACE,UACF","file":"31.dc8fbb3e.chunk.css","sourcesContent":[".custom-input-produk-ucapan-user[disabled]:hover {\n  cursor: default;\n}\n\n.custom-input-produk-ucapan-user[disabled] {\n  color: black;\n}\n"]}
