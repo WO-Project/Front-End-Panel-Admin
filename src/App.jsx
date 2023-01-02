@@ -7,6 +7,7 @@ import { IntlProvider } from "react-intl";
 import AppLocale from './languages';
 
 import Router from "./router/Router";
+import { usePermissionContext } from './context/PermissionContext';
 
 export default function App() {
   // Redux
@@ -18,6 +19,13 @@ export default function App() {
   useEffect(() => {
     document.querySelector("html").setAttribute("lang", customise.language);
   }, [customise]);
+
+
+  const { fetchApi } = usePermissionContext()
+
+  useEffect(() => {
+    fetchApi()
+  }, [])
 
   return (
     <ConfigProvider locale={currentAppLocale.antd} direction={customise.direction}>

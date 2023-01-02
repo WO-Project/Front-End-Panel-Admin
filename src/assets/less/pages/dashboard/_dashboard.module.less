@@ -1,0 +1,46 @@
+.card-container {
+  justify-content: space-between;
+
+  .cards {
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+
+    .content {
+      display: flex;
+      align-items: center;
+      padding: 5px;
+
+      .icon {
+        width: 40px;
+        height: 40px;
+        padding: 7px;
+        background-color: rgba(255, 255, 0, 0.2);
+        color: orange;
+        border-radius: 50%;
+        margin-right: 15px;
+      }
+
+      .desc {
+        :nth-child(1) {
+          font-size: 30px;
+        }
+
+        :nth-child(2) {
+          font-size: 12px;
+        }
+      }
+    }
+  }
+}
+
+.heading {
+  margin: 0;
+  padding: 20px 10px;
+  font-size: 50px;
+}
+
+.clickable-counter:hover {
+  background-color: #c8a6585e;
+  transition: 0.5s;
+}

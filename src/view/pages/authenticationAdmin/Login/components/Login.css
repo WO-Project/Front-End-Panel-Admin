@@ -1,0 +1,15 @@
+.custom-redirect-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0 40px;
+}
+
+.custom-redirect-login {
+  text-align: right;
+  color: #c8a758;
+}
+
+.custom-redirect-login:hover {
+  color: rgb(74, 74, 218);
+  text-decoration: underline;
+}

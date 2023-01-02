@@ -1,3 +1,47 @@
+// ///////////////
+.header-card {
+  border-radius: 10px;
+  padding: 0 10px;
+
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+
+    .header-greet {
+      display: flex;
+      align-items: center;
+
+      :nth-child(1) {
+        margin-right: 10px;
+        width: 35px;
+        height: 35px;
+        padding: 5px;
+        background-color: rgba(255, 0, 0, 0.2);
+        color: rgb(151, 0, 0);
+        border-radius: 10px;
+      }
+
+      :nth-child(2) {
+        font-size: 1.2em;
+      }
+    }
+
+    .header-button {
+      display: flex;
+      align-items: center;
+
+      .button {
+        margin-left: 10px;
+      }
+    }
+  }
+}
+
+
+
+
+
+// ////////////////
 .ant-layout-header {
   background: none;
   margin: 16px 32px 32px;
@@ -45,13 +89,13 @@
       .menu-item {
         color: @b-80;
         transition: 0.4s;
-        
+
         svg path {
           stroke: @b-80;
           transition: 0.4s;
         }
 
-        &:hover{
+        &:hover {
           background: @b-10;
           color: @b-100;
 
@@ -186,6 +230,7 @@
   }
 
   @media @lg {
+
     // Mobile Button
     .@{class-prefix}-mobile-sidebar-button {
       display: block;
@@ -289,9 +334,9 @@
 }
 
 // Notification
-.@{class-prefix}-notification-dropdown{
+.@{class-prefix}-notification-dropdown {
   width: 380px;
-  
+
   @media @sm {
     margin-right: 16px;
     width: 290px;
@@ -299,9 +344,9 @@
 }
 
 // User
-.@{class-prefix}-user-dropdown{
+.@{class-prefix}-user-dropdown {
   width: 280px;
-  
+
   @media @sm {
     margin-right: -16px;
     width: 240px;

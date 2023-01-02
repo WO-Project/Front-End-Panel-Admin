@@ -1,0 +1,48 @@
+.form-crud {
+  border-radius: 10px;
+
+  .title {
+    margin-left: 20px;
+    margin-bottom: 30px;
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  label {
+    font-size: 15px;
+    margin-right: 20px;
+  }
+
+  .ant-space-item:nth-child(2) {
+    width: 100%;
+  }
+
+  .ant-form-item-label,
+  .ant-form-item-no-colon {
+    display: flex;
+    align-items: center;
+  }
+
+  .ant-form-item-control-input::before {
+    content: ":";
+    margin-right: 30px;
+    font-size: 15px;
+    font-weight: bolder;
+    align-self: center;
+    justify-content: center;
+  }
+
+  .ant-form-item:last-child .ant-form-item-control-input::before {
+    content: "";
+    margin-right: 0;
+  }
+
+  .ant-input-number {
+    width: 100%;
+  }
+
+  .ant-form-item-explain-error {
+    margin-left: 35px;
+    margin-bottom: 15px;
+  }
+}

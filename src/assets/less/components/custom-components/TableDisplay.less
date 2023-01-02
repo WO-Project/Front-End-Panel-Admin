@@ -1,0 +1,78 @@
+.custom-component-table-card {
+
+  table {
+
+    td {
+      vertical-align: middle;
+    }
+
+    .expanded-row {
+      margin: 15px 0 15px 10px;
+
+      p {
+        font-weight: 500;
+        margin-bottom: 10px;
+        font-size: 13px;
+      }
+
+      ol {
+        list-style-type: number;
+        margin-left: 30px;
+        font-size: 13px;
+      }
+    }
+
+    .icons-container {
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+
+      a {
+        border: 2px rgba(0, 0, 0, 0.2) solid;
+        border-radius: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 35px;
+        height: 35px;
+        color: black;
+        transition: 0.3s;
+
+        &:hover {
+          border: 1.5px red solid;
+          color: red;
+        }
+      }
+
+      .trash {
+        border: 1.5px red solid;
+        width: 35px;
+        height: 35px;
+        padding: 5px;
+        border-radius: 8px;
+        display: flex;
+        cursor: pointer;
+      }
+    }
+
+    .dropdown-menu {
+      width: 150px;
+
+      .ant-select-selector {
+        background-color: #C8A758;
+
+        .ant-select-selection-item {
+          color: white;
+          font-weight: 500;
+          font-size: 13px;
+          width: 100px;
+        }
+      }
+
+      svg {
+        color: white;
+        font-weight: bold;
+      }
+    }
+  }
+}

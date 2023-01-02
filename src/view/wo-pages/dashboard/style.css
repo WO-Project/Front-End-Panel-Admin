@@ -1,0 +1,39 @@
+.custom-dashboard-statistic {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: #2d3436;
+  font-size: 14px;
+  font-variant: tabular-nums;
+  line-height: 1.5715;
+  list-style: none;
+  font-feature-settings: "tnum", "tnum";
+}
+
+.custom-dashboard-statistic-title {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.45);
+  margin-bottom: 4px;
+}
+
+.custom-dashboard-statistic-content {
+  color: #2d3436;
+  font-size: 24px;
+  font-family: "Poppins", sans-serif;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-dashboard-statistic-content-prefix {
+  margin-right: 4px;
+  /* display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column; */
+}
+
+.custom-dashboard-statistic-content {
+  color: #2d3436;
+  font-size: 24px;
+  font-family: "Poppins", sans-serif;
+}

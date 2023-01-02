@@ -7,3 +7,6 @@ export const NAVIGATION_FULL = "NAVIGATION_FULL";
 export const NAVIGATION_BG = "NAVIGATION_BG";
 export const DIRECTION = "DIRECTION";
 export const LANGUAGE = "LANGUAGE";
+export const ADMIN_USERNAME = "ADMIN_USERNAME";
+export const ADMIN_NAME = "ADMIN_NAME";
+export const ADMIN_MAIL = "ADMIN_MAIL";

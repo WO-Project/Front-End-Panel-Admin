@@ -1,5 +1,6 @@
-import pages from "./pages";
+import adminNav from "./admin";
+import woNav from "./wo";
 
-const navigation = [...pages];
+const navigation = [...adminNav, ...woNav];
 
-export default navigation
+export default navigation;

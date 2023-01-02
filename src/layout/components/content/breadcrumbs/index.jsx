@@ -15,7 +15,6 @@ const BreadCrumbs = (props) => {
         <Breadcrumb.Item>
           <Link to="/">Home</Link>
         </Breadcrumb.Item>
-
         {breadCrumbParent === "Components" ? (
           <Breadcrumb.Item>
             Components

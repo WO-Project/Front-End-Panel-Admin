@@ -1,0 +1,7 @@
+.custom-input-produk-ucapan-user[disabled]:hover {
+  cursor: default;
+}
+
+.custom-input-produk-ucapan-user[disabled] {
+  color: black;
+}
