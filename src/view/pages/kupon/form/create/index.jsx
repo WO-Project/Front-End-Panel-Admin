@@ -34,7 +34,7 @@ const index = (props) => {
       name,
       type,
       nominal,
-      quota: typeQuota == 2 ? quota : 0,
+      quota: typeQuota == 2 ? quota : null,
       begin_date,
       end_date,
     });

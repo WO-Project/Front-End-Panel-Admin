@@ -3,6 +3,7 @@ import { lazy } from "react";
 import PengantinRoutes from "./Pengantin";
 import ProdukUcapanRoutes from "./ProdukUcapan";
 import LinkOrderRoutes from "./LinkOrder";
+import PesananRoutes from "./Pesanan";
 
 const WORoutes = [
   {
@@ -23,11 +24,7 @@ const WORoutes = [
 
   ...LinkOrderRoutes,
 
-  {
-    path: "/wo/pesanan",
-    component: lazy(() => import("../../view/wo-pages/dashboard")),
-    layout: "VerticalLayout",
-  },
+  ...PesananRoutes,
 
   {
     path: "/wo/saldo-komisi",

@@ -25,13 +25,14 @@ const index = () => {
 
       const isJpgOrPng =
         i.file.type === "image/jpeg" || i.file.type === "image/png";
+
       if (!isJpgOrPng) {
-        message.error("You can only upload JPG/PNG file!");
+        message.error("File yang diterima berformat JPG/PNG!");
       }
 
       const isLt2M = i.file.size / 1024 / 1024 < 2;
       if (!isLt2M) {
-        message.error("Image must smaller than 2MB!");
+        message.error("Ukuran maksimal file 2MB!");
       }
 
       if (!isJpgOrPng || !isLt2M) {
@@ -62,10 +63,9 @@ const index = () => {
 
   const onFinishFailed = (errorInfo) => {
     if (errorInfo.errorFields.length == 1) {
-      message.error(errorInfo.errorFields[0].errors[0])
-    }
-    else {
-      message.error("Mohon isi semua form yang ada")
+      message.error(errorInfo.errorFields[0].errors[0]);
+    } else {
+      message.error("Mohon isi semua form yang ada");
     }
   };
 

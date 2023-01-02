@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 
 import { useData } from "../../../api/website-settings/apiTemplate";
 
@@ -17,13 +16,17 @@ import {
   message,
   Upload,
 } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
 import { Trash, Danger } from "iconsax-react";
+import { asset } from "../../../configs/apiConfig";
 
 export default function () {
   const [isAdding, setIsAdding] = useState(false);
 
   let { data, error, loading, method } = useData("social-medias");
   data = data.filter((d) => d.id !== undefined);
+
+  console.log(data);
 
   useEffect(() => {
     setIsAdding(false);
@@ -58,7 +61,7 @@ export default function () {
   };
 
   const create = async (value) => {
-    await method.create(value);
+    await method.createResources(value);
 
     if (!error.create) {
       message.info("Berhasil menambahkan media sosial baru!");
@@ -100,7 +103,21 @@ export default function () {
                 ]}
               >
                 <Skeleton avatar title={false} loading={item.loading} active>
-                  <List.Item.Meta title={item.name} description={item.value} />
+                  <List.Item.Meta
+                    avatar={
+                      <img
+                        src={asset(item.icon)}
+                        alt="icon"
+                        style={{
+                          width: 100,
+                          height: 100,
+                          objectFit: "contain",
+                        }}
+                      />
+                    }
+                    title={item.name}
+                    description={item.value}
+                  />
                   <div>
                     <Select
                       value={statusConverter(item.status)}
@@ -157,13 +174,44 @@ export default function () {
   );
 }
 
-const AddForm = ({ submit, setIsAdding, createErr }) => {
+const AddForm = ({ submit, setIsAdding, uploadHandler, createErr }) => {
   const [name, setName] = useState();
   const [value, setValue] = useState();
+  const [thumbnail, setThumbnail] = useState();
+
+  const thumbnailOnChangeHandler = (i) => {
+    if (i.fileList.length === 0) setThumbnail("");
+    else {
+      i.file.status = "done";
+
+      const isJpgOrPng =
+        i.file.type === "image/jpeg" || i.file.type === "image/png";
+
+      if (!isJpgOrPng) {
+        message.error("File yang diterima berformat JPG/PNG!");
+      }
+
+      const isLt2M = i.file.size / 1024 / 1024 < 2;
+      if (!isLt2M) {
+        message.error("Ukuran maksimal file 2MB!");
+      }
+
+      if (!isJpgOrPng || !isLt2M) {
+        i.fileList.splice(0, 1);
+      } else {
+        setThumbnail(i.file.originFileObj);
+      }
+    }
+  };
 
   const submitHandler = (e) => {
+    const form = new FormData();
+
     if (name && value) {
-      submit({ name, value });
+      form.append("name", name);
+      form.append("value", value);
+      form.append("icon", thumbnail);
+      submit(form);
       name && value && setIsAdding(false);
     }
   };
@@ -222,7 +270,20 @@ const AddForm = ({ submit, setIsAdding, createErr }) => {
             },
           ]}
         >
-          <Upload />
+          <Upload
+            accept=".jpg,.png,.jpeg,.svg"
+            customRequest={undefined}
+            className="avatar-uploader"
+            listType="picture"
+            maxCount={1}
+            onChange={thumbnailOnChangeHandler}
+          >
+            {!thumbnail && (
+              <Button icon={<UploadOutlined />}>
+                Upload file png atau jpg
+              </Button>
+            )}
+          </Upload>
         </Form.Item>
         <Form.Item
           wrapperCol={{
