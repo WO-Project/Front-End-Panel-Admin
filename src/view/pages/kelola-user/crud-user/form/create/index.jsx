@@ -125,7 +125,6 @@ const index = () => {
             onSelect={(e) => setType(e)}
           >
             <Option value={1}>Admin</Option>
-            <Option value={1}>Content Creator</Option>
             <Option value={3}>Wo</Option>
           </Select>
         </Form.Item>

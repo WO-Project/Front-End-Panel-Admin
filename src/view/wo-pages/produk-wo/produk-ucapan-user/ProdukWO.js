@@ -55,12 +55,11 @@ const columns = [
     fixed: "right",
     render: (payload) => (
       <Space size="large" className="icons-container">
-
-        {payload.permission.includes("/admin/produk-ucapan-user/detail/:userid") ? (
+        {payload.permission.includes("/wo/produk-ucapan/detail/:id") ? (
           <Popover content={"Detail"}>
             <Link
               to={{
-                pathname: `/admin/produk-ucapan-user/detail/${payload.id}`,
+                pathname: `/wo/produk-ucapan/detail/${payload.id}`,
               }}
             >
               <Eye size={20} />
@@ -68,11 +67,11 @@ const columns = [
           </Popover>
         ) : undefined}
 
-        {payload.permission.includes("/admin/produk-ucapan-user/detail/:userid") ? (
+        {payload.permission.includes("/wo/produk-ucapan/edit/:id") ? (
           <Popover content={"Edit"}>
             <Link
               to={{
-                pathname: `/admin/produk-ucapan-user/edit/${payload.id}`,
+                pathname: `/wo/produk-ucapan/edit/${payload.id}`,
                 state: {
                   permission: "Edit",
                   data: "User",
@@ -85,7 +84,7 @@ const columns = [
           </Popover>
         ) : undefined}
 
-        {payload.permission.includes("delete produk wo") ? (
+        {payload.permission.includes("delete produk ucapan wo") ? (
           <Popover content={"Delete"}>
             <Link
               onClick={(e) => {

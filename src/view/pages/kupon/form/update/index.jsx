@@ -43,7 +43,7 @@ const index = () => {
       setBeginDate(data.begin_date);
       setEndDate(data.end_date);
       setStatus(data.status);
-      setTypeQuota(data.quota > 0 ? 2 : 1);
+      setTypeQuota(data.quota ? 2 : 1);
     }
   }, [data]);
 

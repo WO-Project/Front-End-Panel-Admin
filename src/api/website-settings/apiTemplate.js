@@ -7,6 +7,7 @@ const METHOD_ID = {
   DESTROY_DATA: "destroy",
   UPDATE_DATA: "update",
   CREATE_DATA: "create",
+  CREATE_RESOURCES: "createResources",
 };
 
 export const useData = (url) => {
@@ -17,12 +18,14 @@ export const useData = (url) => {
     destroy: null,
     update: null,
     create: null,
+    createResources: null,
   });
   const [loading, setLoading] = useState({
     getAll: true,
     destroy: false,
     update: false,
     create: false,
+    createResources: false,
   });
 
   const generateApi = (methodId, id = null, value = null) => {
@@ -37,6 +40,14 @@ export const useData = (url) => {
       case METHOD_ID.CREATE_DATA:
         setChanged(false);
         req = api.post(`${url}/store`, value);
+        break;
+      case METHOD_ID.CREATE_RESOURCES:
+        setChanged(false);
+        req = api.post(`${url}/store`, value, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
         break;
       case METHOD_ID.UPDATE_DATA:
         setChanged(false);
@@ -93,10 +104,14 @@ export const useData = (url) => {
     return generateApi(METHOD_ID.CREATE_DATA, null, value);
   };
 
+  const createResources = (value) => {
+    return generateApi(METHOD_ID.CREATE_RESOURCES, null, value);
+  };
+
   return {
     data,
     error,
     loading,
-    method: { getAll, destroy, update, create },
+    method: { getAll, destroy, update, create, createResources },
   };
 };

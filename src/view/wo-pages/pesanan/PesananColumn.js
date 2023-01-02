@@ -48,7 +48,7 @@ const columns = [
     key: "action",
     render: (payload) => (
       <Space size="large" className="icons-container">
-        {payload.permission.includes("/wo/pesanan/detail/:id") ? (
+        {payload.permission.includes("/admin/pesanan/detail/:userid") ? (
           <Popover content={"Detail"}>
             <Link
               to={{
@@ -65,7 +65,20 @@ const columns = [
           </Popover>
         ) : undefined}
 
-        {payload.permission.includes("delete pesanan wo") ? (
+        {/* <Popover content={"Edit"}>
+          <Link to={{
+            pathname: `pesanan/edit/${payload.id}`,
+            state: {
+              permission: 'Edit',
+              data: 'Pesanan',
+              id: payload.id
+            },
+          }}>
+            <Edit size={20} />
+          </Link>
+        </Popover> */}
+
+        {payload.permission.includes("delete pesanan") ? (
           <Popover content={"Delete"}>
             <Trash
               color="red"
