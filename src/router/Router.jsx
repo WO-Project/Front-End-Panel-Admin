@@ -148,7 +148,8 @@ export default function Router() {
                   if (auth) {
                     if (
                       permission.includes(route.path) ||
-                      route.path == "/dashboard"
+                      route.path == "/dashboard" ||
+                      route.path == "/profile"
                     ) {
                       if (
                         (type == 1 && route.type == type) ||
