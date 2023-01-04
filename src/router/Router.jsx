@@ -154,7 +154,6 @@ export default function Router() {
                         (type == 1 && route.type == type) ||
                         (type == 3 && route.type == type)
                       ) {
-                        console.log(route.path);
                         return (
                           <Route
                             key={route.path}

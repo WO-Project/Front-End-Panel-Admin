@@ -4,6 +4,7 @@ import PengantinRoutes from "./Pengantin";
 import ProdukUcapanRoutes from "./ProdukUcapan";
 import LinkOrderRoutes from "./LinkOrder";
 import PesananRoutes from "./Pesanan";
+import KomisiRoutes from "./Komisi";
 
 const WORoutes = [
   {
@@ -26,23 +27,7 @@ const WORoutes = [
 
   ...PesananRoutes,
 
-  {
-    path: "/wo/saldo-komisi",
-    component: lazy(() => import("../../view/wo-pages/dashboard")),
-    layout: "VerticalLayout",
-  },
-
-  {
-    path: "/wo/riwayat-komisi",
-    component: lazy(() => import("../../view/wo-pages/dashboard")),
-    layout: "VerticalLayout",
-  },
-
-  {
-    path: "/wo/pencairan-komisi",
-    component: lazy(() => import("../../view/wo-pages/dashboard")),
-    layout: "VerticalLayout",
-  },
+  ...KomisiRoutes,
 ];
 
 export default WORoutes;
