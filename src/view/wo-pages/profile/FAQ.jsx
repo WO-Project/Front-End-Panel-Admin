@@ -23,7 +23,9 @@ export default function () {
   const history = useHistory();
 
   let { data, error, loading, method } = useData("frequently-ask-questions");
-  data = data.filter((d) => d.id !== undefined);
+  data = data
+    .filter((d) => d.id !== undefined && d.status != 2)
+    .map((d, index) => ({ ...d, index: index + 1 }));
 
   useEffect(() => {
     setIsAdding(false);
@@ -92,70 +94,18 @@ export default function () {
           loading={loading.update || loading.destroy || loading.getAll}
           renderItem={(item) => (
             <>
-              <List.Item
-                actions={[
-                  <Popover
-                    content="destroydelete"
-                    key="delete-contact"
-                    onClick={() => destroy(item.id, item.name)}
-                  >
-                    <Trash color="red" size={20} />
-                  </Popover>,
-                ]}
-              >
+              <List.Item>
                 <Skeleton title={false} loading={item.loading} active>
-                  <List.Item.Meta title={item.name} description={item.answer} />
-                  <div>
-                    <Select
-                      value={statusConverter(item.status)}
-                      style={{
-                        width: 120,
-                      }}
-                      onChange={(e) => {
-                        if (e != item.status)
-                          updateStatus(item.id, {
-                            name: item.name,
-                            answer: item.answer,
-                            status: e,
-                            wedding_organizer_id: 0,
-                          });
-                      }}
-                      options={[
-                        {
-                          value: "2",
-                          label: "tidak aktif",
-                        },
-                        {
-                          value: "1",
-                          label: "aktif",
-                        },
-                      ]}
-                    />
-                  </div>
+                  <List.Item.Meta
+                    avatar={<h1>{item.index}</h1>}
+                    title={item.name}
+                    description={item.answer}
+                  />
                 </Skeleton>
               </List.Item>
             </>
           )}
         />
-        {isAdding ? (
-          <AddForm
-            submit={create}
-            setIsAdding={setIsAdding}
-            createErr={error.create}
-          />
-        ) : (
-          <div className="button">
-            <Button
-              disabled={loading.create}
-              size="small"
-              type="primary"
-              danger
-              onClick={() => setIsAdding(true)}
-            >
-              tambah FAQ
-            </Button>
-          </div>
-        )}
       </div>
     </>
   );

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useHistory } from "react-router-dom";
 
 import { useData } from "../../../api/website-settings/apiTemplate";
@@ -22,12 +22,28 @@ export default function () {
   const [isAdding, setIsAdding] = useState(false);
   const history = useHistory();
 
+  const isInitialMount = useRef(true);
+
   let { data, error, loading, method } = useData("frequently-ask-questions");
   data = data.filter((d) => d.id !== undefined);
 
   useEffect(() => {
     setIsAdding(false);
   }, []);
+
+  // need useEffect to display error
+  useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+    } else {
+      if (!loading.create) {
+        const errorCreate = error.create;
+        if (!errorCreate) {
+          message.info("Berhasil menambahkan FAQ baru!");
+        } else message.error("Gagal menambahkan FAQ baru!");
+      }
+    }
+  }, [loading.create]);
 
   const statusConverter = (status) => {
     switch (status) {
@@ -57,12 +73,10 @@ export default function () {
     });
   };
 
-  const create = async (value) => {
-    await method.create(value);
+  console.log(error.create);
 
-    if (!error.create) {
-      message.info("Berhasil menambahkan FAQ baru!");
-    } else message.error("Gagal menambahkan FAQ baru!");
+  const create = (value) => {
+    method.create(value);
   };
 
   const updateStatus = async (id, value) => {
@@ -104,7 +118,10 @@ export default function () {
                 ]}
               >
                 <Skeleton title={false} loading={item.loading} active>
-                  <List.Item.Meta title={item.name} description={item.answer} />
+                  <List.Item.Meta
+                    title={item.name}
+                    description={<p>{item.answer}</p>}
+                  />
                   <div>
                     <Select
                       value={statusConverter(item.status)}

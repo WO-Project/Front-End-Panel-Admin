@@ -139,7 +139,7 @@ const MasterDisplay = () => {
   });
 
   const mapDataToCsv = (data) => {
-    const csvData = data.map((d) => {
+    const csvData = data?.map((d) => {
       return {
         id: d.id,
         date: d.date,
@@ -151,19 +151,6 @@ const MasterDisplay = () => {
     });
     return csvData;
   };
-
-  data = data.map((d) => {
-    return {
-      id: d.id,
-      date: d.created_at,
-      name: d.name,
-      type: d.type,
-      nominal: d.nominal_get,
-      wo: d.commission ? d.commission.wedding_organizer.name : "",
-      deletePesanan: deletePesanan,
-      permission,
-    };
-  });
 
   const { confirm } = Modal;
   const showModal = (id, name, wo, deletePesanan) => {
@@ -274,7 +261,16 @@ const MasterDisplay = () => {
           <Col span={24}>
             <div ref={pdfComponent}>
               <TableDisplay
-                data={data}
+                data={data?.map((d) => ({
+                  id: d.id,
+                  date: d.created_at,
+                  name: d.name,
+                  type: d.type,
+                  nominal: d.nominal_get,
+                  wo: d.commission ? d.commission.wedding_organizer.name : "",
+                  deletePesanan: deletePesanan,
+                  permission,
+                }))}
                 column={columns}
                 filteredState={filterData}
                 otherButton={[
@@ -286,7 +282,9 @@ const MasterDisplay = () => {
                         data={
                           currentData != null
                             ? mapDataToCsv(currentData)
-                            : mapDataToCsv(data)
+                            : data != null
+                            ? mapDataToCsv(data)
+                            : []
                         }
                       >
                         <p>Download CSV</p>

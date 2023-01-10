@@ -45,15 +45,11 @@ export default function MenuItem(props) {
 
   // Location
   const location = useLocation();
-  const { pathname } = location;
 
-  const splitLocation = pathname.split("/");
+  const splitLocation = location.pathname;
 
   // Menu
-  const splitLocationUrl =
-    splitLocation[splitLocation.length - 2] +
-    "/" +
-    splitLocation[splitLocation.length - 1];
+  const splitLocationUrl = splitLocation[0] + "/" + splitLocation[1];
 
   const { permission, type } = usePermissionContext();
   const [filteredNavigation, setFilteredNaviation] = useState([]);

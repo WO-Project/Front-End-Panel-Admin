@@ -11,7 +11,6 @@ import {
   Spin,
   Select,
   message,
-  Upload,
   Typography,
 } from "antd";
 
@@ -129,6 +128,27 @@ const EditProfile = (props) => {
                     onChange={(e) => setEmail(e.target.value)}
                     defaultValue={email}
                   />
+                </Form.Item>
+                <Form.Item label="Telepon" name="phone" initialValue={null}>
+                  <Input
+                  // value={email}
+                  // onChange={(e) => setEmail(e.target.value)}
+                  // defaultValue={email}
+                  />
+                </Form.Item>
+                <Form.Item label="Alamat" name="address" initialValue={null}>
+                  <Input
+                  // value={email}
+                  // onChange={(e) => setEmail(e.target.value)}
+                  // defaultValue={email}
+                  />
+                </Form.Item>
+                <Form.Item
+                  label="Foto Profil"
+                  name="attachment"
+                  initialValue={null}
+                >
+                  <Upload />
                 </Form.Item>
                 <Form.Item
                   wrapperCol={{
@@ -383,9 +403,27 @@ export default function index() {
   return (
     <>
       <EditProfile />
-      <FAQ />
-      <TermConditions />
-      <PrivacyPolicies />
+      <div
+        style={{
+          backgroundColor: "white",
+          marginTop: 50,
+          paddingTop: 30,
+          display: "flex",
+          flexDirection: "column",
+          gap: 10,
+          alignItems: "stretch",
+        }}
+      >
+        <Typography.Title
+          level={2}
+          style={{ display: "flex", justifyContent: "center" }}
+        >
+          Tentang Best Wishes
+        </Typography.Title>
+        <FAQ />
+        <TermConditions />
+        <PrivacyPolicies />
+      </div>
     </>
   );
 }

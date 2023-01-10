@@ -18,7 +18,7 @@ const index = (props) => {
   if (error) return <ErrorPage message={error} />;
 
   return (
-    <CardForm title={title}>
+    <CardForm title={title} back>
       <Form
         name="basic"
         labelCol={{

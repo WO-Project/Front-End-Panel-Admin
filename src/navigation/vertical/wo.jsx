@@ -45,23 +45,18 @@ const woNav = [
     id: "wo-komisi",
     title: "Komisi WO",
     icon: <Moneys set="curved" className="remix-icon" size={18} />,
-    navLink: "/wo/saldo-komisi",
-    // children: [
-    //   {
-    //     id: "wo-saldo-komisi",
-    //     title: "Saldo Komisi",
-    //   },
-    //   {
-    //     id: "wo-riwayat-komisi",
-    //     title: " Riwayat Komisi",
-    //     navLink: "/wo/riwayat-komisi",
-    //   },
-    //   {
-    //     id: "wo-pencairan-komisi",
-    //     title: "Pencairan Komisi",
-    //     navLink: "/wo/pencairan-komisi",
-    //   },
-    // ],
+    children: [
+      {
+        id: "wo-saldo-komisi",
+        title: "Saldo Komisi",
+        navLink: "/wo/saldo-komisi",
+      },
+      {
+        id: "wo-riwayat-komisi",
+        title: " Riwayat Komisi",
+        navLink: "/wo/riwayat-komisi",
+      },
+    ],
   },
 
   {

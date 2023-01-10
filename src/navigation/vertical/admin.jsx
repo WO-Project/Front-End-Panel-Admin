@@ -81,27 +81,27 @@ const adminNav = [
     children: [
       {
         id: "wedding",
-        title: "Data Wedding Organizer",
+        title: "Wedding Organizer",
         navLink: "/admin/wedding-organizer",
       },
       {
         id: "pengantin",
-        title: "Data Pengantin",
+        title: "Pengantin",
         navLink: "/admin/pengantin",
       },
       {
         id: "customer",
-        title: "Data Customer",
+        title: "Customer",
         navLink: "/admin/customer",
       },
       {
         id: "produk",
-        title: "Data Produk Ucapan Digital",
+        title: "Produk Ucapan Digital",
         navLink: "/admin/produk-ucapan-digital",
       },
       {
         id: "pesanan",
-        title: "Data Pesanan",
+        title: "Pesanan",
         navLink: "/admin/pesanan",
       },
     ],

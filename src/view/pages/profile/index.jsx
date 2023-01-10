@@ -130,6 +130,27 @@ const EditProfile = (props) => {
                     defaultValue={email}
                   />
                 </Form.Item>
+                <Form.Item label="Telepon" name="phone" initialValue={null}>
+                  <Input
+                  // value={email}
+                  // onChange={(e) => setEmail(e.target.value)}
+                  // defaultValue={email}
+                  />
+                </Form.Item>
+                <Form.Item label="Alamat" name="address" initialValue={null}>
+                  <Input
+                  // value={email}
+                  // onChange={(e) => setEmail(e.target.value)}
+                  // defaultValue={email}
+                  />
+                </Form.Item>
+                <Form.Item
+                  label="Foto Profil"
+                  name="attachment"
+                  initialValue={null}
+                >
+                  <Upload />
+                </Form.Item>
                 <Form.Item
                   wrapperCol={{
                     offset: 4,

@@ -1,5 +1,4 @@
 import { Button, Form, Space } from "antd";
-import { useHistory } from "react-router-dom";
 import React from "react";
 import CardForm from "../../../../../components/custom-components/form-crud/CardForm";
 
@@ -8,7 +7,6 @@ import LoadingSpinner from "../../../../../components/custom-components/LoadingS
 import ErrorPage from "../../../../../components/custom-components/Feedback/ErrorPage";
 
 const index = (props) => {
-  const history = useHistory();
   const title = `${props.location.state.permission} Data ${props.location.state.data}`;
   const id = props.location.state.id;
   const { data, error, loading } = getPesanan(id);

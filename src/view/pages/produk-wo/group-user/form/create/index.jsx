@@ -22,21 +22,27 @@ const index = () => {
     loading: wo_loading,
   } = getWeddingOrganizers();
 
-  console.log(wo_data);
+  const onFinish = () => {
+    let control = true;
+    wo.every(async (w) => {
+      const success = await createCommision({
+        wedding_organizer_id: w,
+        name,
+        type,
+        nominal,
+      });
 
-  const onFinish = async () => {
-    const success = await createCommision({
-      wedding_organizer_id: wo,
-      name,
-      type,
-      nominal,
+      if (!success?.data?.success) {
+        message.error("Gagal menambahkan komisi");
+        control = false;
+        return false;
+      }
+      return true;
     });
 
-    if (success?.data?.success) {
+    if (control) {
       message.success("Berhasil menambahkan komisi");
       history.goBack();
-    } else {
-      message.error("Gagal menambahkan komisi");
     }
   };
 
@@ -86,6 +92,7 @@ const index = () => {
             />
           ) : (
             <Select
+              mode="multiple"
               showSearch
               placeholder="Pilih WO"
               optionFilterProp="children"

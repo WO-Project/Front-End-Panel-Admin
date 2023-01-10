@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 
 export const bestSellingColumns = [
   {
-    title: "Nama Produk",
-    dataIndex: "name",
-    key: "name",
+    title: "Produk",
+    dataIndex: "product",
+    key: "product",
   },
   {
     title: "Harga",
@@ -20,8 +20,35 @@ export const bestSellingColumns = [
   },
   {
     title: "Wedding Organizer",
-    dataIndex: "wo",
-    key: "wo",
+    dataIndex: "wo_name",
+    key: "wo_name",
+  },
+  {
+    title: "Detail",
+    key: "action",
+    width: 200,
+    render: (payload) => (
+      <Space size="large" className="icons-container">
+        {payload.permission.includes(
+          "/admin/produk-ucapan-digital/detail/:userid"
+        ) ? (
+          <Popover content={"Detail"}>
+            <Link
+              to={{
+                pathname: `admin/produk-ucapan-digital/detail/${payload.product_id}`,
+                state: {
+                  permission: "Detail",
+                  data: "Produk Ucapan Digital",
+                  id: payload.product_id,
+                },
+              }}
+            >
+              <Eye size={20} />
+            </Link>
+          </Popover>
+        ) : undefined}
+      </Space>
+    ),
   },
 ];
 

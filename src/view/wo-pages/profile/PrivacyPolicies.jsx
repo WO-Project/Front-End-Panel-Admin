@@ -2,6 +2,7 @@ import { useRichEditorData } from "../../../api/website-settings/richEditorApiTe
 
 import { Typography, Spin, Button } from "antd";
 import RichEditor from "../../components/custom-components/rich-editor/RichEditor";
+import RichTextReader from "../../components/custom-components/rich-editor/RichTextReader";
 
 export default function PrivacyPolicies() {
   const { data, loading, method } = useRichEditorData("privacy-policies");
@@ -14,20 +15,7 @@ export default function PrivacyPolicies() {
           <Spin />
         ) : (
           <>
-            <RichEditor
-              controlledValueDispatcher={data.setValue}
-              controlledValueState={data.value}
-            />
-            <div style={{ display: "flex", justifyContent: "flex-end" }}>
-              <Button
-                type="primary"
-                danger
-                size="small"
-                onClick={method.update}
-              >
-                Simpan
-              </Button>
-            </div>
+            <RichTextReader value={data.value} />
           </>
         )}
       </div>

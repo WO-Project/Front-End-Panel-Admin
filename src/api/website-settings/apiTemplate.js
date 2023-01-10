@@ -30,7 +30,7 @@ export const useData = (url) => {
 
   const generateApi = (methodId, id = null, value = null) => {
     setLoading((prev) => ({ ...prev, [methodId]: true }));
-    setError({ ...error, [methodId]: null });
+    setError((error)=>({ ...error, [methodId]: null }));
 
     let req;
     switch (methodId) {
@@ -74,12 +74,8 @@ export const useData = (url) => {
           });
 
     return req
-      .catch((e) => setError({ ...error, [methodId]: e }))
-      .finally(() =>
-        setTimeout(() => {
-          setLoading((prev) => ({ ...prev, [methodId]: false }));
-        }, 0)
-      );
+      .catch((e) => setError((error)=>({ ...error, [methodId]: e })))
+      .finally(() => setLoading((prev) => ({ ...prev, [methodId]: false })));
   };
 
   useEffect(() => {

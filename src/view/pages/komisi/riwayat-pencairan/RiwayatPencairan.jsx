@@ -151,7 +151,7 @@ const MasterDisplay = () => {
     return csvData;
   };
 
-  data = data.map((d) => {
+  data = data?.map((d) => {
     return {
       id: d.id,
       request_date: d.request_date,
@@ -282,7 +282,9 @@ const MasterDisplay = () => {
                         data={
                           currentData != null
                             ? mapDataToCsv(currentData)
-                            : mapDataToCsv(data)
+                            : data != null
+                            ? mapDataToCsv(data)
+                            : []
                         }
                       >
                         <p>Download CSV</p>

@@ -118,7 +118,7 @@ export default function DashBoard() {
           <Col span={24}>
             <Card>
               <Table
-                dataSource={data_best}
+                dataSource={data_best.map((d) => ({ ...d, permission }))}
                 columns={bestSellingColumns}
                 title={() => (
                   <h1 style={{ fontSize: 20, fontWeight: 600 }}>
@@ -134,7 +134,14 @@ export default function DashBoard() {
                         justifyContent: "flex-end",
                       }}
                     >
-                      <Link to="/admin/pesanan">
+                      <Link
+                        to={{
+                          pathname: "/admin/produk-ucapan-digital",
+                          state: {
+                            back: true,
+                          },
+                        }}
+                      >
                         <Button type="primary" danger>
                           Selengkapnya
                         </Button>
@@ -185,7 +192,14 @@ export default function DashBoard() {
                         justifyContent: "flex-end",
                       }}
                     >
-                      <Link to="/admin/pesanan">
+                      <Link
+                        to={{
+                          pathname: `admin/pesanan`,
+                          state: {
+                            back: true,
+                          },
+                        }}
+                      >
                         <Button type="primary" danger>
                           Selengkapnya
                         </Button>
